@@ -517,6 +517,11 @@ function showPrefabs(player) --shows the prefabs belonging to this map and this 
 	MP.TriggerClientEvent(player.playerID, "spawnObstacles", Util.JsonEncode(areas[area]["obstacles"]))
 end
 
+function onSaveArea(player, data)
+	print("onSaveArea called by player: " .. dump(player) .. " and data: " .. dump(data))
+
+end
+
 function createFlag(player)
 	MP.TriggerClientEvent(player.playerID, "onCreateFlag", "nil")
 end
@@ -541,6 +546,7 @@ function transporter(player, argument)
 		MP.SendChatMessage(player.playerID, "\"/transporter allow resets \'true/false\' \" to specify if the flag carrier can reset without losing the flag.")
 		MP.SendChatMessage(player.playerID, "\"/transporter create \'flag/goal\' \" to create a goal or flag, so you can make your own areas! \n Consult the tutorial on GitHub to learn how to do this.")
 		MP.SendChatMessage(player.playerID, "\"/transporter ghosts \'true/false\' \" to specify if people should be ghosts on reset and when getting the flag.")
+		MP.SendChatMessage(player.playerID, "\"/transporter save \'name\' \" to save the created area with the name (overwrites the area with name and saves all goals and flags created with /ctf create goal/flag).")
 	elseif argument == "show" then
 		onAreaChange()
 		showPrefabs(player)
@@ -578,6 +584,9 @@ function transporter(player, argument)
 			teams = false
 		end
 		MP.SendChatMessage(-1, "Playing with teams: " .. dump(teams) .. " (available options are true or false)")
+	elseif string.find(argument, "area %S") then
+			local tmpAreaName = string.sub(argument, 6, 10000)
+		  MP.TriggerClientEvent(player.playerID, "saveArea", tmpAreaName)
 	elseif string.find(argument, "allow resets %S") then
 		local allowedString = string.sub(argument,14,10000)
 		if allowedString == "true" then
@@ -793,6 +802,7 @@ function onInit()
 	MP.RegisterEvent("onVehicleEdited","onVehicleEdited")
 	MP.RegisterEvent("onVehicleReset","onVehicleReset")
 	MP.RegisterEvent("onVehicleDeleted","onVehicleDeleted")
+	MP.RegisterEvent("onSaveArea","onSaveArea")
 
 	loadAreas() --this uses the Map in ServerConfig.toml to parse only areas on this level
 	-- applyStuff(commands, TransporterCommands)
@@ -1068,5 +1078,6 @@ M.ctf = ctf
 M.CTF = CTF
 
 M.loadAreas = loadAreas
+M.onSaveArea = onSaveArea
 
 return M

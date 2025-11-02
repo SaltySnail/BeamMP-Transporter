@@ -695,26 +695,13 @@ local function spawnGoal(data)
 	table.insert(activePrefabs, name .. "Trigger")
 end
 
-local flagCounters = {}  -- Track counters per level/area
-
-local function getNextFlagName(level, area)
-	local key = level .. "_" .. area
-	if not flagCounters[key] then
-		flagCounters[key] = {flags = 0, goals = 0, spawns = 0, obstacles = 0}
-	end
-	flagCounters[key].flags = flagCounters[key].flags + 1
-	return "CTF_flag" .. flagCounters[key].flags
-end
-
 local function onCreateFlag()
 	local currentVehID = be:getPlayerVehicleID(0)
 	local veh = getObjectByID(currentVehID)
 	if not veh then return end
-	
-	local level = getMissionFilename()  -- e.g., "west_coast_usa"
-	local area = "city"  -- You'll need to determine this based on your game logic
-	
-	local flagName = getNextFlagName(level, area)
+
+	local flagName = "CTF_flag" .. lastCreatedFlagID
+	lastCreatedFlagID = lastCreatedFlagID + 1
 	local pos = veh:getPosition()
 	local rot = veh:getRotation()  -- Gets rotation as quaternion
 	
@@ -729,8 +716,63 @@ local function onCreateGoal()
 	local currentVehID = be:getPlayerVehicleID(0)
 	local veh = getObjectByID(currentVehID)
 	if not veh then return end
+
+	local goalName = "CTF_goal" .. lastCreatedGoalID
 	lastCreatedGoalID = lastCreatedGoalID + 1
-  spawnGoal("goal" .. lastCreatedGoalID, veh:getPosition())
+	local pos = veh:getPosition()
+	local rot = veh:getRotation()  -- Gets rotation as quaternion
+	
+	local toSend = {}
+	table.insert(toSend, goalName)
+	table.insert(toSend, {pos.x, pos.y, pos.z})  -- Convert to array
+	table.insert(toSend, {rot.x, rot.y, rot.z, rot.w})  -- Convert to array
+	spawnGoal(jsonEncode(toSend))
+end
+
+local function saveArea(areaName)
+	print("Save area called " .. areaName)
+	if not areaName or areaName == "" then
+		print("Error: Area name is required")
+		return false
+	end
+	
+	-- Collect all current flags and goals
+	local areaData = {
+		flags = {},
+		goals = {},
+		spawns = {},
+		obstacles = {}
+	}
+	
+	-- Gather all flags (CTF_flag*)
+	for i = 1, lastCreatedFlagID - 1 do
+		local flagName = "CTF_flag" .. i
+		local flagTrigger = scenetree.findObject(flagName .. "Trigger")
+		if flagTrigger then
+			local pos = flagTrigger:getPosition()
+			local rot = flagTrigger:getRotation()
+			areaData.flags[flagName] = {
+				position = {pos.x, pos.y, pos.z},
+				rotation = {rot.x, rot.y, rot.z, rot.w}
+			}
+		end
+	end
+	
+	-- Gather all goals (CTF_goal*)
+	for i = 1, lastCreatedGoalID - 1 do
+		local goalName = "CTF_goal" .. i
+		local goalTrigger = scenetree.findObject(goalName .. "Trigger")
+		if goalTrigger then
+			local pos = goalTrigger:getPosition()
+			local rot = goalTrigger:getRotation()
+			areaData.goals[goalName] = {
+				position = {pos.x, pos.y, pos.z},
+				rotation = {rot.x, rot.y, rot.z, rot.w}
+			}
+		end
+	end
+	
+	TriggerServerEvent("onSaveArea", jsonEncode(areaData))
 end
 
 local function spawnObstacles(filepath) 
@@ -1399,6 +1441,7 @@ if AddEventHandler then
 	AddEventHandler("unfadePerson", unfadePerson)
 	AddEventHandler("requestVehicleID", requestVehicleID)
 	AddEventHandler("requestVelocity", requestVelocity)
+	AddEventHandler("saveArea", saveArea)
 	
 	-- AddEventHandler("onTransporterFlagTrigger", onTransporterFlagTrigger)
 	-- AddEventHandler("onTransporterGoalTrigger", onTransporterGoalTrigger)
@@ -1443,6 +1486,7 @@ M.requestVelocity = requestVelocity
 -- M.onTransporterFlagTrigger = onTransporterFlagTrigger
 -- M.onTransporterGoalTrigger = onTransporterGoalTrigger
 M.onCTFTrigger = onCTFTrigger
+M.saveArea = saveArea
 commands.dropPlayerAtCameraNoReset = dropPlayerAtCameraNoReset
 
 return M
