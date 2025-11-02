@@ -214,6 +214,7 @@ local currentArea = ""
 local currentLevel = ""
 local lastCreatedFlagID = 1
 local lastCreatedGoalID = 1
+local lastCreatedSpawnID = 1
 
 local defaultRedFadeDistance = 20
 
@@ -459,30 +460,39 @@ end
 -- end
 
 local function removePrefabs(type)
-	if type == "flag" then
-		for name in activeprefabs do
-			if string.match(name, ".*flag.*") then 
-				log('d', logtag, "Removing flag: " .. name)
-				removeprefab(name)
+	-- Search through all objects in the scene
+	for _, objName in pairs(scenetree.getAllObjects()) do
+		local obj = scenetree.findObject(objName)
+		if obj and objName then
+			local shouldRemove = false
+			
+			if type == "flag" then
+				shouldRemove = string.find(objName, "CTF_flag") ~= nil
+			elseif type == "goal" then
+				shouldRemove = string.find(objName, "CTF_goal") ~= nil
+			elseif type == "spawn" then
+				shouldRemove = string.find(objName, "CTF_spawn") ~= nil
+			elseif type == "obstacle" then
+				shouldRemove = string.find(objName, "CTF_obstacle") ~= nil
+			elseif type == "all" then
+				shouldRemove = string.find(objName, "CTF_flag") or string.find(objName, "CTF_goal") or 
+				               string.find(objName, "CTF_spawn") or string.find(objName, "CTF_obstacle")
+			else
+				print("removePrefabs called with unknown type: " .. type)
+				return
+			end
+			
+			if shouldRemove then
+				print("Removing prefab: " .. objName)
+				local success, err = pcall(function()
+					obj:delete()
+				end)
+				
+				if not success then
+					print("Error removing " .. objName .. ": " .. tostring(err))
+				end
 			end
 		end
-	elseif type == "goal" then
-		for name in activePrefabs do
-			if string.match(name, ".*goal.*") then 
-				-- log('D', logtag, "Removing goal: " .. name)
-				print("Removing goal: " .. name)
-				removePrefab(name)
-			end
-		end
-	elseif type == "all" then
-		for name in activePrefabs do
-			-- log('D', logtag, "Removing prefab: " .. name)
-			print("Removing prefab: " .. name)
-			removePrefab(name)
-		end
-	else 
-		-- log('W', logtag, "removePrefabs called with unknown type: " .. type)
-		print("removePrefabs called with unknown type: " .. type)
 	end
 end
 
@@ -531,6 +541,7 @@ local function spawnFlag(data)
 	visualObj.canSave = true
 	visualObj:registerObject(name .. "TSStatic")
 	scenetree.MissionGroup:addObject(visualObj)
+	table.insert(activePrefabs, name .. "TSStatic")
 	local triggerObj = createObject("BeamNGTrigger")
 	if position then
 		triggerObj:setPosition(vec3(position.x, position.y, position.z))
@@ -675,6 +686,50 @@ local function spawnGoal(data)
 	visualObj.canSave = true
 	visualObj:registerObject(name .. "TSStatic")
 	scenetree.MissionGroup:addObject(visualObj)
+	table.insert(activePrefabs, name .. "TSStatic")
+	local triggerObj = createObject("BeamNGTrigger")
+	if position then
+		triggerObj:setPosition(vec3(position.x, position.y, position.z))
+	else
+		triggerObj:setPosition(vec3(0,0,0))
+	end
+	local rotationString = "0,0,0,1"
+	if rotation then
+		rotationString = "" .. rotation.x .. "," .. rotation.y .. "," .. rotation.z .. "," .. rotation.w
+	end
+	triggerObj.scale = vec3(6,6,35)
+	triggerObj:setField('rotation', 0, rotationString)
+	triggerObj:setField('luaFunction', 0, "Transporter.onCTFTrigger")
+	triggerObj:setField('triggerMode', 0, "Overlaps")
+	triggerObj:setField('triggerTestType', 0, "Bounding box")
+	triggerObj:registerObject(name .. "Trigger")
+	scenetree.MissionGroup:addObject(triggerObj)
+	table.insert(activePrefabs, name .. "Trigger")
+end
+
+local function spawnSpawnTrigger(data)
+  data = jsonDecode(data)
+	local name = ""
+	local position = {}
+	local rotation = {}
+
+	for index, data in pairs(data) do
+    if (index == 1) then
+      name = data
+    end
+    if (index == 2) then
+      position.x = data[1]
+      position.y = data[2]
+      position.z = data[3]
+    end
+    if (index == 3) then
+      rotation.x = data[1]
+      rotation.y = data[2]
+      rotation.z = data[3]
+      rotation.w = data[4]
+    end
+	end
+	print("Spawning spawnTrigger " .. name)	
 	local triggerObj = createObject("BeamNGTrigger")
 	if position then
 		triggerObj:setPosition(vec3(position.x, position.y, position.z))
@@ -729,6 +784,23 @@ local function onCreateGoal()
 	spawnGoal(jsonEncode(toSend))
 end
 
+local function onCreateSpawn()
+	local currentVehID = be:getPlayerVehicleID(0)
+	local veh = getObjectByID(currentVehID)
+	if not veh then return end
+
+	local spawnName = "CTF_spawn" .. lastCreatedSpawnID
+	lastCreatedSpawnID = lastCreatedSpawnID + 1
+	local pos = veh:getPosition()
+	local rot = veh:getRotation()  -- Gets rotation as quaternion
+	
+	local toSend = {}
+	table.insert(toSend, spawnName)
+	table.insert(toSend, {pos.x, pos.y, pos.z})  -- Convert to array
+	table.insert(toSend, {rot.x, rot.y, rot.z, rot.w})  -- Convert to array
+	spawnSpawnTrigger(jsonEncode(toSend))
+end
+
 local function saveArea(areaName)
 	print("Save area called " .. areaName)
 	if not areaName or areaName == "" then
@@ -738,38 +810,69 @@ local function saveArea(areaName)
 	
 	-- Collect all current flags and goals
 	local areaData = {
-		flags = {},
-		goals = {},
-		spawns = {},
-		obstacles = {}
+		[areaName] = {
+			flags = {},
+			goals = {},
+			spawns = {},
+			obstacles = {}
+		}
 	}
 	
-	-- Gather all flags (CTF_flag*)
-	for i = 1, lastCreatedFlagID - 1 do
-		local flagName = "CTF_flag" .. i
-		local flagTrigger = scenetree.findObject(flagName .. "Trigger")
-		if flagTrigger then
-			local pos = flagTrigger:getPosition()
-			local rot = flagTrigger:getRotation()
-			areaData.flags[flagName] = {
-				position = {pos.x, pos.y, pos.z},
-				rotation = {rot.x, rot.y, rot.z, rot.w}
-			}
+	-- Search through all objects in the scene
+	for _,objName in pairs(scenetree.getAllObjects()) do
+		local obj = scenetree.findObject(objName)
+		if obj then
+			if objName then
+				-- Gather all flags (CTF_flag*)
+				if string.find(objName, "CTF_flag") and string.find(objName, "Trigger") then
+					local flagName = objName:gsub("Trigger", "")
+					local pos = obj:getPosition()
+					local rot = obj:getRotation()
+					areaData[areaName].flags[flagName] = {
+						position = {pos.x, pos.y, pos.z},
+						rotation = {rot.x, rot.y, rot.z, rot.w}
+					}
+				end
+				
+				-- Gather all goals (CTF_goal*)
+				if string.find(objName, "CTF_goal") and string.find(objName, "Trigger") then
+					local goalName = objName:gsub("Trigger", "")
+					local pos = obj:getPosition()
+					local rot = obj:getRotation()
+					areaData[areaName].goals[goalName] = {
+						position = {pos.x, pos.y, pos.z},
+						rotation = {rot.x, rot.y, rot.z, rot.w}
+					}
+				end
+				
+				-- Gather all spawns (CTF_spawn*)
+				if string.find(objName, "CTF_spawn") and string.find(objName, "Trigger") then
+					local spawnName = objName:gsub("Trigger", "")
+					local pos = obj:getPosition()
+					local rot = obj:getRotation()
+					areaData[areaName].spawns[spawnName] = {
+						position = {pos.x, pos.y, pos.z},
+						rotation = {rot.x, rot.y, rot.z, rot.w}
+					}
+				end
+				
+				-- Gather all obstacles (CTF_obstacle*)
+				if string.find(objName, "CTF_obstacle") then
+					local pos = obj:getPosition()
+					local rot = obj:getRotation()
+					local shapeName = obj:getField('shapeName', '')
+					areaData[areaName].obstacles[objName] = {
+						position = {pos.x, pos.y, pos.z},
+						rotation = {rot.x, rot.y, rot.z, rot.w},
+						shapeName = shapeName
+					}
+				end
+			end
 		end
-	end
-	
-	-- Gather all goals (CTF_goal*)
-	for i = 1, lastCreatedGoalID - 1 do
-		local goalName = "CTF_goal" .. i
-		local goalTrigger = scenetree.findObject(goalName .. "Trigger")
-		if goalTrigger then
-			local pos = goalTrigger:getPosition()
-			local rot = goalTrigger:getRotation()
-			areaData.goals[goalName] = {
-				position = {pos.x, pos.y, pos.z},
-				rotation = {rot.x, rot.y, rot.z, rot.w}
-			}
-		end
+		--removePrefabs('all')
+		lastCreatedFlagID = 1
+		lastCreatedGoalID = 1
+		lastCreatedSpawnID = 1
 	end
 	
 	TriggerServerEvent("onSaveArea", jsonEncode(areaData))
@@ -1416,6 +1519,7 @@ if AddEventHandler then
 	AddEventHandler("spawnGoal", spawnGoal)
 	AddEventHandler("onCreateFlag", onCreateFlag)
 	AddEventHandler("onCreateGoal", onCreateGoal)
+	AddEventHandler("onCreateSpawn", onCreateSpawn)
 	AddEventHandler("spawnObstacles", spawnObstacles)
 	AddEventHandler("removePrefabs", removePrefabs)
 	-- AddEventHandler("setCurrentArea", setCurrentArea)
@@ -1462,8 +1566,10 @@ M.onVehicleSwitched = onVehicleSwitched
 M.resetCarColors = resetCarColors
 M.spawnFlag = spawnFlag
 M.spawnGoal = spawnGoal
+M.spawnSpawnTrigger = spawnSpawnTrigger
 M.onCreateFlag = onCreateFlag
 M.onCreateGoal = onCreateGoal
+M.onCreateSpawn = onCreateSpawn
 M.spawnObstacles = spawnObstacles
 M.removePrefabs = removePrefabs
 -- M.setCurrentArea = setCurrentArea

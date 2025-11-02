@@ -519,7 +519,41 @@ end
 
 function onSaveArea(player, data)
 	print("onSaveArea called by player: " .. dump(player) .. " and data: " .. dump(data))
+	local existingData = {}
+	local file = io.open(TRANSPORTER_DATA_PATH .. "areas.json", "r")
+	if file then
+		local content = file:read("*all")
+		file:close()
+		existingData = Util.JsonDecode(content) or {}
+	end
+	
+	levelName = MP.Get(MP.Settings.Map):match("/levels/(.+)/info.json")
+	if not levelName then
+		print("Couldn't determine level name")
+		return false
+	end
+	
+	if not existingData[levelName] then
+		existingData[levelName] = {}
+	end
 
+	data = Util.JsonDecode(data)
+	for areaName, areaData in pairs(data) do
+		existingData[levelName][areaName] = areaData
+		print("Saved area '" .. areaName .. "' for level '" .. levelName .. "'")
+	end
+	
+	file = io.open(TRANSPORTER_DATA_PATH .. "areas.json", "w")
+	if file then
+		local jsonString = Util.JsonPrettify(Util.JsonEncode(existingData))
+		file:write(jsonString)
+		file:close()
+		return true
+	else
+		print("Couldn't write to Transporter/Data/areas.json")
+		return false
+	end
+	loadAreas()
 end
 
 function createFlag(player)
@@ -528,6 +562,11 @@ end
 
 function createGoal(player)
 	MP.TriggerClientEvent(player.playerID, "onCreateGoal", "nil")
+end
+
+function createSpawn(player)
+	print("creating spawn...")
+	MP.TriggerClientEvent(player.playerID, "onCreateSpawn", "nil")
 end
 
 function transporter(player, argument)
@@ -544,7 +583,7 @@ function transporter(player, argument)
 		MP.SendChatMessage(player.playerID, "\"/transporter score limit \'points\' \" to set the score limit of a transporter game to the specified score.")
 		MP.SendChatMessage(player.playerID, "\"/transporter teams \'true/false\' \" to specify if the transporter games uses teams.")
 		MP.SendChatMessage(player.playerID, "\"/transporter allow resets \'true/false\' \" to specify if the flag carrier can reset without losing the flag.")
-		MP.SendChatMessage(player.playerID, "\"/transporter create \'flag/goal\' \" to create a goal or flag, so you can make your own areas! \n Consult the tutorial on GitHub to learn how to do this.")
+		MP.SendChatMessage(player.playerID, "\"/transporter create \'flag/goal/spawn\' \" to create a goal, spawn, or flag, so you can make your own areas! \n Consult the tutorial on GitHub to learn how to do this.")
 		MP.SendChatMessage(player.playerID, "\"/transporter ghosts \'true/false\' \" to specify if people should be ghosts on reset and when getting the flag.")
 		MP.SendChatMessage(player.playerID, "\"/transporter save \'name\' \" to save the created area with the name (overwrites the area with name and saves all goals and flags created with /ctf create goal/flag).")
 	elseif argument == "show" then
@@ -584,7 +623,7 @@ function transporter(player, argument)
 			teams = false
 		end
 		MP.SendChatMessage(-1, "Playing with teams: " .. dump(teams) .. " (available options are true or false)")
-	elseif string.find(argument, "area %S") then
+	elseif string.find(argument, "save %S") then
 			local tmpAreaName = string.sub(argument, 6, 10000)
 		  MP.TriggerClientEvent(player.playerID, "saveArea", tmpAreaName)
 	elseif string.find(argument, "allow resets %S") then
@@ -609,6 +648,8 @@ function transporter(player, argument)
 			createFlag(player)
 		elseif createString == "goal" then
 			createGoal(player)
+		elseif createString == "spawn" then
+			createSpawn(player)
 		end
 	elseif string.find(argument, "list %S") then
 		local subArgument = string.sub(argument,6,10000)
@@ -782,7 +823,6 @@ function onInit()
 	MP.RegisterEvent("setLevelName", "setLevelName")
 	MP.RegisterEvent("setFlagCarrier", "setFlagCarrier")
 	MP.RegisterEvent("onGoal", "onGoal")
-	MP.RegisterEvent("setAreaNames", "setAreaNames")
 	MP.RegisterEvent("setLevels", "setLevels")
 	MP.RegisterEvent("setFlagCount", "setFlagCount")
 	MP.RegisterEvent("setGoalCount", "setGoalCount")
@@ -998,15 +1038,6 @@ function onGoal(playerID)
 	end
 end
 
-function setAreaNames(playerID, data)
-	areaNames = {} 
-	print("Available areas: " .. data)
-	for name in data:gmatch("%S+") do 
-		table.insert(areaNames, name)
-	end
-	onAreaChange()
-end
-
 function setVehVel(playerID, vel)
 	vehVel[MP.GetPlayerName(playerID)] = {}
 	vehVel[MP.GetPlayerName(playerID)].vel = tonumber(vel)
@@ -1063,7 +1094,6 @@ M.onTransporterContact = onTransporterContact
 
 M.setFlagCarrier = setFlagCarrier
 M.onGoal = onGoal
-M.setAreaNames = setAreaNames
 M.setLevels = setLevels
 M.setFlagCount = setFlagCount
 M.setGoalCount = setGoalCount
