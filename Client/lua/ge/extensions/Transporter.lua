@@ -9,6 +9,9 @@ local gamestate = {players = {}, settings = {}}
 local blockedInputActions = {'slower_motion','faster_motion','toggle_slow_motion','modify_vehicle','vehicle_selector','saveHome','loadHome', 'reset_all_physics','toggleTraffic', "recover_vehicle", "recover_vehicle_alt", "recover_to_last_road", "reload_vehicle", "reload_all_vehicles", "parts_selector", "dropPlayerAtCamera", "nodegrabberRender",'reset_physics','switch_previous_vehicle','switch_next_vehicle'} --"dropPlayerAtCameraNoReset", missing. This allows for resets with f7, this should be done with a sort of timer on reset or only alow rewinds. This seems to not be possible
 
 local colors = {["Red"] = {255,50,50,255},["LightBlue"] = {50,50,160,255},["Green"] = {50,255,50,255},["Yellow"] = {200,200,25,255},["Purple"] = {150,50,195,255}}
+
+local activePrefabs = {}
+
 local thisAreaData = {}
 local thisLevelData = {}
 local mapData = {} --TODO: this should be a txt file for easily adding areas
@@ -400,197 +403,339 @@ function disallowResets()
 	end
 end
 
+-- local function removePrefabs(type)
+-- 	log('D', logTag, "removePrefabs(" .. type .. ") Called" )
+-- 	if type == "flag" and flagPrefabActive then 
+-- 		removePrefab(flagPrefabName)
+-- 		-- log('D', logTag, "Removing: " .. flagPrefabName)
+-- 		flagPrefabActive = false
+-- 	elseif type == "goal" and goalPrefabActive then 
+-- 		removePrefab(goalPrefabName)
+-- 		-- log('D', logTag, "Removing: " .. goalPrefabName)
+-- 		goalPrefabActive = false
+-- 	elseif type == "all" then
+-- 		if flagPrefabActive then
+-- 			removePrefab(flagPrefabName)
+-- 			-- log('D', logTag, "Removing: " .. flagPrefabName)
+-- 			flagPrefabActive = false
+-- 		end
+-- 		if goalPrefabActive then
+-- 			removePrefab(goalPrefabName)
+-- 			-- log('D', logTag, "Removing: " .. goalPrefabName)
+-- 			goalPrefabActive = false
+-- 		end
+-- 		if obstaclesPrefabActive then
+-- 			removePrefab(obstaclesPrefabName)
+-- 			-- log('D', logTag, "Removing: " .. obstaclesPrefabName)
+-- 			obstaclesPrefabActive = false
+-- 			be:reloadStaticCollision(true)
+-- 		end
+-- 		local prefabPath = ""
+-- 		local levelName = core_levels.getLevelName(getMissionFilename())
+-- 		local flags = "1"
+-- 		local goals = "1"
+-- 		log('D', logTag, "Removing everything in; Map: " .. levelName .. " and Area: " .. currentArea)
+-- 		-- log('D', logTag, "mapData: " .. dump(mapData))
+-- 		local levelData = {}
+-- 		levelData = mapData[levelName]["levelData"]
+-- 		-- log('D', logTag, "levelData: " .. dump(levelData))
+-- 		local areaData = {}
+-- 		areaData = levelData[currentArea]
+-- 		-- log('D', logTag, "areaData (" .. currentArea .. "): " .. dump(areaData))
+-- 		flags = areaData["flagcount"]
+-- 		goals = areaData["goalcount"]
+-- 		log('D', logTag, "Flags: " .. flags .. " and Goals: " .. goals)
+-- 		for flagID=1,tonumber(flags) do
+-- 			prefabPath = "flag" .. flagID
+-- 			-- log('D', logTag, "Removing: " .. prefabPath)
+-- 			removePrefab(prefabPath)
+-- 		end
+-- 		for goalID=1,tonumber(goals) do
+-- 			prefabPath = "goal" .. goalID
+-- 			-- log('D', logTag, "Removing: " .. prefabPath)
+-- 			removePrefab(prefabPath)
+-- 		end
+-- 	end
+-- end
+
 local function removePrefabs(type)
-	log('D', logTag, "removePrefabs(" .. type .. ") Called" )
-	if type == "flag" and flagPrefabActive then 
-		removePrefab(flagPrefabName)
-		-- log('D', logTag, "Removing: " .. flagPrefabName)
-		flagPrefabActive = false
-	elseif type == "goal" and goalPrefabActive then 
-		removePrefab(goalPrefabName)
-		-- log('D', logTag, "Removing: " .. goalPrefabName)
-		goalPrefabActive = false
+	if type == "flag" then
+		for name in activeprefabs do
+			if string.match(name, ".*flag.*") then 
+				log('d', logtag, "Removing flag: " .. name)
+				removeprefab(name)
+			end
+		end
+	elseif type == "goal" then
+		for name in activePrefabs do
+			if string.match(name, ".*goal.*") then 
+				-- log('D', logtag, "Removing goal: " .. name)
+				print("Removing goal: " .. name)
+				removePrefab(name)
+			end
+		end
 	elseif type == "all" then
-		if flagPrefabActive then
-			removePrefab(flagPrefabName)
-			-- log('D', logTag, "Removing: " .. flagPrefabName)
-			flagPrefabActive = false
+		for name in activePrefabs do
+			-- log('D', logtag, "Removing prefab: " .. name)
+			print("Removing prefab: " .. name)
+			removePrefab(name)
 		end
-		if goalPrefabActive then
-			removePrefab(goalPrefabName)
-			-- log('D', logTag, "Removing: " .. goalPrefabName)
-			goalPrefabActive = false
-		end
-		if obstaclesPrefabActive then
-			removePrefab(obstaclesPrefabName)
-			-- log('D', logTag, "Removing: " .. obstaclesPrefabName)
-			obstaclesPrefabActive = false
-			be:reloadStaticCollision(true)
-		end
-		local prefabPath = ""
-		local levelName = core_levels.getLevelName(getMissionFilename())
-		local flags = "1"
-		local goals = "1"
-		log('D', logTag, "Removing everything in; Map: " .. levelName .. " and Area: " .. currentArea)
-		-- log('D', logTag, "mapData: " .. dump(mapData))
-		local levelData = {}
-		levelData = mapData[levelName]["levelData"]
-		-- log('D', logTag, "levelData: " .. dump(levelData))
-		local areaData = {}
-		areaData = levelData[currentArea]
-		-- log('D', logTag, "areaData (" .. currentArea .. "): " .. dump(areaData))
-		flags = areaData["flagcount"]
-		goals = areaData["goalcount"]
-		log('D', logTag, "Flags: " .. flags .. " and Goals: " .. goals)
-		for flagID=1,tonumber(flags) do
-			prefabPath = "flag" .. flagID
-			-- log('D', logTag, "Removing: " .. prefabPath)
-			removePrefab(prefabPath)
-		end
-		for goalID=1,tonumber(goals) do
-			prefabPath = "goal" .. goalID
-			-- log('D', logTag, "Removing: " .. prefabPath)
-			removePrefab(prefabPath)
-		end
-	end
-end
-
-local function spawnFlag(filepath, offset) 
-	log('D', logTag, filepath)
-	local offsetString = '0 0 0'
-	if offset then
-		offsetString = "" .. offset.x .. " " .. offset.y .. " " .. offset.z
-	end
-	log('D', logTag, "Offset: " .. offsetString)
-	flagPrefabActive = true
-	flagPrefabPath   = filepath
-	flagPrefabName   = string.gsub(flagPrefabPath, "(.*/)(.*)", "%2"):sub(1, -13)
-	flagPrefabObj    = spawnPrefab(flagPrefabName, flagPrefabPath, offsetString, '0 0 1', '1 1 1')
-	log('D', logTag, "flagPrefabObj: " .. dump(flagPrefabObj))
-	-- read local file
-	local file = io.open(flagPrefabPath, "rb")
-	if not file then return end
-	local jsonString = file:read "*a"
-	file:close()
-	log('D', logTag, "prefab json: " .. dump(jsonString))
-	if jsonString then 
-		local line = jsonDecode(jsonString)
-		if string.match(line.name, "flag(%d*)Trigger") then 
-			flagLocation = vec3(line.position)
-		end
-	end
-	if not flagLocation then
-		flagLocation = vec3(0,0,0)
-	end
-end
-
-local function spawnGoal(filepath, offset) 
-	log('D', logTag, filepath)
-	local offsetString = '0 0 0'
-	if offset then
-		offsetString = "" .. offset.x .. " " .. offset.y .. " " .. offset.z
-	end
-	if gamestate.teams then 
-		scaleString = '2 2 2'
 	else 
-		scaleString = '1 1 1'
+		-- log('W', logtag, "removePrefabs called with unknown type: " .. type)
+		print("removePrefabs called with unknown type: " .. type)
 	end
-	log('D', logTag, "Offset: " .. offsetString)
-	goalPrefabActive = true
-	goalPrefabPath   = filepath
-	goalPrefabName   = string.gsub(goalPrefabPath, "(.*/)(.*)", "%2"):sub(1, -13)
-	goalPrefabObj    = spawnPrefab(goalPrefabName, goalPrefabPath,  offsetString, '0 0 1', scaleString)
-	log('D', logTag, "goalPrefabObj: " .. dump(goalPrefabObj))	
-	-- read local file 
-	local file = io.open(goalPrefabPath, "rb")
-	if not file then return end
-	local jsonString = file:read "*a"
-	file:close()	
-	log('D', logTag, "prefab json: " .. dump(jsonString))
-	if jsonString then 
-		local line = jsonDecode(jsonString)
-		if string.match(line.name, "goal(%d*)Trigger") then 
-			goalLocation = vec3(line.position)
-		end
+end
+
+local function spawnFlag(data)
+  data = jsonDecode(data)
+	local name = ""
+	local position = {}
+	local rotation = {}
+
+	for index, data in pairs(data) do
+    if (index == 1) then
+      name = data
+    end
+    if (index == 2) then
+      position.x = data[1]
+      position.y = data[2]
+      position.z = data[3]
+    end
+    if (index == 3) then
+      rotation.x = data[1]
+      rotation.y = data[2]
+      rotation.z = data[3]
+      rotation.w = data[4]
+    end
 	end
-	if not goalLocation then
-		goalLocation = vec3(0,0,0)
+	-- log('D', logtag, "Spawning flag " .. name)	
+	print("Spawning flag " .. name)	
+	local visualObj = createObject('TSStatic')
+	if position then
+		visualObj:setPosition(vec3(position.x, position.y, position.z))
+	else
+		visualObj:setPosition(vec3(0,0,0))
 	end
+	local rotationString = "0,0,0,1"
+	if rotation then
+		rotationString = "" .. rotation.x .. "," .. rotation.y .. "," .. rotation.z .. "," .. rotation.w
+	end
+	visualObj:setField('rotation', 0, rotationString)
+	visualObj:setField('shapeName', 0, "/art/shapes/interface/single_faded_column.dae")
+	visualObj.scale = vec3(10,10,6)
+	visualObj.useInstanceRenderData = true
+	visualObj:setField('instanceColor', 0, string.format("%g %g %g %g", 0,0.0227570534,1,1))
+	visualObj:setField('instanceColor1', 0, string.format("%g %g %g %g", 0,0.0238099098,1,1))
+	visualObj:setField('collisionType', 0, "None")
+	visualObj:setField('decalType', 0, "None")
+	visualObj.canSave = true
+	visualObj:registerObject(name .. "TSStatic")
+	scenetree.MissionGroup:addObject(visualObj)
+	local triggerObj = createObject("BeamNGTrigger")
+	if position then
+		triggerObj:setPosition(vec3(position.x, position.y, position.z))
+	else
+		triggerObj:setPosition(vec3(0,0,0))
+	end
+	local rotationString = "0,0,0,1"
+	if rotation then
+		rotationString = "" .. rotation.x .. "," .. rotation.y .. "," .. rotation.z .. "," .. rotation.w
+	end
+	triggerObj.scale = vec3(2,2,35)
+	triggerObj:setField('rotation', 0, rotationString)
+	triggerObj:setField('luaFunction', 0, "Transporter.onCTFTrigger")
+	triggerObj:setField('triggerMode', 0, "Overlaps")
+	triggerObj:setField('triggerTestType', 0, "Bounding box")
+	triggerObj:registerObject(name .. "Trigger")
+	scenetree.MissionGroup:addObject(triggerObj)
+	table.insert(activePrefabs, name .. "Trigger")
+end
+
+-- local function spawnFlag(filepath, offset, rotationString)
+-- 	log('D', logTag, filepath)
+-- 	local offsetString = '0 0 0'
+-- 	if offset then
+-- 		offsetString = "" .. offset.x .. " " .. offset.y .. " " .. offset.z
+-- 	end
+-- 	log('D', logTag, "Offset: " .. offsetString)
+-- 	flagPrefabActive = true
+-- 	flagPrefabPath   = filepath
+-- 	flagPrefabName   = string.gsub(flagPrefabPath, "(.*/)(.*)", "%2"):sub(1, -13)
+-- 	flagPrefabObj    = spawnPrefab(flagPrefabName, flagPrefabPath, offsetString, '0 0 1', '1 1 1')
+-- 	log('D', logTag, "flagPrefabObj: " .. dump(flagPrefabObj))
+-- 	-- read local file
+-- 	local file = io.open(flagPrefabPath, "rb")
+-- 	if not file then return end
+-- 	local jsonString = file:read "*a"
+-- 	file:close()
+-- 	log('D', logTag, "prefab json: " .. dump(jsonString))
+-- 	if jsonString then 
+-- 		local line = jsonDecode(jsonString)
+-- 		if string.match(line.name, "flag(%d*)Trigger") then 
+-- 			flagLocation = vec3(line.position)
+-- 		end
+-- 	end
+-- 	if not flagLocation then
+-- 		flagLocation = vec3(0,0,0)
+-- 	end
+-- 	if offset then
+-- 		newObj:setPosition(vec3(offset.x, offset.y, offset.z))
+-- 	else
+-- 		newObj:setPosition(vec3(0,0,0))
+-- 	end
+-- 	if not rotationString then rotationString = '0 0 0 1' end
+-- 	newObj:setField('rotation', 0, rotationString)
+-- 	newObj:setField('shapeName', 0, "/art/shapes/interface/single_faded_column.dae")
+-- 	newObj.scale = vec3(10,10,6)
+-- 	newObj.useInstanceRenderData = true
+-- 	newObj:setField('instanceColor', 0, string.format("%g %g %g %g", 0,0.0227570534,1,1))
+-- 	newObj:setField('instanceColor1', 0, string.format("%g %g %g %g", 0,0.0238099098,1,1))
+-- 	newObj:setField('collisionType', 0, "Collision Mesh")
+-- 	newObj:setField('decalType', 0, "Collision Mesh")
+-- 	newObj.canSave = true
+-- 	newObj:registerObject(goalPrefabName .. "TSStatic")
+-- 	scenetree.MissionGroup:addObject(newObj)
+-- end
+
+-- local function spawnGoal(filepath, offset) 
+-- 	log('D', logTag, filepath)
+-- 	local offsetString = '0 0 0'
+-- 	if offset then
+-- 		offsetString = "" .. offset.x .. " " .. offset.y .. " " .. offset.z
+-- 	end
+-- 	if gamestate.teams then 
+-- 		scaleString = '2 2 2'
+-- 	else 
+-- 		scaleString = '1 1 1'
+-- 	end
+-- 	log('D', logTag, "Offset: " .. offsetString)
+-- 	goalPrefabActive = true
+-- 	goalPrefabPath   = filepath
+-- 	goalPrefabName   = string.gsub(goalPrefabPath, "(.*/)(.*)", "%2"):sub(1, -13)
+-- 	goalPrefabObj    = spawnPrefab(goalPrefabName, goalPrefabPath,  offsetString, '0 0 1', scaleString)
+-- 	log('D', logTag, "goalPrefabObj: " .. dump(goalPrefabObj))	
+-- 	-- read local file 
+-- 	local file = io.open(goalPrefabPath, "rb")
+-- 	if not file then return end
+-- 	local jsonString = file:read "*a"
+-- 	file:close()	
+-- 	log('D', logTag, "prefab json: " .. dump(jsonString))
+-- 	if jsonString then 
+-- 		local line = jsonDecode(jsonString)
+-- 		if string.match(line.name, "goal(%d*)Trigger") then 
+-- 			goalLocation = vec3(line.position)
+-- 		end
+-- 	end
+-- 	if not goalLocation then
+-- 		goalLocation = vec3(0,0,0)
+-- 	end
+-- end
+
+local function spawnGoal(data)
+  data = jsonDecode(data)
+	local name = ""
+	local position = {}
+	local rotation = {}
+
+	for index, data in pairs(data) do
+    if (index == 1) then
+      name = data
+    end
+    if (index == 2) then
+      position.x = data[1]
+      position.y = data[2]
+      position.z = data[3]
+    end
+    if (index == 3) then
+      rotation.x = data[1]
+      rotation.y = data[2]
+      rotation.z = data[3]
+      rotation.w = data[4]
+    end
+	end
+	print("Spawning goal " .. name)	
+	local visualObj = createObject('TSStatic')
+	if position then
+		visualObj:setPosition(vec3(position.x, position.y, position.z))
+	else
+		visualObj:setPosition(vec3(0,0,0))
+	end
+	local rotationString = "0,0,0,1"
+	if rotation then
+		rotationString = "" .. rotation.x .. "," .. rotation.y .. "," .. rotation.z .. "," .. rotation.w
+	end
+	visualObj:setField('rotation', 0, rotationString)
+	visualObj:setField('shapeName', 0, "/art/shapes/interface/single_faded_column.dae")
+	visualObj.scale = vec3(30,30,7)
+	visualObj.useInstanceRenderData = true
+	visualObj:setField('instanceColor', 0, string.format("%g %g %g %g", 0.0245484114,1,0,1))
+	visualObj:setField('instanceColor1', 0, string.format("%g %g %g %g", 0.999989986,0.999990225,1,1))
+	visualObj:setField('collisionType', 0, "None")
+	visualObj:setField('decalType', 0, "None")
+	visualObj.canSave = true
+	visualObj:registerObject(name .. "TSStatic")
+	scenetree.MissionGroup:addObject(visualObj)
+	local triggerObj = createObject("BeamNGTrigger")
+	if position then
+		triggerObj:setPosition(vec3(position.x, position.y, position.z))
+	else
+		triggerObj:setPosition(vec3(0,0,0))
+	end
+	local rotationString = "0,0,0,1"
+	if rotation then
+		rotationString = "" .. rotation.x .. "," .. rotation.y .. "," .. rotation.z .. "," .. rotation.w
+	end
+	triggerObj.scale = vec3(6,6,35)
+	triggerObj:setField('rotation', 0, rotationString)
+	triggerObj:setField('luaFunction', 0, "Transporter.onCTFTrigger")
+	triggerObj:setField('triggerMode', 0, "Overlaps")
+	triggerObj:setField('triggerTestType', 0, "Bounding box")
+	triggerObj:registerObject(name .. "Trigger")
+	scenetree.MissionGroup:addObject(triggerObj)
+	table.insert(activePrefabs, name .. "Trigger")
+end
+
+local flagCounters = {}  -- Track counters per level/area
+
+local function getNextFlagName(level, area)
+	local key = level .. "_" .. area
+	if not flagCounters[key] then
+		flagCounters[key] = {flags = 0, goals = 0, spawns = 0, obstacles = 0}
+	end
+	flagCounters[key].flags = flagCounters[key].flags + 1
+	return "CTF_flag" .. flagCounters[key].flags
 end
 
 local function onCreateFlag()
-	removePrefabs("flag") --if you want to see more than one prefab at a time also remove this line
-	local currentVehID = be:getPlayerVehicleID(0)
-	local veh = getObjectByID(currentVehID)
-	if not veh then return end   
-	--try fixing commented stuff when you want to see more than one prefab at a time:
-	
-	-- -- Load the prefab file
-    -- local file = io.open("levels/flag_.prefab.json", "r")
-    -- local content = file:read("*all")
-    -- file:close()
-
-    -- -- Replace "flag" with "flag" followed by the ID
-    -- local newContent = string.gsub(content, "flag", "flag" .. lastCreatedFlagID)
-
-    -- -- Write the modified content to the file
-    -- file = io.open("levels/flag" .. lastCreatedFlagID .. ".prefab.json", "w")
-    -- file:write(newContent)
-    -- file:close()
-
-    -- Spawn the flag
-    -- spawnFlag("levels/flag" .. lastCreatedFlagID .. ".prefab.json", veh:getPosition())
-    spawnFlag("levels/flag_.prefab.json", veh:getPosition())
-	if flagPrefabObj then
-		local succes = flagPrefabObj:save("levels/" .. currentLevel .. "/" .. flagPrefabName .. ".prefab.json", false)
-		-- log('D', logtag, "saving: levels/" .. currentLevel .. "/" .. flagPrefabName .. ".prefab.json")
-	end
-	-- Write the old content to the file
-	-- file = io.open("levels/flag" .. lastCreatedFlagID .. ".prefab.json", "w")
-	-- file:write(content)
-	-- file:close()
-
-	lastCreatedFlagID = lastCreatedFlagID + 1
-end
-
-local function onCreateGoal()
-	removePrefabs("goal") --if you want to see more than one prefab at a time also remove this line
 	local currentVehID = be:getPlayerVehicleID(0)
 	local veh = getObjectByID(currentVehID)
 	if not veh then return end
-	--try fixing commented stuff when you want to see more than one prefab at a time:
+	
+	local level = getMissionFilename()  -- e.g., "west_coast_usa"
+	local area = "city"  -- You'll need to determine this based on your game logic
+	
+	local flagName = getNextFlagName(level, area)
+	local pos = veh:getPosition()
+	local rot = veh:getRotation()  -- Gets rotation as quaternion
+	
+	local toSend = {}
+	table.insert(toSend, flagName)
+	table.insert(toSend, {pos.x, pos.y, pos.z})  -- Convert to array
+	table.insert(toSend, {rot.x, rot.y, rot.z, rot.w})  -- Convert to array
+	spawnFlag(jsonEncode(toSend))
+end
 
-	-- -- Load the prefab file
-    -- local file = io.open("levels/goal_.prefab.json", "r")
-    -- local content = file:read("*all")
-    -- file:close()
-
-    -- -- Replace "goal" with "goal" followed by the ID
-    -- local newContent = string.gsub(content, "goal", "goal" .. lastCreatedGoalID)
-
-    -- -- Write the modified content to the file
-    -- file = io.open("levels/goal" .. lastCreatedGoalID .. ".prefab.json", "w")
-    -- file:write(newContent)
-    -- file:close()
-
-    -- Spawn the goal
-    -- spawnGoal("levels/goal" .. lastCreatedGoalID .. ".prefab.json", veh:getPosition())
-    spawnGoal("levels/goal_.prefab.json", veh:getPosition())
-	if goalPrefabObj then
-		--Save it
-		local succes = goalPrefabObj:save("levels/" .. currentLevel .. "/" .. goalPrefabName .. ".prefab.json", false)
-		-- log('D', logtag, "saving: levels/" .. currentLevel .. "/" .. goalPrefabName .. ".prefab.json")
-	end
-    -- Write the old content to the file
-    -- file = io.open("levels/goal" .. lastCreatedGoalID .. ".prefab.json", "w")
-    -- file:write(content)
-    -- file:close()
-
+local function onCreateGoal()
+	local currentVehID = be:getPlayerVehicleID(0)
+	local veh = getObjectByID(currentVehID)
+	if not veh then return end
 	lastCreatedGoalID = lastCreatedGoalID + 1
+  spawnGoal("goal" .. lastCreatedGoalID, veh:getPosition())
 end
 
 local function spawnObstacles(filepath) 
-	log('D', logTag, filepath)
+	-- log('D', logTag, filepath)
+	print(filepath)
 	obstaclesPrefabActive = true
 	obstaclesPrefabPath   = filepath
 	obstaclesPrefabName   = string.gsub(obstaclesPrefabPath, "(.*/)(.*)", "%2"):sub(1, -13)
@@ -709,53 +854,53 @@ local function unfadePerson(vehID)
 	vehicle:setMeshAlpha(1,"")
 end
 
-local function requestLevelName()
-  currentLevel = core_levels.getLevelName(getMissionFilename())
-  if TriggerServerEvent then TriggerServerEvent("setLevelName", currentLevel) end
-end
-
-function setCurrentArea(area)
-	currentArea = area
-end
-
-local function requestAreaNames()
-	local levelName = core_levels.getLevelName(getMissionFilename())
-	if TriggerServerEvent and mapData[levelName] then TriggerServerEvent("setAreaNames", mapData[levelName].areas) end
-end
-
-local function requestLevels()
-	if TriggerServerEvent then TriggerServerEvent("setLevels", mapData.levels) end
-end
-
-local function requestFlagCount()
-	local levelName = core_levels.getLevelName(getMissionFilename())	
-	local flags = "1"
-	log('D', logTag, "mapData: " .. dump(mapData))
-	local levelData = {}
-	levelData = mapData[levelName]["levelData"]
-	log('D', logTag, "levelData: " .. dump(levelData))
-	local areaData = {}
-	areaData = levelData[currentArea]
-	log('D', logTag, "areaData: " .. dump(areaData))
-	flags = areaData["flagcount"]
-	log('D', logTag, "There are " .. flags .. " flags in " .. levelName .. ", " .. currentArea)
-	if TriggerServerEvent then TriggerServerEvent("setFlagCount", flags) end
-end
-
-local function requestGoalCount()
-	local levelName = core_levels.getLevelName(getMissionFilename())	
-	local goals = "1"
-	log('D', logTag, "mapData: " .. dump(mapData))	
-	local levelData = {}
-	levelData = mapData[levelName]["levelData"]
-	log('D', logTag, "levelData: " .. dump(levelData))
-	local areaData = {}
-	areaData = levelData[currentArea]
-	log('D', logTag, "areaData (" .. currentArea .. "): " .. dump(areaData))
-	goals = areaData["goalcount"]
-	log('D', logTag, "There are " .. goals .. " goals in " .. levelName .. ", " .. currentArea)
-	if TriggerServerEvent then TriggerServerEvent("setGoalCount", goals) end
-end
+-- local function requestLevelName()
+--   currentLevel = core_levels.getLevelName(getMissionFilename())
+--   if TriggerServerEvent then TriggerServerEvent("setLevelName", currentLevel) end
+-- end
+--
+-- function setCurrentArea(area)
+-- 	currentArea = area
+-- end
+--
+-- local function requestAreaNames()
+-- 	local levelName = core_levels.getLevelName(getMissionFilename())
+-- 	if TriggerServerEvent and mapData[levelName] then TriggerServerEvent("setAreaNames", mapData[levelName].areas) end
+-- end
+--
+-- local function requestLevels()
+-- 	if TriggerServerEvent then TriggerServerEvent("setLevels", mapData.levels) end
+-- end
+--
+-- local function requestFlagCount()
+-- 	local levelName = core_levels.getLevelName(getMissionFilename())	
+-- 	local flags = "1"
+-- 	log('D', logTag, "mapData: " .. dump(mapData))
+-- 	local levelData = {}
+-- 	levelData = mapData[levelName]["levelData"]
+-- 	log('D', logTag, "levelData: " .. dump(levelData))
+-- 	local areaData = {}
+-- 	areaData = levelData[currentArea]
+-- 	log('D', logTag, "areaData: " .. dump(areaData))
+-- 	flags = areaData["flagcount"]
+-- 	log('D', logTag, "There are " .. flags .. " flags in " .. levelName .. ", " .. currentArea)
+-- 	if TriggerServerEvent then TriggerServerEvent("setFlagCount", flags) end
+-- end
+--
+-- local function requestGoalCount()
+-- 	local levelName = core_levels.getLevelName(getMissionFilename())	
+-- 	local goals = "1"
+-- 	log('D', logTag, "mapData: " .. dump(mapData))	
+-- 	local levelData = {}
+-- 	levelData = mapData[levelName]["levelData"]
+-- 	log('D', logTag, "levelData: " .. dump(levelData))
+-- 	local areaData = {}
+-- 	areaData = levelData[currentArea]
+-- 	log('D', logTag, "areaData (" .. currentArea .. "): " .. dump(areaData))
+-- 	goals = areaData["goalcount"]
+-- 	log('D', logTag, "There are " .. goals .. " goals in " .. levelName .. ", " .. currentArea)
+-- 	if TriggerServerEvent then TriggerServerEvent("setGoalCount", goals) end
+-- end
 
 function updateTransporterGameState(data)
 	mergeTransporterTable(jsonDecode(data),gamestate)
@@ -838,12 +983,15 @@ local function requestTransporterGameState()
 end
 
 local function sendTransporterContact(vehID,localVehID)
-	log('D', logTag, "sendTransporterContact called")
+	-- log('D', logTag, "sendTransporterContact called")
+	print("sendTransporterContact called")
 	if not MPVehicleGE or MPCoreNetwork and not MPCoreNetwork.isMPSession() then return end
 	local LocalvehPlayerName = MPVehicleGE.getNicknameMap()[localVehID]
 	local vehPlayerName = MPVehicleGE.getNicknameMap()[vehID]
-	log('D', logTag, "not MPVehicleGE or MPCoreNetwork and not MPCoreNetwork.isMPSession() ")
-	log('D', logTag, "LocalvehPlayerName " .. LocalvehPlayerName .. " vehPlayerName " .. vehPlayerName .. " vehID " .. vehID ..  " localVehID " ..localVehID)
+	-- log('D', logTag, "not MPVehicleGE or MPCoreNetwork and not MPCoreNetwork.isMPSession() ")
+	-- log('D', logTag, "LocalvehPlayerName " .. LocalvehPlayerName .. " vehPlayerName " .. vehPlayerName .. " vehID " .. vehID ..  " localVehID " ..localVehID)
+	print("not MPVehicleGE or MPCoreNetwork and not MPCoreNetwork.isMPSession() ")
+	print("LocalvehPlayerName " .. LocalvehPlayerName .. " vehPlayerName " .. vehPlayerName .. " vehID " .. vehID ..  " localVehID " ..localVehID)
 	local serverVehID = MPVehicleGE.getServerVehicleID(vehID)
 	local remotePlayerID, vehicleID = string.match(serverVehID, "(%d+)-(%d+)")
 	if TriggerServerEvent then TriggerServerEvent("onTransporterContact", remotePlayerID) end
@@ -1228,12 +1376,12 @@ if AddEventHandler then
 	AddEventHandler("onCreateGoal", onCreateGoal)
 	AddEventHandler("spawnObstacles", spawnObstacles)
 	AddEventHandler("removePrefabs", removePrefabs)
-	AddEventHandler("setCurrentArea", setCurrentArea)
-	AddEventHandler("requestLevelName", requestLevelName)
-	AddEventHandler("requestAreaNames", requestAreaNames)
-	AddEventHandler("requestLevels", requestLevels)
-	AddEventHandler("requestFlagCount", requestFlagCount)
-	AddEventHandler("requestGoalCount", requestGoalCount)
+	-- AddEventHandler("setCurrentArea", setCurrentArea)
+	-- AddEventHandler("requestLevelName", requestLevelName)
+	-- AddEventHandler("requestAreaNames", requestAreaNames)
+	-- AddEventHandler("requestLevels", requestLevels)
+	-- AddEventHandler("requestFlagCount", requestFlagCount)
+	-- AddEventHandler("requestGoalCount", requestGoalCount)
 	AddEventHandler("receiveTransporterGameState", receiveTransporterGameState)
 	AddEventHandler("requestTransporterGameState", requestTransporterGameState)
 	AddEventHandler("updateTransporterGameState", updateTransporterGameState)
@@ -1260,11 +1408,11 @@ end
 M.requestTransporterGameState = requestTransporterGameState
 M.receiveTransporterGameState = receiveTransporterGameState
 M.updateTransporterGameState = updateTransporterGameState
-M.requestLevelName = requestLevelName
-M.requestAreaNames = requestAreaNames
-M.requestLevels = requestLevels
-M.requestFlagCount = requestFlagCount
-M.requestGoalCount = requestGoalCount
+-- M.requestLevelName = requestLevelName
+-- M.requestAreaNames = requestAreaNames
+-- M.requestLevels = requestLevels
+-- M.requestFlagCount = requestFlagCount
+-- M.requestGoalCount = requestGoalCount
 M.sendTransporterContact = sendTransporterContact
 M.onPreRender = onPreRender
 M.onVehicleSwitched = onVehicleSwitched
@@ -1275,7 +1423,7 @@ M.onCreateFlag = onCreateFlag
 M.onCreateGoal = onCreateGoal
 M.spawnObstacles = spawnObstacles
 M.removePrefabs = removePrefabs
-M.setCurrentArea = setCurrentArea
+-- M.setCurrentArea = setCurrentArea
 M.onExtensionUnloaded = onExtensionUnloaded
 M.onResetGameplay = onResetGameplay
 M.onGameEnd = onGameEnd

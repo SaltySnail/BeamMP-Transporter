@@ -21,7 +21,7 @@
             "command": "cp 'Transporter.lua' 'C:/Users/Julian/Desktop/beammp_Server/windows/Resources/Server/Transporter/Transporter.lua'",
             "windows": {
                 // "command": "Copy-Item 'Transporter.lua' 'C:/Users/Julian/Desktop/beammp_Server/windows/Resources/Server/CobaltEssentials/extensions/Transporter.lua'"
-                "command": "Copy-Item 'Transporter.lua' 'C:/Users/Julian/Desktop/beammp_Server/windows/Resources/Server/Transporter/Transporter.lua'"
+                "command": "mkdir 'C:/Users/Julian/Desktop/beammp_Server/windows/Resources/Server/Transporter' -Force; Copy-Item 'Transporter.lua' 'C:/Users/Julian/Desktop/beammp_Server/windows/Resources/Server/Transporter/Transporter.lua'"
             },
             "options": {
                 // "cwd": "Server/CobaltEssentials/extensions"

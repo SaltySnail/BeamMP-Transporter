@@ -29,6 +29,10 @@ local lastCollision = {"", ""}
 local autoStartTimer = 0
 local autoStart = false
 local ghosts = true
+local areas = {}
+local TRANSPORTER_DATA_PATH = "Resources/Server/Transporter/Data/"
+
+local areaCreation = {}
 
 gameState.flagExists = false
 gameState.gameRunning = false
@@ -205,29 +209,78 @@ function updateClients()
 	end
 end
 
-function spawnFlag()
-	local flagID = 0
-	if flagPrefabCount > 0 then
-		rand() --Some implementation need this before the numbers become random
-		rand()
-		rand()
-		flagID = rand(1,flagPrefabCount)
+local function loadAreas()
+	levelName = MP.Get(MP.Settings.Map):match("/levels/(.+)/info.json") -- gets levelname out of /levels/levelname/info.json
+	local file = io.open(TRANSPORTER_DATA_PATH .. "areas.json", "r") 
+  if file then
+    local content = file:read("*all")
+    file:close()
+	  areas = Util.JsonDecode(content)[levelName]
+	  areaNames = {}
+	  if not areas then
+			print("Level doesn't have areas: " .. levelName)
+			return
+	  end
+	  for name,_ in pairs(areas) do
+			table.insert(areaNames, name)
+	  end
+	else
+		print("Couldn't open Transporter/Data/areas.json")
 	end
-	print("Chosen flag: levels/" .. levelName .. "/multiplayer/" .. area .. "/flag" .. flagID .. ".prefab.json")
-	MP.TriggerClientEvent(-1, "spawnFlag", "levels/" .. levelName .. "/multiplayer/" .. area .. "/flag" .. flagID .. ".prefab.json") --flagPrefabTable[rand(1, flagPrefabTable.size())]
+end
+
+function spawnFlag()
+	local flagName = ""
+	local flagNames = {}
+	print(dump(areas))
+	for name,_ in pairs(areas[area]["flags"]) do
+    	table.insert(flagNames, name)
+	end
+	if #flagNames > 0 then
+    	rand() --Some implementation need this before the numbers become random
+    	rand()
+    	rand()
+    	flagName = flagNames[rand(1,#flagNames)]
+	end
+	print("Chosen flag: " .. dump(flagName))
+	local toSend = {}
+	table.insert(toSend, flagName)
+	table.insert(toSend, areas[area]["flags"][flagName]["position"])
+	table.insert(toSend, areas[area]["flags"][flagName]["rotation"])
+	MP.TriggerClientEvent(-1, "spawnFlag", Util.JsonEncode(toSend)) --flagPrefabTable[rand(1, flagPrefabTable.size())]
 end
 
 function spawnGoal()
-	local goalID = 0
-	if goalPrefabCount > 0 then
+	local goalName = ""
+	local goalNames = {}
+	for name,_ in pairs(areas[area]["goals"]) do
+		table.insert(goalNames, name)
+	end
+	if #goalNames > 0 then
 		rand() --Some implementation need this before the numbers become random
 		rand()
 		rand()
-		goalID = rand(1,goalPrefabCount)
+		goalName = goalNames[rand(1,#goalNames)]
 	end
-	print("Chosen goal: levels/" .. levelName .. "/multiplayer/" .. area .. "/goal" .. goalID .. ".prefab.json")
-	MP.TriggerClientEvent(-1, "spawnGoal", "levels/" .. levelName .. "/multiplayer/" .. area .. "/goal" .. goalID .. ".prefab.json") --flagPrefabTable[rand(1, flagPrefabTable.size())]
+	print("Chosen goal: " .. goalName)
+	local toSend = {}
+	table.insert(toSend, goalName)
+	table.insert(toSend, areas[area]["goals"][goalName]["position"])
+	table.insert(toSend, areas[area]["goals"][goalName]["rotation"])
+	MP.TriggerClientEvent(-1, "spawnGoal", Util.JsonEncode(toSend)) --flagPrefabTable[rand(1, flagPrefabTable.size())]
 end
+
+-- function spawnGoal()
+-- 	local goalID = 0
+-- 	if goalPrefabCount > 0 then
+-- 		rand() --Some implementation need this before the numbers become random
+-- 		rand()
+-- 		rand()
+-- 		goalID = rand(1,goalPrefabCount)
+-- 	end
+-- 	print("Chosen goal: levels/" .. levelName .. "/multiplayer/" .. area .. "/goal" .. goalID .. ".prefab.json")
+-- 	MP.TriggerClientEvent(-1, "spawnGoal", "levels/" .. levelName .. "/multiplayer/" .. area .. "/goal" .. goalID .. ".prefab.json") --flagPrefabTable[rand(1, flagPrefabTable.size())]
+-- end
 
 function spawnFlagAndGoal()
 	spawnFlag()
@@ -247,26 +300,26 @@ function applyStuff(targetDatabase, tables)
 	return appliedTables
 end
 
-function setLevelName(playerID, name)
-	levelName = name
-	print("level name: " .. levelName)
-end
+-- function setLevelName(playerID, name)
+-- 	levelName = name
+-- 	print("level name: " .. levelName)
+-- end
 
 function onAreaChange()	
+	loadAreas() --Just to be sure
 	local foundArea = false
-	for key,areaName in pairs(areaNames) do
+	for areaName,_ in pairs(areas) do
 		if areaName == requestedArea then
 			area = areaName
 			foundArea = true
 		end
 	end
 	if area == "" or not foundArea then
-		if areaNames[1] then
-			area = areaNames[1]
+		for areaName,_ in pairs(areas) do
+			area = areaName
 			-- MP.SendChatMessage(-1, "The requested area for the transporter gamemode was not on this map, so it will default to the area " .. area)
 			print("The requested area for the transporter gamemode was not on this map, so it will default to the area " .. area)
-		else
-			MP.SendChatMessage(-1, "Could not find an area to play on, on the map " .. levelName)
+			break
 		end
 	end
 	MP.TriggerClientEvent(-1, "setCurrentArea", area)
@@ -280,14 +333,10 @@ end
 
 function gameSetup()
 	MP.TriggerClientEvent(-1, "requestVehicleID", "nil")
-	local levelAvailable = false
-	for i, level in pairs(levels) do
-		if level == levelName then levelAvailable = true end
-	end
-	if not levelAvailable then 
-		MP.SendChatMessage(-1, "Transporter is not available on this map.")
-		return 
-	end
+	-- if #areas == 0 then 
+	-- 	MP.SendChatMessage(-1, "Transporter is not available on this map.")
+	-- 	return 
+	-- end
 	math.randomseed(os.time())
 	onAreaChange()
 	for k,v in pairs(possibleTeams) do
@@ -451,12 +500,21 @@ end
 
 function showPrefabs(player) --shows the prefabs belonging to this map and this area
 	MP.TriggerClientEvent(player.playerID, "spawnObstacles", "levels/" .. levelName .. "/multiplayer/" .. area .. "/obstacles.prefab.json") 
-	for flagID=1,flagPrefabCount do
-		MP.TriggerClientEvent(player.playerID, "spawnFlag", "levels/" .. levelName .. "/multiplayer/" .. area .. "/flag" .. flagID .. ".prefab.json") 
+	for name,data in pairs(areas[area]["flags"]) do
+		local toSend = {}
+		table.insert(toSend, name)
+		table.insert(toSend, data["position"])
+		table.insert(toSend, data["rotation"])
+		MP.TriggerClientEvent(player.playerID, "spawnFlag", Util.JsonEncode(toSend)) 
 	end
-	for goalID=1,goalPrefabCount do
-		MP.TriggerClientEvent(player.playerID, "spawnGoal", "levels/" .. levelName .. "/multiplayer/" .. area .. "/goal" .. goalID .. ".prefab.json")
+	for name,data in pairs(areas[area]["goals"]) do
+		local toSend = {}
+		table.insert(toSend, name)
+		table.insert(toSend, data["position"])
+		table.insert(toSend, data["rotation"])
+		MP.TriggerClientEvent(player.playerID, "spawnGoal", Util.JsonEncode(toSend)) 
 	end
+	MP.TriggerClientEvent(player.playerID, "spawnObstacles", Util.JsonEncode(areas[area]["obstacles"]))
 end
 
 function createFlag(player)
@@ -736,6 +794,7 @@ function onInit()
 	MP.RegisterEvent("onVehicleReset","onVehicleReset")
 	MP.RegisterEvent("onVehicleDeleted","onVehicleDeleted")
 
+	loadAreas() --this uses the Map in ServerConfig.toml to parse only areas on this level
 	-- applyStuff(commands, TransporterCommands)
 	print("--------------------Transporter loaded----------------")
 end
@@ -769,9 +828,9 @@ end
 function onPlayerJoin(playerID)
 	playersOutsideOfRound[MP.GetPlayerName(playerID)] = {}
 	playersOutsideOfRound[MP.GetPlayerName(playerID)].totalScore = 0
-	MP.TriggerClientEvent(-1, "requestLevelName", "nil") --TODO: fix this when changing levels somehow
-	MP.TriggerClientEvent(-1, "requestAreaNames", "nil")
-	MP.TriggerClientEvent(-1, "requestLevels", "nil")
+	-- MP.TriggerClientEvent(-1, "requestLevelName", "nil") --TODO: fix this when changing levels somehow
+	-- MP.TriggerClientEvent(-1, "requestAreaNames", "nil")
+	-- MP.TriggerClientEvent(-1, "requestLevels", "nil")
 end
 
 --called whenever a player disconnects from the server
@@ -843,10 +902,10 @@ function onStopServer()
 end
 
 function requestTransporterGameState(localPlayerID)
-	if levelName == "" then MP.TriggerClientEvent(localPlayerID, "requestLevelName", "nil") end
-	if areaNames == {} then MP.TriggerClientEvent(localPlayerID, "requestAreaNames", "nil") end
-	if levels == {} then MP.TriggerClientEvent(localPlayerID, "requestLevels", "nil") end
-	if area == "" then onAreaChange() end
+	--if levelName == "" then MP.TriggerClientEvent(localPlayerID, "requestLevelName", "nil") end
+	-- if areaNames == {} then MP.TriggerClientEvent(localPlayerID, "requestAreaNames", "nil") end
+	-- if levels == {} then MP.TriggerClientEvent(localPlayerID, "requestLevels", "nil") end
+	-- if area == "" then onAreaChange() end
 	MP.TriggerClientEventJson(localPlayerID, "receiveTransporterGameState", gameState)
 end
 
@@ -1007,5 +1066,7 @@ M.setVehVel = setVehVel
 M.transporter = transporter
 M.ctf = ctf
 M.CTF = CTF
+
+M.loadAreas = loadAreas
 
 return M
