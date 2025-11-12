@@ -860,10 +860,12 @@ local function saveArea(areaName)
 				if string.find(objName, "CTF_obstacle") then
 					local pos = obj:getPosition()
 					local rot = obj:getRotation()
+					local scale = obj:getScale()
 					local shapeName = obj:getField('shapeName', '')
 					areaData[areaName].obstacles[objName] = {
 						position = {pos.x, pos.y, pos.z},
 						rotation = {rot.x, rot.y, rot.z, rot.w},
+						scale = {scale.x, scale.y, scale.z},
 						shapeName = shapeName
 					}
 				end
@@ -878,15 +880,92 @@ local function saveArea(areaName)
 	TriggerServerEvent("onSaveArea", jsonEncode(areaData))
 end
 
-local function spawnObstacles(filepath) 
-	-- log('D', logTag, filepath)
-	print(filepath)
-	obstaclesPrefabActive = true
-	obstaclesPrefabPath   = filepath
-	obstaclesPrefabName   = string.gsub(obstaclesPrefabPath, "(.*/)(.*)", "%2"):sub(1, -13)
-	obstaclesPrefabObj    = spawnPrefab(obstaclesPrefabName, obstaclesPrefabPath, '0 0 0', '0 0 1', '1 1 1')
-	be:reloadStaticCollision(true)
+local function quatToAxisAngle(q)
+	-- Normalize the quaternion first
+	local len = math.sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w)
+	local qx, qy, qz, qw = q.x / len, q.y / len, q.z / len, q.w / len
+	
+	-- Calculate angle in DEGREES
+	local angle = math.deg(2 * math.acos(math.min(1, math.max(-1, qw))))
+	
+	-- Calculate axis
+	local s = math.sqrt(1 - qw * qw)
+	
+	local ax, ay, az
+	if s < 0.001 then
+		-- If s is close to zero, we have a very small rotation
+		ax, ay, az = 1, 0, 0
+		angle = 0
+	else
+		ax = qx / s
+		ay = qy / s
+		az = qz / s
+	end
+	
+	return {x = ax, y = ay, z = az, w = angle}
 end
+
+local function spawnObstacles(obstaclesJson)
+	print("Spawning obstacles from JSON data")
+	
+	-- Decode the JSON string
+	local success, obstaclesData = pcall(function()
+		return jsonDecode(obstaclesJson)
+	end)
+	
+	if not success or not obstaclesData then
+		print("Failed to decode obstacles JSON")
+		return
+	end
+	
+	if next(obstaclesData) == nil then
+		print("No obstacles found in JSON data")
+		return
+	end
+	
+	-- Remove any existing obstacles first
+	removePrefabs("obstacle")
+	
+	-- Spawn each obstacle
+	for obstacleName, obstacleData in pairs(obstaclesData) do
+		local pos = obstacleData.position
+		local rot = obstacleData.rotation
+		rot = quat(rot[1], rot[2], rot[3], rot[4])
+		rot = quatToAxisAngle(rot)
+		local scale = obstacleData.scale or {1,1,1}
+		local shapeName = obstacleData.shapeName
+		
+		if pos and rot and shapeName then
+			-- Create TSStatic object
+			local obstacle = createObject('TSStatic')
+			obstacle:setField('shapeName', 0, shapeName)
+			obstacle:setPosition(vec3(pos[1], pos[2], pos[3]))
+			-- obstacle:setField('rotationEuler', 0, rot.x .. ' ' .. rot.y .. ' ' .. rot.z)
+			obstacle:setField('rotation', 0, rot.x .. ' ' .. rot.y .. ' ' .. rot.z .. ' ' .. rot.w)
+			obstacle:setField('scale', 0, scale[1] .. ' ' .. scale[2] .. ' ' .. scale[3])
+			obstacle:registerObject(obstacleName)
+			
+			print("Spawned obstacle: " .. obstacleName .. " at position: " .. tostring(pos[1]) .. ", " .. tostring(pos[2]) .. ", " .. tostring(pos[3]))
+		else
+			print("Invalid obstacle data for: " .. obstacleName)
+		end
+	end
+	
+	-- Reload collision after spawning all obstacles
+	be:reloadStaticCollision(true)
+	
+	print("Finished spawning obstacles")
+end
+
+-- local function spawnObstacles(filepath) 
+-- 	-- log('D', logTag, filepath)
+-- 	print(filepath)
+-- 	obstaclesPrefabActive = true
+-- 	obstaclesPrefabPath   = filepath
+-- 	obstaclesPrefabName   = string.gsub(obstaclesPrefabPath, "(.*/)(.*)", "%2"):sub(1, -13)
+-- 	obstaclesPrefabObj    = spawnPrefab(obstaclesPrefabName, obstaclesPrefabPath, '0 0 0', '0 0 1', '1 1 1')
+-- 	be:reloadStaticCollision(true)
+-- end
 
 function onGameEnd()
 	core_gamestate.setGameState('multiplayer', 'multiplayer', 'multiplayer') --reset the app layout

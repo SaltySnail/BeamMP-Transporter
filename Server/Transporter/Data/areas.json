@@ -1,39 +1,2236 @@
 {
-  "west_coast_usa":
-  {
-    "city":
-    {
-      "flags":
-      {
-        "CTF_flag1":
-        {
-          "position":[0,0,200],
-          "rotation":[0,0,0,1]
+  "west_coast_usa": {
+    "city": {
+      "flags": {
+        "CTF_flag1": {
+          "position": [
+            -520.30383300781,
+            54.432384490967,
+            99.667953491211
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag10": {
+          "position": [
+            -703.38671875,
+            738.49011230469,
+            91.475700378418
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag11": {
+          "position": [
+            -546.83660888672,
+            666.67883300781,
+            88.034698486328
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag12": {
+          "position": [
+            -723.40948486328,
+            621.19683837891,
+            115.00067138672
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag13": {
+          "position": [
+            -834.16705322266,
+            626.05084228516,
+            117.14414978027
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag14": {
+          "position": [
+            -835.37799072266,
+            139.73226928711,
+            140.44358825684
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag15": {
+          "position": [
+            -672.39581298828,
+            100.85084533691,
+            116.93047332764
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag16": {
+          "position": [
+            -587.57794189453,
+            327.3942565918,
+            108.24244689941
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag17": {
+          "position": [
+            -722.84045410156,
+            814.90130615234,
+            81.414924621582
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag18": {
+          "position": [
+            -325.71014404297,
+            327.72650146484,
+            102.03316497803
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag19": {
+          "position": [
+            -236.08836364746,
+            367.0754699707,
+            102.33104705811
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag2": {
+          "position": [
+            -407.27487182617,
+            282.55062866211,
+            102.19776153564
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag20": {
+          "position": [
+            -320.07525634766,
+            411.94613647461,
+            98.371063232422
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag21": {
+          "position": [
+            -196.6782989502,
+            525.65026855469,
+            75.030242919922
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag22": {
+          "position": [
+            -110.59201812744,
+            345.16223144531,
+            105.10192108154
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag3": {
+          "position": [
+            -638.93316650391,
+            552.36120605469,
+            107.04043579102
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag4": {
+          "position": [
+            -423.19342041016,
+            528.98413085938,
+            87.160125732422
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag5": {
+          "position": [
+            -227.87884521484,
+            440.79055786133,
+            79.70777130127
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag6": {
+          "position": [
+            62.966293334961,
+            649.29150390625,
+            74.900238037109
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag7": {
+          "position": [
+            -13.37283706665,
+            824.09356689453,
+            74.908592224121
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag8": {
+          "position": [
+            -352.9326171875,
+            654.88946533203,
+            75.060173034668
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_flag9": {
+          "position": [
+            -807.30395507813,
+            856.25671386719,
+            75.0615234375
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
         }
       },
-      "goals":
-      {
-        "CTF_goal1":
-        {
-          "position":[0,0,500],
-          "rotation":[0,0,0,1]
+      "goals": {
+        "CTF_goal1": {
+          "position": [
+            -768.58843994141,
+            555.01708984375,
+            123.8346786499
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_goal10": {
+          "position": [
+            -466.94244384766,
+            509.66360473633,
+            96.615905761719
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_goal11": {
+          "position": [
+            -649.95385742188,
+            482.38296508789,
+            117.07166290283
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_goal12": {
+          "position": [
+            -920.89721679688,
+            440.47247314453,
+            153.40698242188
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_goal13": {
+          "position": [
+            -450.6911315918,
+            149.73056030273,
+            100.27953338623
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_goal14": {
+          "position": [
+            -746.78631591797,
+            -48.00883102417,
+            102.19053649902
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_goal15": {
+          "position": [
+            -213.39901733398,
+            273.0891418457,
+            89.994239807129
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_goal2": {
+          "position": [
+            -920.25054931641,
+            662.93420410156,
+            112.22853088379
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_goal3": {
+          "position": [
+            -771.96881103516,
+            769.61474609375,
+            87.850074768066
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_goal4": {
+          "position": [
+            -437.287109375,
+            696.85125732422,
+            75.07234954834
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_goal5": {
+          "position": [
+            -283.89819335938,
+            541.67565917969,
+            75.043769836426
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_goal6": {
+          "position": [
+            -493.49444580078,
+            327.85916137695,
+            97.09725189209
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_goal7": {
+          "position": [
+            -704.59368896484,
+            117.28541564941,
+            118.53966522217
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_goal8": {
+          "position": [
+            -860.42962646484,
+            270.87518310547,
+            159.62097167969
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_goal9": {
+          "position": [
+            -679.48016357422,
+            297.82086181641,
+            129.42517089844
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
         }
       },
-      "spawns":
-      {
-        "CTF_spawn1":
-        {
-          "position":[0,0,500],
-          "rotation":[0,0,0,1]
+      "obstacles": {
+        "CTF_obstacleGreenScreenTSStatic": {
+          "position": [
+            -883.80438232422,
+            72.971534729004,
+            134.35470581055
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1": {
+          "position": [
+            -889.32647705078,
+            78.516395568848,
+            136.04818725586
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic11": {
+          "position": [
+            -894.79364013672,
+            84.006225585938,
+            137.72489929199
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic111": {
+          "position": [
+            -900.25592041016,
+            89.490997314453,
+            139.40007019043
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1111": {
+          "position": [
+            -905.74560546875,
+            95.003349304199,
+            141.08364868164
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic11111": {
+          "position": [
+            -911.16784667969,
+            100.4478225708,
+            142.74652099609
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic111111": {
+          "position": [
+            -916.62164306641,
+            105.9241104126,
+            144.41909790039
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1111111": {
+          "position": [
+            -922.09625244141,
+            111.4213104248,
+            146.0980682373
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic11111111": {
+          "position": [
+            -927.56958007813,
+            116.91708374023,
+            147.77656555176
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic111111111": {
+          "position": [
+            -878.37078857422,
+            67.515586853027,
+            132.68835449219
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic11111112": {
+          "position": [
+            -872.8974609375,
+            62.019824981689,
+            131.00985717773
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1111112": {
+          "position": [
+            -867.4228515625,
+            56.522632598877,
+            129.33090209961
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic11111121": {
+          "position": [
+            -967.58422851563,
+            152.00288391113,
+            157.61761474609
+          ],
+          "rotation": [
+            0.0059931324794888,
+            -0.0070254635065794,
+            0.90494590997696,
+            0.42542624473572
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic111111211": {
+          "position": [
+            -973.43621826172,
+            156.85180664063,
+            157.75302124023
+          ],
+          "rotation": [
+            0.0059931324794888,
+            -0.0070254635065794,
+            0.90494590997696,
+            0.42542624473572
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic111112": {
+          "position": [
+            -861.96905517578,
+            51.046340942383,
+            127.65827941895
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1111121": {
+          "position": [
+            -961.04235839844,
+            147.93890380859,
+            157.1830291748
+          ],
+          "rotation": [
+            0.0021363985724747,
+            -0.062656857073307,
+            0.84800088405609,
+            0.52627366781235
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic11112": {
+          "position": [
+            -856.54681396484,
+            45.601852416992,
+            125.99540710449
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic111121": {
+          "position": [
+            -955.02264404297,
+            144.01499938965,
+            156.10299682617
+          ],
+          "rotation": [
+            0.039674676954746,
+            -0.098737858235836,
+            0.90263426303864,
+            0.41704708337784
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1112": {
+          "position": [
+            -851.05712890625,
+            40.089496612549,
+            124.31182861328
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic11121": {
+          "position": [
+            -949.37634277344,
+            138.81393432617,
+            154.46432495117
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic112": {
+          "position": [
+            -845.59484863281,
+            34.604724884033,
+            122.63665771484
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1121": {
+          "position": [
+            -943.9140625,
+            133.32916259766,
+            152.78915405273
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic12": {
+          "position": [
+            -840.12768554688,
+            29.114894866943,
+            120.95994567871
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic121": {
+          "position": [
+            -938.44689941406,
+            127.83934020996,
+            151.1124420166
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122": {
+          "position": [
+            -829.05609130859,
+            17.999614715576,
+            117.77899932861
+          ],
+          "rotation": [
+            0.034570101648569,
+            -0.075034774839878,
+            0.92094695568085,
+            0.38082978129387
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1221": {
+          "position": [
+            -823.48352050781,
+            12.417814254761,
+            117.55951690674
+          ],
+          "rotation": [
+            0.0056087602861226,
+            -0.0050232433713973,
+            0.92398500442505,
+            0.38235449790955
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic12211": {
+          "position": [
+            -817.92504882813,
+            6.8511967658997,
+            117.45273590088
+          ],
+          "rotation": [
+            0.0056087602861226,
+            -0.0050232433713973,
+            0.92398500442505,
+            0.38235449790955
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122111": {
+          "position": [
+            -807.08721923828,
+            -4.0061016082764,
+            116.8578414917
+          ],
+          "rotation": [
+            0.026509067043662,
+            -0.055542979389429,
+            0.92232775688171,
+            0.38147565722466
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1221111": {
+          "position": [
+            -801.84222412109,
+            -9.2677879333496,
+            115.78649902344
+          ],
+          "rotation": [
+            0.049704145640135,
+            -0.11163968592882,
+            0.9172295331955,
+            0.37915164232254
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic12211111": {
+          "position": [
+            -796.40185546875,
+            -14.733037948608,
+            113.85901641846
+          ],
+          "rotation": [
+            0.049704145640135,
+            -0.11163968592882,
+            0.9172295331955,
+            0.37915164232254
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122111111": {
+          "position": [
+            -785.55450439453,
+            -25.629821777344,
+            110.01593780518
+          ],
+          "rotation": [
+            0.049704145640135,
+            -0.11163968592882,
+            0.9172295331955,
+            0.37915164232254
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1221111111": {
+          "position": [
+            -763.83404541016,
+            -47.446193695068,
+            102.64630126953
+          ],
+          "rotation": [
+            0.037547904998064,
+            -0.082236170768738,
+            0.92033183574677,
+            0.38054779171944
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic12211111111": {
+          "position": [
+            -758.38830566406,
+            -52.904159545898,
+            102.07964324951
+          ],
+          "rotation": [
+            0.0064620785415173,
+            -0.0070854066871107,
+            0.92397153377533,
+            0.38234114646912
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122111111111": {
+          "position": [
+            -751.88623046875,
+            -57.848358154297,
+            101.92644500732
+          ],
+          "rotation": [
+            0.0054125166498125,
+            -0.0079161878675222,
+            0.8617308139801,
+            0.50727510452271
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1221111111111": {
+          "position": [
+            -743.82537841797,
+            -58.723087310791,
+            101.77934265137
+          ],
+          "rotation": [
+            0.0018217320321128,
+            -0.0094150239601731,
+            0.58924555778503,
+            0.80789703130722
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic12211111111111": {
+          "position": [
+            -736.73480224609,
+            -55.267520904541,
+            101.68440246582
+          ],
+          "rotation": [
+            0.00046721351100132,
+            -0.0095782577991486,
+            0.46863383054733,
+            0.88334041833878
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122111112": {
+          "position": [
+            -774.72302246094,
+            -36.510612487793,
+            106.17850494385
+          ],
+          "rotation": [
+            0.049704145640135,
+            -0.11163968592882,
+            0.9172295331955,
+            0.37915164232254
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic12211112": {
+          "position": [
+            -790.99487304688,
+            -20.164573669434,
+            111.94341278076
+          ],
+          "rotation": [
+            0.049704145640135,
+            -0.11163968592882,
+            0.9172295331955,
+            0.37915164232254
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122111121": {
+          "position": [
+            -769.31616210938,
+            -41.942138671875,
+            104.26290130615
+          ],
+          "rotation": [
+            0.049704145640135,
+            -0.11163968592882,
+            0.9172295331955,
+            0.37915164232254
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic12211113": {
+          "position": [
+            -780.16345214844,
+            -31.045351028442,
+            108.10597991943
+          ],
+          "rotation": [
+            0.049704145640135,
+            -0.11163968592882,
+            0.9172295331955,
+            0.37915164232254
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122112": {
+          "position": [
+            -407.58316040039,
+            569.09375,
+            75.085975646973
+          ],
+          "rotation": [
+            0.0056087602861226,
+            -0.0050232433713973,
+            0.92398500442505,
+            0.38235449790955
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1221121": {
+          "position": [
+            -23.872060775757,
+            397.81042480469,
+            101.04145050049
+          ],
+          "rotation": [
+            0.0033138713333756,
+            -0.0064386962912977,
+            0.1240890994668,
+            0.99224460124969
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic12211211": {
+          "position": [
+            -26.701879501343,
+            420.48077392578,
+            100.96704864502
+          ],
+          "rotation": [
+            -5.8344157878309e-06,
+            -0.0072414432652295,
+            -0.34449967741966,
+            0.93875843286514
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122112111": {
+          "position": [
+            -37.785469055176,
+            431.93759155273,
+            101.06076049805
+          ],
+          "rotation": [
+            -0.00091903039719909,
+            -0.0071828900836408,
+            -0.46013909578323,
+            0.88781720399857
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic12211212": {
+          "position": [
+            -10.33078956604,
+            483.96112060547,
+            74.384162902832
+          ],
+          "rotation": [
+            0.0049578845500946,
+            -0.0052780597470701,
+            0.39237084984779,
+            0.91977858543396
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122112121": {
+          "position": [
+            31.405071258545,
+            543.32861328125,
+            73.52091217041
+          ],
+          "rotation": [
+            0.001294327666983,
+            -0.0071248328313231,
+            -0.17036573588848,
+            0.98535424470901
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122112122": {
+          "position": [
+            -286.02069091797,
+            206.93978881836,
+            90.301208496094
+          ],
+          "rotation": [
+            0.0070082456804812,
+            -0.0018229287816212,
+            0.8222628235817,
+            0.56906175613403
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1221121221": {
+          "position": [
+            -265.66323852539,
+            199.2914276123,
+            91.665626525879
+          ],
+          "rotation": [
+            -0.11197571456432,
+            0.16991925239563,
+            0.80451649427414,
+            0.55798053741455
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1221121222": {
+          "position": [
+            -347.29257202148,
+            213.37149047852,
+            105.44336700439
+          ],
+          "rotation": [
+            -0.03180905804038,
+            0.04689147695899,
+            -0.49211359024048,
+            0.86868494749069
+          ],
+          "scale": [
+            1,
+            1.390920996666,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1221121223": {
+          "position": [
+            -475.00634765625,
+            69.566825866699,
+            99.21614074707
+          ],
+          "rotation": [
+            0.0070082456804812,
+            -0.0018229287816212,
+            0.8222628235817,
+            0.56906175613403
+          ],
+          "scale": [
+            1,
+            1.3132183551788,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic12211212231": {
+          "position": [
+            -611.38494873047,
+            269.57110595703,
+            112.42043304443
+          ],
+          "rotation": [
+            0.0069465539418161,
+            -0.0020454784389585,
+            0.83999085426331,
+            0.54255211353302
+          ],
+          "scale": [
+            1,
+            1.3132183551788,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic12212": {
+          "position": [
+            -812.37738037109,
+            1.2954058647156,
+            117.34617614746
+          ],
+          "rotation": [
+            0.0056087602861226,
+            -0.0050232433713973,
+            0.92398500442505,
+            0.38235449790955
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122121": {
+          "position": [
+            -402.03549194336,
+            563.53802490234,
+            74.979415893555
+          ],
+          "rotation": [
+            0.0056087602861226,
+            -0.0050232433713973,
+            0.92398500442505,
+            0.38235449790955
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1221211": {
+          "position": [
+            -21.938858032227,
+            405.42050170898,
+            100.97727203369
+          ],
+          "rotation": [
+            0.0033138713333756,
+            -0.0064386962912977,
+            0.1240890994668,
+            0.99224460124969
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic12212111": {
+          "position": [
+            -31.780660629272,
+            426.4690246582,
+            101.00631713867
+          ],
+          "rotation": [
+            -5.8344157878309e-06,
+            -0.0072414432652295,
+            -0.34449967741966,
+            0.93875843286514
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122121111": {
+          "position": [
+            -44.200828552246,
+            436.46453857422,
+            101.12547302246
+          ],
+          "rotation": [
+            -0.00091903039719909,
+            -0.0071828900836408,
+            -0.46013909578323,
+            0.88781720399857
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic12212112": {
+          "position": [
+            -4.6637229919434,
+            489.39508056641,
+            74.28003692627
+          ],
+          "rotation": [
+            0.0049578845500946,
+            -0.0052780597470701,
+            0.39237084984779,
+            0.91977858543396
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122121121": {
+          "position": [
+            28.768577575684,
+            550.72485351563,
+            73.519958496094
+          ],
+          "rotation": [
+            0.001294327666983,
+            -0.0071248328313231,
+            -0.17036573588848,
+            0.98535424470901
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122121122": {
+          "position": [
+            -278.67263793945,
+            204.17330932617,
+            90.215049743652
+          ],
+          "rotation": [
+            0.0070082456804812,
+            -0.0018229287816212,
+            0.8222628235817,
+            0.56906175613403
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1221211221": {
+          "position": [
+            -259.91876220703,
+            197.16221618652,
+            94.914581298828
+          ],
+          "rotation": [
+            -0.13243435323238,
+            0.19941155612469,
+            0.79771816730499,
+            0.55348169803619
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1221211222": {
+          "position": [
+            -369.39987182617,
+            148.95706176758,
+            100.81931304932
+          ],
+          "rotation": [
+            0.0072333230637014,
+            -0.00034292004420422,
+            0.92170423269272,
+            0.38782572746277
+          ],
+          "scale": [
+            1,
+            1.3324844837189,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1221211223": {
+          "position": [
+            -460.22399902344,
+            66.373260498047,
+            99.255317687988
+          ],
+          "rotation": [
+            0.012839751318097,
+            -0.005981080699712,
+            0.75192213058472,
+            0.659099817276
+          ],
+          "scale": [
+            1,
+            1.9636740684509,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic12213": {
+          "position": [
+            -413.14166259766,
+            574.66040039063,
+            75.192756652832
+          ],
+          "rotation": [
+            0.0056087602861226,
+            -0.0050232433713973,
+            0.92398500442505,
+            0.38235449790955
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122131": {
+          "position": [
+            -25.809160232544,
+            390.18548583984,
+            101.10576629639
+          ],
+          "rotation": [
+            0.0033138713333756,
+            -0.0064386962912977,
+            0.1240890994668,
+            0.99224460124969
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1221311": {
+          "position": [
+            -22.455165863037,
+            413.54321289063,
+            100.94384002686
+          ],
+          "rotation": [
+            0.0011034500785172,
+            -0.0071568791754544,
+            -0.19663889706135,
+            0.98044919967651
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1221312": {
+          "position": [
+            -16.009035110474,
+            478.51657104492,
+            74.488510131836
+          ],
+          "rotation": [
+            0.0049578845500946,
+            -0.0052780597470701,
+            0.39237084984779,
+            0.91977858543396
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic12213121": {
+          "position": [
+            33.495475769043,
+            535.55316162109,
+            73.531196594238
+          ],
+          "rotation": [
+            0.0018498203717172,
+            -0.0070011913776398,
+            -0.092463031411171,
+            0.99568974971771
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122131211": {
+          "position": [
+            51.524074554443,
+            767.08190917969,
+            74.645660400391
+          ],
+          "rotation": [
+            0.0018498203717172,
+            -0.0070011913776398,
+            -0.092463031411171,
+            0.99568974971771
+          ],
+          "scale": [
+            1,
+            1.9170525074005,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic12213122": {
+          "position": [
+            -293.38311767578,
+            209.71176147461,
+            90.387557983398
+          ],
+          "rotation": [
+            0.0070082456804812,
+            -0.0018229287816212,
+            0.8222628235817,
+            0.56906175613403
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122131221": {
+          "position": [
+            -271.52032470703,
+            201.48150634766,
+            90.231391906738
+          ],
+          "rotation": [
+            -0.00099300395231694,
+            0.0097376685589552,
+            0.82220703363419,
+            0.56910443305969
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic122131222": {
+          "position": [
+            -484.67483520508,
+            73.207008361816,
+            99.329544067383
+          ],
+          "rotation": [
+            0.0070082456804812,
+            -0.0018229287816212,
+            0.8222628235817,
+            0.56906175613403
+          ],
+          "scale": [
+            1,
+            1.3132183551788,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic1221312221": {
+          "position": [
+            -713.09136962891,
+            -103.73249053955,
+            99.571868896484
+          ],
+          "rotation": [
+            0.0064521371386945,
+            -0.0032876287586987,
+            0.92541444301605,
+            0.37888714671135
+          ],
+          "scale": [
+            1,
+            1.3132183551788,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic12213122211": {
+          "position": [
+            -691.26300048828,
+            -125.95753479004,
+            99.571868896484
+          ],
+          "rotation": [
+            0.0064521371386945,
+            -0.0032876287586987,
+            0.92541444301605,
+            0.37888714671135
+          ],
+          "scale": [
+            1,
+            1.3132183551788,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic2": {
+          "position": [
+            -834.60559082031,
+            23.5700340271,
+            119.2664642334
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic21": {
+          "position": [
+            -932.9248046875,
+            122.29447937012,
+            149.41896057129
+          ],
+          "rotation": [
+            0.043667837977409,
+            -0.097037941217422,
+            0.91888910531998,
+            0.37989410758018
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
+        },
+        "CTF_obstacleGreenScreenTSStatic22": {
+          "position": [
+            -829.05609130859,
+            17.999614715576,
+            117.77899932861
+          ],
+          "rotation": [
+            0.034570101648569,
+            -0.075034774839878,
+            0.92094695568085,
+            0.38082978129387
+          ],
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "shapeName": "/levels/west_coast_usa/art/shapes/objects/greenscreen_8x4.dae"
         }
       },
-      "obstacles":
-      {
-        "CTF_obstacle1":
-        {
-          "position":[0,0,500],
-          "rotation":[0,0,0,1],
-          "shapeName":"*.dae"
+      "spawns": {
+        "CTF_spawn1": {
+          "position": [
+            -968.69348144531,
+            169.5814666748,
+            157.97897338867
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn10": {
+          "position": [
+            -889.50054931641,
+            248.39309692383,
+            159.28829956055
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn11": {
+          "position": [
+            -881.08374023438,
+            256.92858886719,
+            159.46237182617
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn12": {
+          "position": [
+            -959.8720703125,
+            164.10450744629,
+            157.99040222168
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn13": {
+          "position": [
+            -952.75756835938,
+            171.15232849121,
+            157.98753356934
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn14": {
+          "position": [
+            -943.19262695313,
+            181.33062744141,
+            158.15733337402
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn15": {
+          "position": [
+            -934.61804199219,
+            189.84497070313,
+            158.31181335449
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn16": {
+          "position": [
+            -929.86633300781,
+            194.95104980469,
+            158.4116973877
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn17": {
+          "position": [
+            -921.82641601563,
+            203.3332824707,
+            158.55960083008
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn18": {
+          "position": [
+            -916.96636962891,
+            208.14657592773,
+            158.65139770508
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn19": {
+          "position": [
+            -912.14007568359,
+            212.49320983887,
+            158.73931884766
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn2": {
+          "position": [
+            -954.92254638672,
+            183.19364929199,
+            158.07232666016
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn20": {
+          "position": [
+            -906.65344238281,
+            217.28515625,
+            158.83517456055
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn21": {
+          "position": [
+            -900.57928466797,
+            224.02201843262,
+            158.95582580566
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn22": {
+          "position": [
+            -893.03588867188,
+            232.22882080078,
+            159.12782287598
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn23": {
+          "position": [
+            -876.99975585938,
+            248.13369750977,
+            159.40864562988
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn3": {
+          "position": [
+            -943.68536376953,
+            194.57069396973,
+            158.24908447266
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn4": {
+          "position": [
+            -935.38885498047,
+            202.80679321289,
+            158.40492248535
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn5": {
+          "position": [
+            -923.85681152344,
+            214.60273742676,
+            158.63177490234
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn6": {
+          "position": [
+            -914.36358642578,
+            223.74554443359,
+            158.80009460449
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn7": {
+          "position": [
+            -908.68493652344,
+            229.27235412598,
+            158.90789794922
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn8": {
+          "position": [
+            -902.88055419922,
+            235.05044555664,
+            159.0450592041
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
+        },
+        "CTF_spawn9": {
+          "position": [
+            -896.76336669922,
+            241.1492767334,
+            159.15829467773
+          ],
+          "rotation": [
+            0,
+            0,
+            0,
+            0.99999994039536
+          ]
         }
       }
     }

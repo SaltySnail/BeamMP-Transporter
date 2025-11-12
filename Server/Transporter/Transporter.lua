@@ -499,7 +499,6 @@ function transporterGameEnd(reason)
 end
 
 function showPrefabs(player) --shows the prefabs belonging to this map and this area
-	MP.TriggerClientEvent(player.playerID, "spawnObstacles", "levels/" .. levelName .. "/multiplayer/" .. area .. "/obstacles.prefab.json") 
 	for name,data in pairs(areas[area]["flags"]) do
 		local toSend = {}
 		table.insert(toSend, name)
@@ -693,7 +692,8 @@ function gameRunningLoop()
 	elseif gameState.time == 0 then
 		gameStarting()
 		spawnFlagAndGoal()
-		MP.TriggerClientEvent(-1, "spawnObstacles", "levels/" .. levelName .. "/multiplayer/" .. area .. "/obstacles.prefab.json")	
+		-- MP.TriggerClientEvent(-1, "spawnObstacles", "levels/" .. levelName .. "/multiplayer/" .. area .. "/obstacles.prefab.json")	
+		MP.TriggerClientEvent(-1, "spawnObstacles", Util.JsonEncode(areas[area]["obstacles"]))
 	end
 	MP.TriggerClientEvent(-1, "requestVelocity", "nil")
 
