@@ -10,208 +10,6 @@ local blockedInputActions = {'slower_motion','faster_motion','toggle_slow_motion
 
 local colors = {["Red"] = {255,50,50,255},["LightBlue"] = {50,50,160,255},["Green"] = {50,255,50,255},["Yellow"] = {200,200,25,255},["Purple"] = {150,50,195,255}}
 
-local activePrefabs = {}
-
-local thisAreaData = {}
-local thisLevelData = {}
-local mapData = {} --TODO: this should be a txt file for easily adding areas
-mapData.levels = ""
-
---Industrial level data:
-thisLevelData = {}
-thisLevelData.name = "industrial"
-thisLevelData.levelData = {}
-thisLevelData.areas = ""
-
---dockyard area data:
-thisAreaData = {}
-thisAreaData.name = "Port"
-thisAreaData.flagcount = "16"
-thisAreaData.goalcount = "16"
-thisLevelData.levelData[thisAreaData.name] = thisAreaData
-thisLevelData.areas = thisLevelData.areas .. " " .. thisAreaData.name 
-mapData[thisLevelData.name] = thisLevelData
-mapData.levels = mapData.levels .. " " .. thisLevelData.name
-
---industry area data:
-thisAreaData = {}
-thisAreaData.name = "Industry"
-thisAreaData.flagcount = "7"
-thisAreaData.goalcount = "7"
-thisLevelData.levelData[thisAreaData.name] = thisAreaData
-thisLevelData.areas = thisLevelData.areas .. " " .. thisAreaData.name 
-mapData[thisLevelData.name] = thisLevelData
-
---container land area data:
-thisAreaData = {}
-thisAreaData.name = "Containerland"
-thisAreaData.flagcount = "6"
-thisAreaData.goalcount = "6"
-thisLevelData.levelData[thisAreaData.name] = thisAreaData
-thisLevelData.areas = thisLevelData.areas .. " " .. thisAreaData.name 
-mapData[thisLevelData.name] = thisLevelData
-
---Warehouses area data:
-thisAreaData = {}
-thisAreaData.name = "Warehouses"
-thisAreaData.flagcount = "7"
-thisAreaData.goalcount = "7"
-thisLevelData.levelData[thisAreaData.name] = thisAreaData
-thisLevelData.areas = thisLevelData.areas .. " " .. thisAreaData.name 
-mapData[thisLevelData.name] = thisLevelData
-
---Battersea level data:
-thisLevelData = {}
-thisLevelData.name = "battersea"
-thisLevelData.levelData = {}
-thisLevelData.areas = ""
-
--- all area data:
-thisAreaData = {}
-thisAreaData.name = "All"
-thisAreaData.flagcount = "32"
-thisAreaData.goalcount = "32"
-thisLevelData.levelData[thisAreaData.name] = thisAreaData
-thisLevelData.areas = thisLevelData.areas .. " " .. thisAreaData.name 
-mapData[thisLevelData.name] = thisLevelData
-
---depot area data:
-thisAreaData = {}
-thisAreaData.name = "Depot"
-thisAreaData.flagcount = "9"
-thisAreaData.goalcount = "9"
-thisLevelData.levelData[thisAreaData.name] = thisAreaData
-thisLevelData.areas = thisLevelData.areas .. " " .. thisAreaData.name 
-mapData[thisLevelData.name] = thisLevelData
-mapData.levels = mapData.levels .. " " .. thisLevelData.name
-
---Italy level data:
-thisLevelData = {}
-thisLevelData.name = "italy"
-thisLevelData.levelData = {}
-thisLevelData.areas = ""
-
--- Citta_Vecchia area data:
-thisAreaData = {}
-thisAreaData.name = "Citta_Vecchia"
-thisAreaData.flagcount = "10"
-thisAreaData.goalcount = "10"
-thisLevelData.levelData[thisAreaData.name] = thisAreaData
-thisLevelData.areas = thisLevelData.areas .. " " .. thisAreaData.name 
-mapData[thisLevelData.name] = thisLevelData
-
--- Norte area data:
-thisAreaData = {}
-thisAreaData.name = "Norte"
-thisAreaData.flagcount = "10"
-thisAreaData.goalcount = "11"
-thisLevelData.levelData[thisAreaData.name] = thisAreaData
-thisLevelData.areas = thisLevelData.areas .. " " .. thisAreaData.name 
-mapData[thisLevelData.name] = thisLevelData
-
--- Airport area data:
-thisAreaData = {}
-thisAreaData.name = "Airport"
-thisAreaData.flagcount = "8"
-thisAreaData.goalcount = "8"
-thisLevelData.levelData[thisAreaData.name] = thisAreaData
-thisLevelData.areas = thisLevelData.areas .. " " .. thisAreaData.name 
-mapData[thisLevelData.name] = thisLevelData
-
--- Castelletto area data:
-thisAreaData = {}
-thisAreaData.name = "Castelletto"
-thisAreaData.flagcount = "5"
-thisAreaData.goalcount = "5"
-thisLevelData.levelData[thisAreaData.name] = thisAreaData
-thisLevelData.areas = thisLevelData.areas .. " " .. thisAreaData.name 
-mapData[thisLevelData.name] = thisLevelData
-mapData.levels = mapData.levels .. " " .. thisLevelData.name
-
---West Coast USA level data:
-thisLevelData = {}
-thisLevelData.name = "west_coast_usa"
-thisLevelData.levelData = {}
-thisLevelData.areas = ""
-
---City area data:
-thisAreaData = {}
-thisAreaData.name = "City"
-thisAreaData.flagcount = "15"
-thisAreaData.goalcount = "15"
-thisLevelData.levelData[thisAreaData.name] = thisAreaData
-thisLevelData.areas = thisLevelData.areas .. " " .. thisAreaData.name 
-mapData[thisLevelData.name] = thisLevelData
-mapData.levels = mapData.levels .. " " .. thisLevelData.name
-
---Island area data:
-thisAreaData = {}
-thisAreaData.name = "Island"
-thisAreaData.flagcount = "11"
-thisAreaData.goalcount = "11"
-thisLevelData.levelData[thisAreaData.name] = thisAreaData
-thisLevelData.areas = thisLevelData.areas .. " " .. thisAreaData.name 
-mapData[thisLevelData.name] = thisLevelData
-mapData.levels = mapData.levels .. " " .. thisLevelData.name
-
---Foundry area data:
-thisAreaData = {}
-thisAreaData.name = "Foundry"
-thisAreaData.flagcount = "6"
-thisAreaData.goalcount = "6"
-thisLevelData.levelData[thisAreaData.name] = thisAreaData
-thisLevelData.areas = thisLevelData.areas .. " " .. thisAreaData.name 
-mapData[thisLevelData.name] = thisLevelData
-mapData.levels = mapData.levels .. " " .. thisLevelData.name
-
---fairhaven area data:
-thisLevelData = {}
-thisLevelData.name = "fairhaven"
-thisLevelData.levelData = {}
-thisLevelData.areas = ""
-
---Airport area data:
-thisAreaData = {}
-thisAreaData.name = "Airport"
-thisAreaData.flagcount = "25"
-thisAreaData.goalcount = "24"
-thisLevelData.levelData[thisAreaData.name] = thisAreaData
-thisLevelData.areas = thisLevelData.areas .. " " .. thisAreaData.name 
-mapData[thisLevelData.name] = thisLevelData
-mapData.levels = mapData.levels .. " " .. thisLevelData.name
-
---AbandonedAirport:
-thisAreaData = {}
-thisAreaData.name = "AbandonedAirport"
-thisAreaData.flagcount = "0"
-thisAreaData.goalcount = "0"
-thisLevelData.levelData[thisAreaData.name] = thisAreaData
-thisLevelData.areas = thisLevelData.areas .. " " .. thisAreaData.name 
-mapData[thisLevelData.name] = thisLevelData
-mapData.levels = mapData.levels .. " " .. thisLevelData.name
-
---Gazebo:
-thisAreaData = {}
-thisAreaData.name = "Gazebo"
-thisAreaData.flagcount = "0"
-thisAreaData.goalcount = "0"
-thisLevelData.levelData[thisAreaData.name] = thisAreaData
-thisLevelData.areas = thisLevelData.areas .. " " .. thisAreaData.name 
-mapData[thisLevelData.name] = thisLevelData
-mapData.levels = mapData.levels .. " " .. thisLevelData.name
-
---Park:
-thisAreaData = {}
-thisAreaData.name = "Park"
-thisAreaData.flagcount = "8"
-thisAreaData.goalcount = "8"
-thisLevelData.levelData[thisAreaData.name] = thisAreaData
-thisLevelData.areas = thisLevelData.areas .. " " .. thisAreaData.name 
-mapData[thisLevelData.name] = thisLevelData
-mapData.levels = mapData.levels .. " " .. thisLevelData.name
-
-local currentArea = ""
-local currentLevel = ""
 local lastCreatedFlagID = 1
 local lastCreatedGoalID = 1
 local lastCreatedSpawnID = 1
@@ -219,21 +17,10 @@ local lastCreatedSpawnID = 1
 local defaultRedFadeDistance = 20
 
 local flagPrefabActive = false
-local flagPrefabPath
-local flagPrefabName
-local flagPrefabObj
 local flagLocation = {}
 
 local goalPrefabActive = false
-local goalPrefabPath
-local goalPrefabName
-local goalPrefabObj
 local goalLocation = {}
-
-local obstaclesPrefabActive = false
-local obstaclesPrefabPath
-local obstaclesPrefabName
-local obstaclesPrefabObj
 
 local flagObj -- initialized during init
 
@@ -288,6 +75,31 @@ function dump(o)
     else
        return tostring(o)
     end
+end
+
+local function quatToAxisAngle(q)
+	-- Normalize the quaternion first
+	local len = math.sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w)
+	local qx, qy, qz, qw = q.x / len, q.y / len, q.z / len, q.w / len
+	
+	-- Calculate angle in DEGREES
+	local angle = math.deg(2 * math.acos(math.min(1, math.max(-1, qw))))
+	
+	-- Calculate axis
+	local s = math.sqrt(1 - qw * qw)
+	
+	local ax, ay, az
+	if s < 0.001 then
+		-- If s is close to zero, we have a very small rotation
+		ax, ay, az = 1, 0, 0
+		angle = 0
+	else
+		ax = qx / s
+		ay = qy / s
+		az = qz / s
+	end
+	
+	return {x = ax, y = ay, z = az, w = angle}
 end
 
 local function seconds_to_days_hours_minutes_seconds(total_seconds) --modified code from https://stackoverflow.com/questions/45364628/lua-4-script-to-convert-seconds-elapsed-to-days-hours-minutes-seconds
@@ -347,11 +159,6 @@ function resetCarColors(data)
 	scenetree["PostEffectCombinePassObject"]:setField("enableBlueShift", 0,0)
 	scenetree["PostEffectCombinePassObject"]:setField("blueShiftColor", 0,"0 0 0")
 
-
-	--core_input_actionFilter.addAction(0, 'vehicleTeleporting', false)
-	--core_input_actionFilter.addAction(0, 'vehicleMenues', false)
-	--core_input_actionFilter.addAction(0, 'freeCam', false)
-	--core_input_actionFilter.addAction(0, 'resetPhysics', false)
 end
 
 local function receiveTransporterGameState(data)
@@ -404,61 +211,6 @@ function disallowResets()
 	end
 end
 
--- local function removePrefabs(type)
--- 	log('D', logTag, "removePrefabs(" .. type .. ") Called" )
--- 	if type == "flag" and flagPrefabActive then 
--- 		removePrefab(flagPrefabName)
--- 		-- log('D', logTag, "Removing: " .. flagPrefabName)
--- 		flagPrefabActive = false
--- 	elseif type == "goal" and goalPrefabActive then 
--- 		removePrefab(goalPrefabName)
--- 		-- log('D', logTag, "Removing: " .. goalPrefabName)
--- 		goalPrefabActive = false
--- 	elseif type == "all" then
--- 		if flagPrefabActive then
--- 			removePrefab(flagPrefabName)
--- 			-- log('D', logTag, "Removing: " .. flagPrefabName)
--- 			flagPrefabActive = false
--- 		end
--- 		if goalPrefabActive then
--- 			removePrefab(goalPrefabName)
--- 			-- log('D', logTag, "Removing: " .. goalPrefabName)
--- 			goalPrefabActive = false
--- 		end
--- 		if obstaclesPrefabActive then
--- 			removePrefab(obstaclesPrefabName)
--- 			-- log('D', logTag, "Removing: " .. obstaclesPrefabName)
--- 			obstaclesPrefabActive = false
--- 			be:reloadStaticCollision(true)
--- 		end
--- 		local prefabPath = ""
--- 		local levelName = core_levels.getLevelName(getMissionFilename())
--- 		local flags = "1"
--- 		local goals = "1"
--- 		log('D', logTag, "Removing everything in; Map: " .. levelName .. " and Area: " .. currentArea)
--- 		-- log('D', logTag, "mapData: " .. dump(mapData))
--- 		local levelData = {}
--- 		levelData = mapData[levelName]["levelData"]
--- 		-- log('D', logTag, "levelData: " .. dump(levelData))
--- 		local areaData = {}
--- 		areaData = levelData[currentArea]
--- 		-- log('D', logTag, "areaData (" .. currentArea .. "): " .. dump(areaData))
--- 		flags = areaData["flagcount"]
--- 		goals = areaData["goalcount"]
--- 		log('D', logTag, "Flags: " .. flags .. " and Goals: " .. goals)
--- 		for flagID=1,tonumber(flags) do
--- 			prefabPath = "flag" .. flagID
--- 			-- log('D', logTag, "Removing: " .. prefabPath)
--- 			removePrefab(prefabPath)
--- 		end
--- 		for goalID=1,tonumber(goals) do
--- 			prefabPath = "goal" .. goalID
--- 			-- log('D', logTag, "Removing: " .. prefabPath)
--- 			removePrefab(prefabPath)
--- 		end
--- 	end
--- end
-
 local function removePrefabs(type)
 	-- Search through all objects in the scene
 	for _, objName in pairs(scenetree.getAllObjects()) do
@@ -510,12 +262,14 @@ local function spawnFlag(data)
       position.x = data[1]
       position.y = data[2]
       position.z = data[3]
+      flagLocation = position
     end
     if (index == 3) then
       rotation.x = data[1]
       rotation.y = data[2]
       rotation.z = data[3]
       rotation.w = data[4]
+      rotation = quatToAxisAngle(rotation)
     end
 	end
 	-- log('D', logtag, "Spawning flag " .. name)	
@@ -541,7 +295,6 @@ local function spawnFlag(data)
 	visualObj.canSave = true
 	visualObj:registerObject(name .. "TSStatic")
 	scenetree.MissionGroup:addObject(visualObj)
-	table.insert(activePrefabs, name .. "TSStatic")
 	local triggerObj = createObject("BeamNGTrigger")
 	if position then
 		triggerObj:setPosition(vec3(position.x, position.y, position.z))
@@ -559,88 +312,8 @@ local function spawnFlag(data)
 	triggerObj:setField('triggerTestType', 0, "Bounding box")
 	triggerObj:registerObject(name .. "Trigger")
 	scenetree.MissionGroup:addObject(triggerObj)
-	table.insert(activePrefabs, name .. "Trigger")
+	flagPrefabActive = true
 end
-
--- local function spawnFlag(filepath, offset, rotationString)
--- 	log('D', logTag, filepath)
--- 	local offsetString = '0 0 0'
--- 	if offset then
--- 		offsetString = "" .. offset.x .. " " .. offset.y .. " " .. offset.z
--- 	end
--- 	log('D', logTag, "Offset: " .. offsetString)
--- 	flagPrefabActive = true
--- 	flagPrefabPath   = filepath
--- 	flagPrefabName   = string.gsub(flagPrefabPath, "(.*/)(.*)", "%2"):sub(1, -13)
--- 	flagPrefabObj    = spawnPrefab(flagPrefabName, flagPrefabPath, offsetString, '0 0 1', '1 1 1')
--- 	log('D', logTag, "flagPrefabObj: " .. dump(flagPrefabObj))
--- 	-- read local file
--- 	local file = io.open(flagPrefabPath, "rb")
--- 	if not file then return end
--- 	local jsonString = file:read "*a"
--- 	file:close()
--- 	log('D', logTag, "prefab json: " .. dump(jsonString))
--- 	if jsonString then 
--- 		local line = jsonDecode(jsonString)
--- 		if string.match(line.name, "flag(%d*)Trigger") then 
--- 			flagLocation = vec3(line.position)
--- 		end
--- 	end
--- 	if not flagLocation then
--- 		flagLocation = vec3(0,0,0)
--- 	end
--- 	if offset then
--- 		newObj:setPosition(vec3(offset.x, offset.y, offset.z))
--- 	else
--- 		newObj:setPosition(vec3(0,0,0))
--- 	end
--- 	if not rotationString then rotationString = '0 0 0 1' end
--- 	newObj:setField('rotation', 0, rotationString)
--- 	newObj:setField('shapeName', 0, "/art/shapes/interface/single_faded_column.dae")
--- 	newObj.scale = vec3(10,10,6)
--- 	newObj.useInstanceRenderData = true
--- 	newObj:setField('instanceColor', 0, string.format("%g %g %g %g", 0,0.0227570534,1,1))
--- 	newObj:setField('instanceColor1', 0, string.format("%g %g %g %g", 0,0.0238099098,1,1))
--- 	newObj:setField('collisionType', 0, "Collision Mesh")
--- 	newObj:setField('decalType', 0, "Collision Mesh")
--- 	newObj.canSave = true
--- 	newObj:registerObject(goalPrefabName .. "TSStatic")
--- 	scenetree.MissionGroup:addObject(newObj)
--- end
-
--- local function spawnGoal(filepath, offset) 
--- 	log('D', logTag, filepath)
--- 	local offsetString = '0 0 0'
--- 	if offset then
--- 		offsetString = "" .. offset.x .. " " .. offset.y .. " " .. offset.z
--- 	end
--- 	if gamestate.teams then 
--- 		scaleString = '2 2 2'
--- 	else 
--- 		scaleString = '1 1 1'
--- 	end
--- 	log('D', logTag, "Offset: " .. offsetString)
--- 	goalPrefabActive = true
--- 	goalPrefabPath   = filepath
--- 	goalPrefabName   = string.gsub(goalPrefabPath, "(.*/)(.*)", "%2"):sub(1, -13)
--- 	goalPrefabObj    = spawnPrefab(goalPrefabName, goalPrefabPath,  offsetString, '0 0 1', scaleString)
--- 	log('D', logTag, "goalPrefabObj: " .. dump(goalPrefabObj))	
--- 	-- read local file 
--- 	local file = io.open(goalPrefabPath, "rb")
--- 	if not file then return end
--- 	local jsonString = file:read "*a"
--- 	file:close()	
--- 	log('D', logTag, "prefab json: " .. dump(jsonString))
--- 	if jsonString then 
--- 		local line = jsonDecode(jsonString)
--- 		if string.match(line.name, "goal(%d*)Trigger") then 
--- 			goalLocation = vec3(line.position)
--- 		end
--- 	end
--- 	if not goalLocation then
--- 		goalLocation = vec3(0,0,0)
--- 	end
--- end
 
 local function spawnGoal(data)
   data = jsonDecode(data)
@@ -656,12 +329,14 @@ local function spawnGoal(data)
       position.x = data[1]
       position.y = data[2]
       position.z = data[3]
+      goalLocation = position
     end
     if (index == 3) then
       rotation.x = data[1]
       rotation.y = data[2]
       rotation.z = data[3]
       rotation.w = data[4]
+      rotation = quatToAxisAngle(rotation)
     end
 	end
 	print("Spawning goal " .. name)	
@@ -686,7 +361,6 @@ local function spawnGoal(data)
 	visualObj.canSave = true
 	visualObj:registerObject(name .. "TSStatic")
 	scenetree.MissionGroup:addObject(visualObj)
-	table.insert(activePrefabs, name .. "TSStatic")
 	local triggerObj = createObject("BeamNGTrigger")
 	if position then
 		triggerObj:setPosition(vec3(position.x, position.y, position.z))
@@ -704,7 +378,7 @@ local function spawnGoal(data)
 	triggerObj:setField('triggerTestType', 0, "Bounding box")
 	triggerObj:registerObject(name .. "Trigger")
 	scenetree.MissionGroup:addObject(triggerObj)
-	table.insert(activePrefabs, name .. "Trigger")
+	goalPrefabActive = true
 end
 
 local function spawnSpawnTrigger(data)
@@ -727,6 +401,7 @@ local function spawnSpawnTrigger(data)
       rotation.y = data[2]
       rotation.z = data[3]
       rotation.w = data[4]
+      rotation = quatToAxisAngle(rotation)
     end
 	end
 	print("Spawning spawnTrigger " .. name)	
@@ -747,7 +422,6 @@ local function spawnSpawnTrigger(data)
 	triggerObj:setField('triggerTestType', 0, "Bounding box")
 	triggerObj:registerObject(name .. "Trigger")
 	scenetree.MissionGroup:addObject(triggerObj)
-	table.insert(activePrefabs, name .. "Trigger")
 end
 
 local function onCreateFlag()
@@ -880,30 +554,6 @@ local function saveArea(areaName)
 	TriggerServerEvent("onSaveArea", jsonEncode(areaData))
 end
 
-local function quatToAxisAngle(q)
-	-- Normalize the quaternion first
-	local len = math.sqrt(q.x * q.x + q.y * q.y + q.z * q.z + q.w * q.w)
-	local qx, qy, qz, qw = q.x / len, q.y / len, q.z / len, q.w / len
-	
-	-- Calculate angle in DEGREES
-	local angle = math.deg(2 * math.acos(math.min(1, math.max(-1, qw))))
-	
-	-- Calculate axis
-	local s = math.sqrt(1 - qw * qw)
-	
-	local ax, ay, az
-	if s < 0.001 then
-		-- If s is close to zero, we have a very small rotation
-		ax, ay, az = 1, 0, 0
-		angle = 0
-	else
-		ax = qx / s
-		ay = qy / s
-		az = qz / s
-	end
-	
-	return {x = ax, y = ay, z = az, w = angle}
-end
 
 local function spawnObstacles(obstaclesJson)
 	print("Spawning obstacles from JSON data")
@@ -940,7 +590,7 @@ local function spawnObstacles(obstaclesJson)
 			local obstacle = createObject('TSStatic')
 			obstacle:setField('shapeName', 0, shapeName)
 			obstacle:setPosition(vec3(pos[1], pos[2], pos[3]))
-			-- obstacle:setField('rotationEuler', 0, rot.x .. ' ' .. rot.y .. ' ' .. rot.z)
+			--apparently using obstacle::setPosRot would've worked directly with a quaternion, but I refuse to refactor this
 			obstacle:setField('rotation', 0, rot.x .. ' ' .. rot.y .. ' ' .. rot.z .. ' ' .. rot.w)
 			obstacle:setField('scale', 0, scale[1] .. ' ' .. scale[2] .. ' ' .. scale[3])
 			obstacle:registerObject(obstacleName)
@@ -956,16 +606,6 @@ local function spawnObstacles(obstaclesJson)
 	
 	print("Finished spawning obstacles")
 end
-
--- local function spawnObstacles(filepath) 
--- 	-- log('D', logTag, filepath)
--- 	print(filepath)
--- 	obstaclesPrefabActive = true
--- 	obstaclesPrefabPath   = filepath
--- 	obstaclesPrefabName   = string.gsub(obstaclesPrefabPath, "(.*/)(.*)", "%2"):sub(1, -13)
--- 	obstaclesPrefabObj    = spawnPrefab(obstaclesPrefabName, obstaclesPrefabPath, '0 0 0', '0 0 1', '1 1 1')
--- 	be:reloadStaticCollision(true)
--- end
 
 function onGameEnd()
 	core_gamestate.setGameState('multiplayer', 'multiplayer', 'multiplayer') --reset the app layout
@@ -1077,54 +717,6 @@ local function unfadePerson(vehID)
 	vehicle:queueLuaCommand("obj:setGhostEnabled(false)")
 	vehicle:setMeshAlpha(1,"")
 end
-
--- local function requestLevelName()
---   currentLevel = core_levels.getLevelName(getMissionFilename())
---   if TriggerServerEvent then TriggerServerEvent("setLevelName", currentLevel) end
--- end
---
--- function setCurrentArea(area)
--- 	currentArea = area
--- end
---
--- local function requestAreaNames()
--- 	local levelName = core_levels.getLevelName(getMissionFilename())
--- 	if TriggerServerEvent and mapData[levelName] then TriggerServerEvent("setAreaNames", mapData[levelName].areas) end
--- end
---
--- local function requestLevels()
--- 	if TriggerServerEvent then TriggerServerEvent("setLevels", mapData.levels) end
--- end
---
--- local function requestFlagCount()
--- 	local levelName = core_levels.getLevelName(getMissionFilename())	
--- 	local flags = "1"
--- 	log('D', logTag, "mapData: " .. dump(mapData))
--- 	local levelData = {}
--- 	levelData = mapData[levelName]["levelData"]
--- 	log('D', logTag, "levelData: " .. dump(levelData))
--- 	local areaData = {}
--- 	areaData = levelData[currentArea]
--- 	log('D', logTag, "areaData: " .. dump(areaData))
--- 	flags = areaData["flagcount"]
--- 	log('D', logTag, "There are " .. flags .. " flags in " .. levelName .. ", " .. currentArea)
--- 	if TriggerServerEvent then TriggerServerEvent("setFlagCount", flags) end
--- end
---
--- local function requestGoalCount()
--- 	local levelName = core_levels.getLevelName(getMissionFilename())	
--- 	local goals = "1"
--- 	log('D', logTag, "mapData: " .. dump(mapData))	
--- 	local levelData = {}
--- 	levelData = mapData[levelName]["levelData"]
--- 	log('D', logTag, "levelData: " .. dump(levelData))
--- 	local areaData = {}
--- 	areaData = levelData[currentArea]
--- 	log('D', logTag, "areaData (" .. currentArea .. "): " .. dump(areaData))
--- 	goals = areaData["goalcount"]
--- 	log('D', logTag, "There are " .. goals .. " goals in " .. levelName .. ", " .. currentArea)
--- 	if TriggerServerEvent then TriggerServerEvent("setGoalCount", goals) end
--- end
 
 function updateTransporterGameState(data)
 	mergeTransporterTable(jsonDecode(data),gamestate)
@@ -1601,12 +1193,6 @@ if AddEventHandler then
 	AddEventHandler("onCreateSpawn", onCreateSpawn)
 	AddEventHandler("spawnObstacles", spawnObstacles)
 	AddEventHandler("removePrefabs", removePrefabs)
-	-- AddEventHandler("setCurrentArea", setCurrentArea)
-	-- AddEventHandler("requestLevelName", requestLevelName)
-	-- AddEventHandler("requestAreaNames", requestAreaNames)
-	-- AddEventHandler("requestLevels", requestLevels)
-	-- AddEventHandler("requestFlagCount", requestFlagCount)
-	-- AddEventHandler("requestGoalCount", requestGoalCount)
 	AddEventHandler("receiveTransporterGameState", receiveTransporterGameState)
 	AddEventHandler("requestTransporterGameState", requestTransporterGameState)
 	AddEventHandler("updateTransporterGameState", updateTransporterGameState)
@@ -1625,20 +1211,12 @@ if AddEventHandler then
 	AddEventHandler("requestVehicleID", requestVehicleID)
 	AddEventHandler("requestVelocity", requestVelocity)
 	AddEventHandler("saveArea", saveArea)
-	
-	-- AddEventHandler("onTransporterFlagTrigger", onTransporterFlagTrigger)
-	-- AddEventHandler("onTransporterGoalTrigger", onTransporterGoalTrigger)
 end
 
 
 M.requestTransporterGameState = requestTransporterGameState
 M.receiveTransporterGameState = receiveTransporterGameState
 M.updateTransporterGameState = updateTransporterGameState
--- M.requestLevelName = requestLevelName
--- M.requestAreaNames = requestAreaNames
--- M.requestLevels = requestLevels
--- M.requestFlagCount = requestFlagCount
--- M.requestGoalCount = requestGoalCount
 M.sendTransporterContact = sendTransporterContact
 M.onPreRender = onPreRender
 M.onVehicleSwitched = onVehicleSwitched
@@ -1651,7 +1229,6 @@ M.onCreateGoal = onCreateGoal
 M.onCreateSpawn = onCreateSpawn
 M.spawnObstacles = spawnObstacles
 M.removePrefabs = removePrefabs
--- M.setCurrentArea = setCurrentArea
 M.onExtensionUnloaded = onExtensionUnloaded
 M.onResetGameplay = onResetGameplay
 M.onGameEnd = onGameEnd
@@ -1667,9 +1244,6 @@ M.fadePerson = fadePerson
 M.unfadePerson = unfadePerson
 M.requestVehicleID = requestVehicleID
 M.requestVelocity = requestVelocity
--- M.onVehicleResetted = onVehicleResetted
--- M.onTransporterFlagTrigger = onTransporterFlagTrigger
--- M.onTransporterGoalTrigger = onTransporterGoalTrigger
 M.onCTFTrigger = onCTFTrigger
 M.saveArea = saveArea
 commands.dropPlayerAtCameraNoReset = dropPlayerAtCameraNoReset
