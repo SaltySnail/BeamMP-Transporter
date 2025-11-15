@@ -220,8 +220,10 @@ local function removePrefabs(type)
 			
 			if type == "flag" then
 				shouldRemove = string.find(objName, "CTF_flag") ~= nil
+				flagPrefabActive = false
 			elseif type == "goal" then
 				shouldRemove = string.find(objName, "CTF_goal") ~= nil
+				goalPrefabActive = false
 			elseif type == "spawn" then
 				shouldRemove = string.find(objName, "CTF_spawn") ~= nil
 			elseif type == "obstacle" then
@@ -441,7 +443,7 @@ local function teleportPlayerToSpawn(data)
 	print("teleportPlayerToSpawn " .. data)
 	local spawnPoint = scenetree.findObject(data .. "Trigger")
 	local rot = spawnPoint:getRotation()
-	rot = rotateObject(rot, vec3(0,0,1), 180)
+	-- rot = rotateObject(rot, vec3(0,0,1), 180)
 	spawn.safeTeleport(getPlayerVehicle(0), spawnPoint:getPosition(), rot) 
 end
 
