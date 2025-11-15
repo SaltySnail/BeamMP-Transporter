@@ -265,11 +265,8 @@ local function spawnFlag(data)
       flagLocation = position
     end
     if (index == 3) then
-      rotation.x = data[1]
-      rotation.y = data[2]
-      rotation.z = data[3]
-      rotation.w = data[4]
-      rotation = quatToAxisAngle(rotation)
+			rotation = quat(data[1], data[2], data[3], data[4])
+			rotation = quatToAxisAngle(rotation)
     end
 	end
 	-- log('D', logtag, "Spawning flag " .. name)	
@@ -332,11 +329,8 @@ local function spawnGoal(data)
       goalLocation = position
     end
     if (index == 3) then
-      rotation.x = data[1]
-      rotation.y = data[2]
-      rotation.z = data[3]
-      rotation.w = data[4]
-      rotation = quatToAxisAngle(rotation)
+			rotation = quat(data[1], data[2], data[3], data[4])
+			rotation = quatToAxisAngle(rotation)
     end
 	end
 	print("Spawning goal " .. name)	
@@ -382,6 +376,7 @@ local function spawnGoal(data)
 end
 
 local function spawnSpawnTrigger(data)
+	print("spawnSpawnTrigger called " .. data)
   data = jsonDecode(data)
 	local name = ""
 	local position = {}
@@ -397,15 +392,12 @@ local function spawnSpawnTrigger(data)
       position.z = data[3]
     end
     if (index == 3) then
-      rotation.x = data[1]
-      rotation.y = data[2]
-      rotation.z = data[3]
-      rotation.w = data[4]
-      rotation = quatToAxisAngle(rotation)
+			rotation = quat(data[1], data[2], data[3], data[4])
+			rotation = quatToAxisAngle(rotation)
     end
 	end
-	print("Spawning spawnTrigger " .. name)	
-	local triggerObj = createObject("BeamNGTrigger")
+	print("Spawning spawnTrigger " .. name .. " " .. dump(data))	
+	local triggerObj = createObject("BeamNGWaypoint")
 	if position then
 		triggerObj:setPosition(vec3(position.x, position.y, position.z))
 	else
@@ -413,20 +405,50 @@ local function spawnSpawnTrigger(data)
 	end
 	local rotationString = "0,0,0,1"
 	if rotation then
-		rotationString = "" .. rotation.x .. "," .. rotation.y .. "," .. rotation.z .. "," .. rotation.w
+		rotationString = "" .. rotation.x .. " " .. rotation.y .. " " .. rotation.z .. " " .. rotation.w
 	end
-	triggerObj.scale = vec3(6,6,35)
+	-- triggerObj.scale = vec3(6,6,35)
+	triggerObj.scale = vec3(1,1,1)
 	triggerObj:setField('rotation', 0, rotationString)
-	triggerObj:setField('luaFunction', 0, "Transporter.onCTFTrigger")
-	triggerObj:setField('triggerMode', 0, "Overlaps")
-	triggerObj:setField('triggerTestType', 0, "Bounding box")
 	triggerObj:registerObject(name .. "Trigger")
 	scenetree.MissionGroup:addObject(triggerObj)
+end
+
+local function rotateObject(rotation, axis, degrees)
+    local radians = math.rad(-degrees) -- Negate the degrees here
+    local rotationChange = {
+        x = axis.x * math.sin(radians / 2),
+        y = axis.y * math.sin(radians / 2),
+        z = axis.z * math.sin(radians / 2),
+        w = math.cos(radians / 2)
+    }
+
+    local function quaternionMultiplication(q1, q2)
+        return {
+            w = q1.w * q2.w - q1.x * q2.x - q1.y * q2.y - q1.z * q2.z,
+            x = q1.w * q2.x + q1.x * q2.w + q1.y * q2.z - q1.z * q2.y,
+            y = q1.w * q2.y - q1.x * q2.z + q1.y * q2.w + q1.z * q2.x,
+            z = q1.w * q2.z + q1.x * q2.y - q1.y * q2.x + q1.z * q2.w
+        }
+    end
+
+    local newRotation = quaternionMultiplication(rotation, rotationChange)
+
+    return newRotation
+end
+
+local function teleportPlayerToSpawn(data)
+	print("teleportPlayerToSpawn " .. data)
+	local spawnPoint = scenetree.findObject(data .. "Trigger")
+	local rot = spawnPoint:getRotation()
+	rot = rotateObject(rot, vec3(0,0,1), 180)
+	spawn.safeTeleport(getPlayerVehicle(0), spawnPoint:getPosition(), rot) 
 end
 
 local function onCreateFlag()
 	local currentVehID = be:getPlayerVehicleID(0)
 	local veh = getObjectByID(currentVehID)
+
 	if not veh then return end
 
 	local flagName = "CTF_flag" .. lastCreatedFlagID
@@ -1211,6 +1233,8 @@ if AddEventHandler then
 	AddEventHandler("requestVehicleID", requestVehicleID)
 	AddEventHandler("requestVelocity", requestVelocity)
 	AddEventHandler("saveArea", saveArea)
+	AddEventHandler("teleportPlayerToSpawn", teleportPlayerToSpawn)
+	AddEventHandler("spawnSpawnTrigger", spawnSpawnTrigger)
 end
 
 
@@ -1246,6 +1270,7 @@ M.requestVehicleID = requestVehicleID
 M.requestVelocity = requestVelocity
 M.onCTFTrigger = onCTFTrigger
 M.saveArea = saveArea
+M.teleportPlayerToSpawn = teleportPlayerToSpawn
 commands.dropPlayerAtCameraNoReset = dropPlayerAtCameraNoReset
 
 return M

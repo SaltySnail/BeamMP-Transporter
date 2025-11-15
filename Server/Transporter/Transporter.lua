@@ -30,6 +30,7 @@ local autoStartTimer = 0
 local autoStart = false
 local ghosts = true
 local areas = {}
+local availableFromAreas = {}
 local TRANSPORTER_DATA_PATH = "Resources/Server/Transporter/Data/"
 
 local areaCreation = {}
@@ -67,6 +68,53 @@ function dump(o)
        return tostring(o)
     end
 end
+
+function pickUnique(allOptions, availableOptions)
+    local function isEmpty(t)
+        return next(t) == nil
+    end
+    
+    local function getRandomKey(t)
+        local keys = {}
+        for k in pairs(t) do
+            table.insert(keys, k)
+        end
+        return keys[math.random(1, #keys)]
+    end
+    
+    availableOptions._lastPicked = availableOptions._lastPicked or nil
+    
+    if isEmpty(availableOptions) or (availableOptions._lastPicked and next(availableOptions) == nil) then
+        local lastPicked = availableOptions._lastPicked
+        
+        for k in pairs(allOptions) do
+            availableOptions[k] = true
+        end
+        
+        if lastPicked then
+            availableOptions[lastPicked] = nil
+        end
+        
+        availableOptions._lastPicked = nil
+    end
+    
+    -- print("pickUnique called")  
+    -- print("num available: " .. (function()
+    --     local count = 0
+    --     for k in pairs(availableOptions) do
+    --         if k ~= "_lastPicked" then count = count + 1 end
+    --     end
+    --     return count
+    -- end)())
+    
+    local pickedKey = getRandomKey(availableOptions)
+    
+    availableOptions._lastPicked = pickedKey
+    availableOptions[pickedKey] = nil
+    
+    return pickedKey
+end
+
 
 function seconds_to_days_hours_minutes_seconds(total_seconds) --modified code from https://stackoverflow.com/questions/45364628/lua-4-script-to-convert-seconds-elapsed-to-days-hours-minutes-seconds
     local time_days     = floor(total_seconds / 86400)
@@ -230,19 +278,15 @@ local function loadAreas()
 end
 
 function spawnFlag()
-	local flagName = ""
-	local flagNames = {}
-	print(dump(areas))
-	for name,_ in pairs(areas[area]["flags"]) do
-    	table.insert(flagNames, name)
+	if not availableFromAreas[area] then
+		availableFromAreas[area] = {}
 	end
-	if #flagNames > 0 then
-    	rand() --Some implementation need this before the numbers become random
-    	rand()
-    	rand()
-    	flagName = flagNames[rand(1,#flagNames)]
+	if not availableFromAreas[area]["flags"] then
+		availableFromAreas[area]["flags"] = {}
 	end
+  local flagName = pickUnique(areas[area]["flags"], availableFromAreas[area]["flags"])
 	print("Chosen flag: " .. dump(flagName))
+	-- print(dump(areas))
 	local toSend = {}
 	table.insert(toSend, flagName)
 	table.insert(toSend, areas[area]["flags"][flagName]["position"])
@@ -251,36 +295,39 @@ function spawnFlag()
 end
 
 function spawnGoal()
-	local goalName = ""
-	local goalNames = {}
-	for name,_ in pairs(areas[area]["goals"]) do
-		table.insert(goalNames, name)
+	if not availableFromAreas[area] then
+		availableFromAreas[area] = {}
 	end
-	if #goalNames > 0 then
-		rand() --Some implementation need this before the numbers become random
-		rand()
-		rand()
-		goalName = goalNames[rand(1,#goalNames)]
+	if not availableFromAreas[area]["goals"] then
+		availableFromAreas[area]["goals"] = {}
 	end
+	local goalName = pickUnique(areas[area]["goals"], availableFromAreas[area]["goals"])
 	print("Chosen goal: " .. goalName)
+	-- print(dump(areas))
 	local toSend = {}
 	table.insert(toSend, goalName)
 	table.insert(toSend, areas[area]["goals"][goalName]["position"])
 	table.insert(toSend, areas[area]["goals"][goalName]["rotation"])
 	MP.TriggerClientEvent(-1, "spawnGoal", Util.JsonEncode(toSend)) --flagPrefabTable[rand(1, flagPrefabTable.size())]
 end
-
--- function spawnGoal()
--- 	local goalID = 0
--- 	if goalPrefabCount > 0 then
--- 		rand() --Some implementation need this before the numbers become random
--- 		rand()
--- 		rand()
--- 		goalID = rand(1,goalPrefabCount)
--- 	end
--- 	print("Chosen goal: levels/" .. levelName .. "/multiplayer/" .. area .. "/goal" .. goalID .. ".prefab.json")
--- 	MP.TriggerClientEvent(-1, "spawnGoal", "levels/" .. levelName .. "/multiplayer/" .. area .. "/goal" .. goalID .. ".prefab.json") --flagPrefabTable[rand(1, flagPrefabTable.size())]
--- end
+ 
+function teleportPlayerToSpawn(ID)
+	-- print(dump(areas))
+	-- print("---------------------------------------------------------------")
+	-- print(dump(availableFromAreas))
+	-- print("---------------------------------------------------------------")
+	-- print(dump(area))
+	if not availableFromAreas[area] then
+		availableFromAreas[area] = {}
+	end
+	if not availableFromAreas[area]["spawns"] then
+		availableFromAreas[area]["spawns"] = {}
+	end
+	local spawnName = pickUnique(areas[area]["spawns"], availableFromAreas[area]["spawns"])
+	print("Chosen spawn: " .. spawnName)
+	print(dump(areas))
+	MP.TriggerClientEvent(ID, "teleportPlayerToSpawn", spawnName)
+end
 
 function spawnFlagAndGoal()
 	spawnFlag()
@@ -299,11 +346,6 @@ function applyStuff(targetDatabase, tables)
 	end
 	return appliedTables
 end
-
--- function setLevelName(playerID, name)
--- 	levelName = name
--- 	print("level name: " .. levelName)
--- end
 
 function onAreaChange()	
 	loadAreas() --Just to be sure
@@ -333,10 +375,6 @@ end
 
 function gameSetup()
 	MP.TriggerClientEvent(-1, "requestVehicleID", "nil")
-	-- if #areas == 0 then 
-	-- 	MP.SendChatMessage(-1, "Transporter is not available on this map.")
-	-- 	return 
-	-- end
 	math.randomseed(os.time())
 	onAreaChange()
 	for k,v in pairs(possibleTeams) do
@@ -406,9 +444,6 @@ function gameSetup()
 	gameState.flagCount = 1
 	gameState.goalCount = 1
 	gameState.scoreLimit = requestedScoreLimit
-
-	-- spawnFlagAndGoal()
-	-- MP.TriggerClientEvent(-1, "spawnObstacles", "levels/" .. levelName .. "/multiplayer/" .. area .. "/obstacles.prefab.json")
 
 	updateClients()
 
@@ -512,6 +547,13 @@ function showPrefabs(player) --shows the prefabs belonging to this map and this 
 		table.insert(toSend, data["position"])
 		table.insert(toSend, data["rotation"])
 		MP.TriggerClientEvent(player.playerID, "spawnGoal", Util.JsonEncode(toSend)) 
+	end
+	for name, data in pairs(areas[area]["spawns"]) do
+		local toSend = {}
+		table.insert(toSend, name)
+		table.insert(toSend, data["position"])
+		table.insert(toSend, data["rotation"])
+		MP.TriggerClientEvent(player.playerID, "spawnSpawnTrigger", Util.JsonEncode(toSend))
 	end
 	MP.TriggerClientEvent(player.playerID, "spawnObstacles", Util.JsonEncode(areas[area]["obstacles"]))
 end
@@ -688,10 +730,22 @@ end
 function gameRunningLoop()
 	if gameState.time < 0 then
 		MP.SendChatMessage(-1,"Transporter game starting in "..math.abs(gameState.time).." second")
-
-	elseif gameState.time == 0 then
+	end
+	if gameState.time == 0 then
 		gameStarting()
+		for ID,Player in pairs(MP.GetPlayers()) do
+			teleportPlayerToSpawn(ID)
+		end
 		spawnFlagAndGoal()
+	end
+	if gameState.time == -3 then
+		for name, spawnData in pairs(areas[area]["spawns"]) do
+			local toSend = {}
+			table.insert(toSend, name)
+			table.insert(toSend, spawnData["position"])
+			table.insert(toSend, spawnData["rotation"])
+			MP.TriggerClientEvent(-1, "spawnSpawnTrigger", Util.JsonEncode(toSend))
+		end
 		-- MP.TriggerClientEvent(-1, "spawnObstacles", "levels/" .. levelName .. "/multiplayer/" .. area .. "/obstacles.prefab.json")	
 		MP.TriggerClientEvent(-1, "spawnObstacles", Util.JsonEncode(areas[area]["obstacles"]))
 	end
