@@ -248,6 +248,9 @@ local function removePrefabs(type)
 			end
 		end
 	end
+	if type == "all" or type == "obstacle" then
+		be:reloadStaticCollision(true)
+	end
 end
 
 local function spawnFlag(data)
@@ -416,34 +419,10 @@ local function spawnSpawnTrigger(data)
 	scenetree.MissionGroup:addObject(triggerObj)
 end
 
-local function rotateObject(rotation, axis, degrees)
-    local radians = math.rad(-degrees) -- Negate the degrees here
-    local rotationChange = {
-        x = axis.x * math.sin(radians / 2),
-        y = axis.y * math.sin(radians / 2),
-        z = axis.z * math.sin(radians / 2),
-        w = math.cos(radians / 2)
-    }
-
-    local function quaternionMultiplication(q1, q2)
-        return {
-            w = q1.w * q2.w - q1.x * q2.x - q1.y * q2.y - q1.z * q2.z,
-            x = q1.w * q2.x + q1.x * q2.w + q1.y * q2.z - q1.z * q2.y,
-            y = q1.w * q2.y - q1.x * q2.z + q1.y * q2.w + q1.z * q2.x,
-            z = q1.w * q2.z + q1.x * q2.y - q1.y * q2.x + q1.z * q2.w
-        }
-    end
-
-    local newRotation = quaternionMultiplication(rotation, rotationChange)
-
-    return newRotation
-end
-
 local function teleportPlayerToSpawn(data)
 	print("teleportPlayerToSpawn " .. data)
 	local spawnPoint = scenetree.findObject(data .. "Trigger")
 	local rot = spawnPoint:getRotation()
-	-- rot = rotateObject(rot, vec3(0,0,1), 180)
 	spawn.safeTeleport(getPlayerVehicle(0), spawnPoint:getPosition(), rot) 
 end
 

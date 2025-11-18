@@ -50,6 +50,8 @@ local defaultFlagTint = true -- if the infecor should have a blue tint
 local defaultDistancecolor = 0.3 -- max intensity of the red filter
 local teams = false
 
+local pickUniqueState = pickUniqueState or {}
+
 -- local TransporterCommands = {
 -- 	transporter = {originModule = "Transporter", level = 0, arguments = {"argument"}, sourceLimited = 1, description = "Enables the .zip with the filename specified."},
 -- 	ctf = {originModule = "Transporter", level = 0, arguments = {"argument"}, sourceLimited = 1, description = "Alias for transporter."},
@@ -82,39 +84,39 @@ function pickUnique(allOptions, availableOptions)
         return keys[math.random(1, #keys)]
     end
     
-    availableOptions._lastPicked = availableOptions._lastPicked or nil
+    -- Use the availableOptions table as a key to track its last picked item
+    local stateKey = availableOptions
+    local lastPicked = pickUniqueState[stateKey]
     
-    if isEmpty(availableOptions) or (availableOptions._lastPicked and next(availableOptions) == nil) then
-        local lastPicked = availableOptions._lastPicked
-        
+    if isEmpty(availableOptions) then
+        -- Refill availableOptions from allOptions
         for k in pairs(allOptions) do
             availableOptions[k] = true
         end
         
+        -- Remove the last picked item to avoid immediate repetition
         if lastPicked then
             availableOptions[lastPicked] = nil
         end
-        
-        availableOptions._lastPicked = nil
     end
     
     -- print("pickUnique called")  
     -- print("num available: " .. (function()
     --     local count = 0
     --     for k in pairs(availableOptions) do
-    --         if k ~= "_lastPicked" then count = count + 1 end
+    --         count = count + 1
     --     end
     --     return count
     -- end)())
     
     local pickedKey = getRandomKey(availableOptions)
     
-    availableOptions._lastPicked = pickedKey
+    -- Save the picked key globally
+  	pickUniqueState[stateKey] = pickedKey
     availableOptions[pickedKey] = nil
     
     return pickedKey
 end
-
 
 function seconds_to_days_hours_minutes_seconds(total_seconds) --modified code from https://stackoverflow.com/questions/45364628/lua-4-script-to-convert-seconds-elapsed-to-days-hours-minutes-seconds
     local time_days     = floor(total_seconds / 86400)
