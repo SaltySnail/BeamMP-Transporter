@@ -27,7 +27,6 @@ local possibleTeams = {"Red", "LightBlue", "Green", "Yellow", "Purple"}
 local chosenTeams = {}
 local lastCollision = {"", ""}
 local autoStartTimer = 0
-local autoStart = false
 local ghosts = true
 local areas = {}
 local availableFromAreas = {}
@@ -43,14 +42,21 @@ gameState.flagCount = 1
 gameState.goalCount = 1
 gameState.allowFlagCarrierResets = false
 
-local roundLength = 5*60 -- length of the game in seconds
 local defaultRedFadeDistance = 100 -- the distance between a flag carrier and someone that doesn't have the flag, where the screen of the flag carrier will turn red
 local defaultColorPulse = true -- if the car color should pulse between the car color and blue
 local defaultFlagTint = true -- if the infecor should have a blue tint
 local defaultDistancecolor = 0.3 -- max intensity of the red filter
-local teams = false
 
 local pickUniqueState = pickUniqueState or {}
+
+local settings = {}
+settings.autoStart = false
+settings.autoStartWaitTime = 30
+settings.ghosts = true
+settings.roundLength = 300 -- length of a round in seconds
+settings.teams = false
+settings.allowCommands = true
+settings.randomVehicles = true
 
 -- local TransporterCommands = {
 -- 	transporter = {originModule = "Transporter", level = 0, arguments = {"argument"}, sourceLimited = 1, description = "Enables the .zip with the filename specified."},
@@ -142,7 +148,7 @@ function seconds_to_days_hours_minutes_seconds(total_seconds) --modified code fr
 end
 
 function gameStarting()
-	local days, hours , minutes , seconds = seconds_to_days_hours_minutes_seconds(roundLength)
+	local days, hours , minutes , seconds = seconds_to_days_hours_minutes_seconds(settings.roundLength)
 	local amount = 0
 	if days then
 		amount = amount + 1
@@ -381,7 +387,20 @@ function teamAlreadyChosen(team)
 	return chosenTeams[team].chosen
 end
 
+local function loadSettings()
+	local file = io.open(TRANSPORTER_DATA_PATH .. "settings.json", "r") 
+  if file then
+    local content = file:read("*all")
+    file:close()
+	  settings = Util.JsonDecode(content)
+	else
+		print("Couldn't open Transporter/Data/settings.json")
+	end
+	print("Settings are now: " .. dump(settings))
+end
+
 function gameSetup()
+	loadSettings()
 	MP.TriggerClientEvent(-1, "requestVehicleID", "nil")
 	math.randomseed(os.time())
 	onAreaChange()
@@ -442,12 +461,12 @@ function gameSetup()
 	gameState.playerCount = playerCount
 	gameState.time = -5
 	
-	gameState.roundLength = roundLength
+	gameState.roundLength = settings.roundLength
 	gameState.endtime = -1
 	gameState.gameRunning = true
 	gameState.gameEnding = false
 	gameState.gameEnded = false
-	gameState.teams = teams
+	gameState.teams = settings.teams
 	gameState.currentArea = ""
 	gameState.flagCount = 1
 	gameState.goalCount = 1
@@ -479,7 +498,7 @@ function transporterGameEnd(reason)
 	MP.SendChatMessage(-1,"The scores this round are: ")
 	local highestScore = 0
 	local winningTeam = ""
-	if teams and chosenTeams then
+	if settings.teams and chosenTeams then
 		for teamName, teamData in pairs(chosenTeams) do
 			if chosenTeams[teamName].chosen then
 				-- print(dump(chosenTeams))
@@ -505,7 +524,7 @@ function transporterGameEnd(reason)
 			MP.SendChatMessage(-1, "" .. playername .. ": " .. player.score)
 		end
 	end
-	if teams and chosenTeams then
+	if settings.teams and chosenTeams then
 		MP.SendChatMessage(-1, "Team " .. winningTeam .. " Won!")
 		for playername,player in pairs(gameState.players) do
 			if player.team == winningTeam then
@@ -532,7 +551,7 @@ function transporterGameEnd(reason)
 		MP.SendChatMessage(player.ID, "" .. playername .. ": " .. playersOutsideOfRound[playername].totalScore)
 	end
 
-	if ghosts then
+	if settings.ghosts then
 		for playerName,player in pairs(gameState.players) do
 			gameState.players[playerName].fade = false
 			-- print("Triggering unfadePerson " .. vehicleIDs[playerName].vehID)
@@ -634,7 +653,9 @@ function transporter(player, argument)
 		MP.SendChatMessage(player.playerID, "\"/transporter allow resets \'true/false\' \" to specify if the flag carrier can reset without losing the flag.")
 		MP.SendChatMessage(player.playerID, "\"/transporter create \'flag/goal/spawn\' \" to create a goal, spawn, or flag, so you can make your own areas! \n Consult the tutorial on GitHub to learn how to do this.")
 		MP.SendChatMessage(player.playerID, "\"/transporter ghosts \'true/false\' \" to specify if people should be ghosts on reset and when getting the flag.")
-		MP.SendChatMessage(player.playerID, "\"/transporter save \'name\' \" to save the created area with the name (overwrites the area with name and saves all goals and flags created with /ctf create goal/flag).")
+		MP.SendChatMessage(player.playerID, "\"/transporter save \'name\' \" to save the created area with the name (overwrites the area with name and saves all goals, flags, spawns, and obstacles created with /ctf create goal/flag/spawn or obstacles renamed with world editor.).")
+		MP.SendChatMessage(player.playerID, "\"/transporter auto \'true/false\' \" turns auto mode on or off")
+		MP.SendChatMessage(player.playerID, "\"/transporter auto wait time \'seconds\' \" the amount of seconds to wait between automatic rounds")
 	elseif argument == "show" then
 		onAreaChange()
 		showPrefabs(player)
@@ -644,7 +665,7 @@ function transporter(player, argument)
 		local number = 5
 		if string.find(argument, "start %d") then
 			number = tonumber(string.sub(argument,7,10000))
-			roundLength = number * 60
+			settings.roundLength = number * 60
 			print("Transporter game starting with duration: " .. number)
 		end
 		if not gameState.gameRunning then
@@ -658,8 +679,8 @@ function transporter(player, argument)
 		end
 	elseif string.find(argument, "time limit %d") then
 		local number = tonumber(string.sub(argument,11,10000))
-		roundLength = number * 60
-		print("Transporter game time limit is now: " .. roundLength)
+		settings.roundLength = number * 60
+		print("Transporter game time limit is now: " .. settings.roundLength)
 	elseif string.find(argument, "score limit %d") then
 		local number = tonumber(string.sub(argument,12,10000))
 		requestedScoreLimit = number
@@ -667,11 +688,11 @@ function transporter(player, argument)
 	elseif string.find(argument, "teams %S") then
 		local teamsString = string.sub(argument,7,10000)
 		if teamsString == "true" then
-			teams = true
+			settings.teams = true
 		elseif teamsString == "false" then
-			teams = false
+			settings.teams = false
 		end
-		MP.SendChatMessage(-1, "Playing with teams: " .. dump(teams) .. " (available options are true or false)")
+		MP.SendChatMessage(-1, "Playing with teams: " .. dump(settings.teams) .. " (available options are true or false)")
 	elseif string.find(argument, "save %S") then
 			local tmpAreaName = string.sub(argument, 6, 10000)
 		  MP.TriggerClientEvent(player.playerID, "saveArea", tmpAreaName)
@@ -686,11 +707,24 @@ function transporter(player, argument)
 	elseif string.find(argument, "ghosts %S") then
 		local allowedString = string.sub(argument,8,10000)
 		if allowedString == "true" then
-			ghosts = true
+			settings.ghosts = true
 		elseif allowedString == "false" then
-			ghosts = false
+			settings.ghosts = false
 		end
-		MP.SendChatMessage(-1, "Resets allowed when carrying flag: " .. dump(gameState.allowFlagCarrierResets) .. " (available options are true or false)")
+		MP.SendChatMessage(-1, "Ghosting enabled: " .. dump(settings.ghosts) .. " (available options are true or false)")
+	elseif string.match(argument, "^auto %S") then
+    local value = string.match(argument, "^auto (%S+)")
+    if value == "true" or value == "false" then
+      settings.autoStart = (value == "true")
+    end
+	elseif string.match(argument, "^auto wait time %S") then
+    local value = string.match(argument, "^auto wait time (%S+)")
+    autoWaitTime = tonumber(value)
+	elseif string.match(argument, "^random vehicles %S") then
+    local value = string.match(argument, "^auto (%S+)")
+    if value == "true" or value == "false" then
+      settings.autoStart = (value == "true")
+    end
 	elseif string.find(argument, "create %S") then
 		local createString = string.sub(argument,8,10000) 
 		if createString == "flag" then
@@ -773,13 +807,13 @@ function gameRunningLoop()
 			if player.localContact and player.remoteContact then
 				MP.SendChatMessage(-1,""..playername.." has captured the flag!")
 			end		
-			if ghosts and not teams and player.fade and gameState.time >= player.fadeEndTime then
+			if settings.ghosts and not settings.teams and player.fade and gameState.time >= player.fadeEndTime then
 				gameState.players[MP.GetPlayerName(player.ID)].fade = false
 				MP.TriggerClientEvent(-1, "unfadePerson", vehicleIDs[MP.GetPlayerName(player.ID)].vehID)
 				-- print("Triggering unfadePerson " .. vehicleIDs[MP.GetPlayerName(player.ID)].vehID)
 				-- MP.TriggerClientEvent(player.ID, "allowResets", "nil")
 			end
-			if ghosts and not teams and not player.hasFlag and vehVel[MP.GetPlayerName(player.ID)] and (vehVel[MP.GetPlayerName(player.ID)].vel < 10) then --less than 10 km/h 
+			if settings.ghosts and not settings.teams and not player.hasFlag and vehVel[MP.GetPlayerName(player.ID)] and (vehVel[MP.GetPlayerName(player.ID)].vel < 10) then --less than 10 km/h 
 				gameState.players[MP.GetPlayerName(player.ID)].fade = true
 				MP.TriggerClientEvent(-1, "fadePerson", vehicleIDs[MP.GetPlayerName(player.ID)].vehID)
 				gameState.players[MP.GetPlayerName(player.ID)].fadeEndTime = gameState.time + 2
@@ -800,14 +834,13 @@ function gameRunningLoop()
 		transporterGameEnd("time")
 		gameState.endtime = gameState.time + 10
 	elseif gameState.gameEnding and gameState.time == gameState.endtime then
-		gameState.gameRunning = false
 		gameState = {}
 		gameState.players = {}
 		gameState.gameRunning = false
 		gameState.gameEnding = false
 		gameState.gameEnded = true
 		MP.TriggerClientEvent(-1, "onGameEnd", "nil")
-		if ghosts then
+		if settings.ghosts then
 			for playerName,player in pairs(gameState.players) do
 				gameState.players[playerName].fade = false
 				-- print("Triggering unfadePerson " .. vehicleIDs[playerName].vehID)
@@ -827,7 +860,7 @@ function gameRunningLoop()
 		gameState.time = gameState.time + 1
 	else
 		for playername,player in pairs(players) do
-			if ghosts then
+			if settings.ghosts then
 				-- gameState.players[MP.GetPlayerName(player.ID)].fade = false
 				print("Triggering unfadePerson " .. vehicleIDs[MP.GetPlayerName(player.ID)].vehID)
 				MP.TriggerClientEvent(-1, "unfadePerson", vehicleIDs[MP.GetPlayerName(player.ID)].vehID)
@@ -860,9 +893,9 @@ end
 function transporterTimer()
 	if gameState.gameRunning then
 		gameRunningLoop()
-	elseif autoStart and MP.GetPlayerCount() > -1 then
+	elseif settings.autoStart and MP.GetPlayerCount() > -1 then
 		autoStartTimer = autoStartTimer + 1
-		if autoStartTimer >= 30 then
+		if autoStartTimer >= settings.autoStartWaitTime then
 			autoStartTimer = 0
 			gameSetup()
 		end
@@ -908,6 +941,7 @@ function onInit()
 	MP.RegisterEvent("onSaveArea","onSaveArea")
 
 	loadAreas() --this uses the Map in ServerConfig.toml to parse only areas on this level
+	loadSettings()
 	-- applyStuff(commands, TransporterCommands)
 	print("--------------------Transporter loaded----------------")
 end
@@ -986,7 +1020,7 @@ end
 function onVehicleReset(playerID, vehID, data)
 	if not gameState or not playerID or not gameState.players or not gameState.gameRunning or not gameState.players[MP.GetPlayerName(playerID)] or gameState.allowFlagCarrierResets then return end
 	resetFlagCarrier(nil, Util.JsonEncode(gameState.players[MP.GetPlayerName(playerID)]))
-	if ghosts then
+	if settings.ghosts then
 		MP.TriggerClientEvent(-1, "fadePerson", "" .. vehicleIDs[MP.GetPlayerName(playerID)].vehID)
 		gameState.players[MP.GetPlayerName(playerID)].fade = true
 		gameState.players[MP.GetPlayerName(playerID)].fadeEndTime = gameState.time + 2
@@ -1043,7 +1077,7 @@ function onTransporterContact(localPlayerID, data)
 				MP.TriggerClientEvent(localPlayerID, "onLostFlag", "nil")
 				MP.TriggerClientEvent(remotePlayerID, "disallowResets", "nil") --got flag
 				MP.TriggerClientEvent(remotePlayerID, "onGotFlag", "nil")
-				if ghosts then
+				if settings.ghosts then
 					MP.TriggerClientEvent(-1, "fadePerson", "" .. vehicleIDs[remotePlayerName].vehID)
 					gameState.players[remotePlayerName].fade = true
 					gameState.players[remotePlayerName].fadeEndTime = gameState.time + 2
@@ -1059,7 +1093,7 @@ function onTransporterContact(localPlayerID, data)
 				MP.TriggerClientEvent(remotePlayerID, "allowResets", "nil") --lost flag
 				MP.TriggerClientEvent(remotePlayerID, "onLostFlag", "nil")
 				gameState.players[localPlayerName].localContact = false
-				if ghosts then
+				if settings.ghosts then
 					MP.TriggerClientEvent(-1, "fadePerson", "" .. vehicleIDs[localPlayerName].vehID)
 					gameState.players[localPlayerName].fade = true
 					gameState.players[localPlayerName].fadeEndTime = gameState.time + 2
