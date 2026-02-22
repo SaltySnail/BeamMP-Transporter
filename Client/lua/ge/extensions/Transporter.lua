@@ -398,7 +398,6 @@ local function spawnSpawnTrigger(data)
     end
     if (index == 3) then
 			rotation = quat(data[1], data[2], data[3], data[4])
-			rotation = quatToAxisAngle(rotation)
     end
 	end
 	print("Spawning spawnTrigger " .. name .. " " .. dump(data))	
@@ -408,7 +407,7 @@ local function spawnSpawnTrigger(data)
 	else
 		triggerObj:setPosition(vec3(0,0,0))
 	end
-	local rotationString = "0,0,0,1"
+	local rotationString = "1 0 0 0"
 	if rotation then
 		rotationString = "" .. rotation.x .. " " .. rotation.y .. " " .. rotation.z .. " " .. rotation.w
 	end
@@ -417,6 +416,10 @@ local function spawnSpawnTrigger(data)
 	triggerObj:setField('rotation', 0, rotationString)
 	triggerObj:registerObject(name .. "Trigger")
 	scenetree.MissionGroup:addObject(triggerObj)
+
+	-- To debug the rotation difference between an objects rotation and the cars rotation:
+	-- local veh = getObjectByID(be:getPlayerVehicleID(0)) 
+	-- spawn.safeTeleport(veh, triggerObj:getPosition(), triggerObj:getRotation(), nil, nil, nil, nil, false)
 end
 
 local function teleportPlayerToSpawn(data)
@@ -469,12 +472,13 @@ local function onCreateSpawn()
 	local spawnName = "CTF_spawn" .. lastCreatedSpawnID
 	lastCreatedSpawnID = lastCreatedSpawnID + 1
 	local pos = veh:getPosition()
-	local rot = veh:getRotation()  -- Gets rotation as quaternion
-	
+	local rot = (quatFromDir(vec3(veh:getDirectionVector()):normalized(), vec3(veh:getDirectionVectorUp()):normalized())):toTorqueQuat()
+
 	local toSend = {}
 	table.insert(toSend, spawnName)
 	table.insert(toSend, {pos.x, pos.y, pos.z})  -- Convert to array
 	table.insert(toSend, {rot.x, rot.y, rot.z, rot.w})  -- Convert to array
+	print("Spawning spawn trigger: " .. dump(toSend))
 	spawnSpawnTrigger(jsonEncode(toSend))
 end
 
@@ -526,10 +530,14 @@ local function saveArea(areaName)
 				if string.find(objName, "CTF_spawn") and string.find(objName, "Trigger") then
 					local spawnName = objName:gsub("Trigger", "")
 					local pos = obj:getPosition()
-					local rot = obj:getRotation()
+					local rotString = obj:getField('rotation', 0)
+					local rot = {}
+					for num in string.gmatch(rotString, "%S+") do
+						table.insert(rot, tonumber(num))
+					end
 					areaData[areaName].spawns[spawnName] = {
 						position = {pos.x, pos.y, pos.z},
-						rotation = {rot.x, rot.y, rot.z, rot.w}
+						rotation = {rot[1], rot[2], rot[3], rot[4]}
 					}
 				end
 				

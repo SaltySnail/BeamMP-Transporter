@@ -81,6 +81,7 @@ function pickUnique(allOptions, availableOptions)
         for k in pairs(t) do
             table.insert(keys, k)
         end
+    		if (#keys == 0) then return nil end
         return keys[math.random(1, #keys)]
     end
     
@@ -110,6 +111,7 @@ function pickUnique(allOptions, availableOptions)
     -- end)())
     
     local pickedKey = getRandomKey(availableOptions)
+  	if (pickedKey == nil) then return nil end
     
     -- Save the picked key globally
   	pickUniqueState[stateKey] = pickedKey
@@ -287,6 +289,7 @@ function spawnFlag()
 		availableFromAreas[area]["flags"] = {}
 	end
   local flagName = pickUnique(areas[area]["flags"], availableFromAreas[area]["flags"])
+  if not flagName then print("Failed to spawn flag") return end
 	print("Chosen flag: " .. dump(flagName))
 	-- print(dump(areas))
 	local toSend = {}
@@ -304,6 +307,7 @@ function spawnGoal()
 		availableFromAreas[area]["goals"] = {}
 	end
 	local goalName = pickUnique(areas[area]["goals"], availableFromAreas[area]["goals"])
+	if not goalName then print("Failed to spawn goal") return end
 	print("Chosen goal: " .. goalName)
 	-- print(dump(areas))
 	local toSend = {}
@@ -326,6 +330,7 @@ function teleportPlayerToSpawn(ID)
 		availableFromAreas[area]["spawns"] = {}
 	end
 	local spawnName = pickUnique(areas[area]["spawns"], availableFromAreas[area]["spawns"])
+	if not spawnName then print("Couldn't find a spawn to teleport to") return end
 	print("Chosen spawn: " .. spawnName)
 	print(dump(areas))
 	MP.TriggerClientEvent(ID, "teleportPlayerToSpawn", spawnName)
@@ -352,6 +357,7 @@ end
 function onAreaChange()	
 	loadAreas() --Just to be sure
 	local foundArea = false
+	if not areas then print("There are no areas on this level...") return end
 	for areaName,_ in pairs(areas) do
 		if areaName == requestedArea then
 			area = areaName
@@ -561,7 +567,7 @@ function showPrefabs(player) --shows the prefabs belonging to this map and this 
 end
 
 function onSaveArea(player, data)
-	print("onSaveArea called by player: " .. dump(player) .. " and data: " .. dump(data))
+	--print("onSaveArea called by player: " .. dump(player) .. " and data: " .. dump(data))
 	local existingData = {}
 	local file = io.open(TRANSPORTER_DATA_PATH .. "areas.json", "r")
 	if file then
@@ -696,6 +702,7 @@ function transporter(player, argument)
 		end
 	elseif string.find(argument, "list %S") then
 		local subArgument = string.sub(argument,6,10000)
+		loadAreas()
 		if subArgument == "areas" then
 			if areaNames == {} then
 				MP.SendChatMessage(player.playerID, "There are no areas made for this map, a server restart might fix it or try a different map.")
