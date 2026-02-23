@@ -30,6 +30,9 @@ local autoStartTimer = 0
 local ghosts = true
 local areas = {}
 local availableFromAreas = {}
+local allowedConfigs = {}
+local availableConfigs = {}
+local class = ""
 local TRANSPORTER_DATA_PATH = "Resources/Server/Transporter/Data/"
 
 local areaCreation = {}
@@ -338,7 +341,7 @@ function teleportPlayerToSpawn(ID)
 	local spawnName = pickUnique(areas[area]["spawns"], availableFromAreas[area]["spawns"])
 	if not spawnName then print("Couldn't find a spawn to teleport to") return end
 	print("Chosen spawn: " .. spawnName)
-	print(dump(areas))
+	-- print(dump(areas))
 	MP.TriggerClientEvent(ID, "teleportPlayerToSpawn", spawnName)
 end
 
@@ -399,8 +402,27 @@ local function loadSettings()
 	print("Settings are now: " .. dump(settings))
 end
 
+local function readAllowedConfigs()
+	local file = io.open(TRANSPORTER_DATA_PATH .. "allowedConfigs.json", "r")
+	if not file then 
+		print("allowedconfigs.json not found")
+		return
+	end
+	local contents = file:read("*a")
+	file:close()
+	allowedConfigs = Util.JsonDecode(contents)
+end
+
+local function pickRandomVehicleClass()
+	class = pickUnique(allowedConfigs, availableConfigs)
+end
+
 function gameSetup()
 	loadSettings()
+	if settings.randomVehicles then
+		readAllowedConfigs()
+		pickRandomVehicleClass()
+	end
 	MP.TriggerClientEvent(-1, "requestVehicleID", "nil")
 	math.randomseed(os.time())
 	onAreaChange()
@@ -437,6 +459,19 @@ function gameSetup()
 		end
 		if MP.IsPlayerConnected(ID) and MP.GetPlayerVehicles(ID) then
 			local player = {}
+			if settings.randomVehicles then
+				if not availableConfigs[class] then availableConfigs[class] = {} end 
+				config = pickUnique(allowedConfigs[class], availableConfigs[class])
+				print("ChosenConfig: " .. dump(allowedConfigs[class][config]))
+				local configFile = io.open(TRANSPORTER_DATA_PATH .. allowedConfigs[class][config], 'r')
+				if not configFile then 
+					print(TRANSPORTER_DATA_PATH .. allowedConfigs[class][config] .. " not found")
+					return
+				end
+				local contents = configFile:read("*a")
+				configFile:close()
+				player.chosenConfig = Util.JsonDecode(contents)
+			end
 			player.ID = ID
 			player.localContact = false
 			player.remoteContact = false
@@ -460,12 +495,16 @@ function gameSetup()
 
 	gameState.playerCount = playerCount
 	gameState.time = -5
+	if settings.randomVehicles then 
+		gameState.time = -30
+	end
 	
 	gameState.roundLength = settings.roundLength
 	gameState.endtime = -1
 	gameState.gameRunning = true
 	gameState.gameEnding = false
 	gameState.gameEnded = false
+	gameState.randomVehicles = settings.randomVehicles
 	gameState.teams = settings.teams
 	gameState.currentArea = ""
 	gameState.flagCount = 1
@@ -538,7 +577,7 @@ function transporterGameEnd(reason)
 		for playername,player in pairs(gameState.players) do
 			if player.score == highestScore then
 				MP.SendChatMessage(-1, "" .. playername .. " Won!")
-				print("" .. dump(player))
+				-- print("" .. dump(player))
 				MP.TriggerClientEvent(player.ID, "onWin", "nil")
 				playersOutsideOfRound[playername].totalScore = playersOutsideOfRound[playername].totalScore + 1--player.score
 			else
@@ -639,7 +678,7 @@ end
 
 function transporter(player, argument)
 	if argument == "help" then
-		MP.SendChatMessage(player.playerID, "Anything between double qoutes; \"\" is a command. \n Anything between single quotes; \'\' is an argument, \n if there is a slash it means those are the argument options for that command.")
+		MP.SendChatMessage(player.playerID, "Anything between double qoutes; \"\" is a command. Anything between single quotes; \'\' is an argument, if there is a slash it means those are the argument options for that command.")
 		MP.SendChatMessage(player.playerID, "\"/transporter start\" to start a transporter game.")
 		MP.SendChatMessage(player.playerID, "\"/transporter stop\" to stop a transporter game.")
 		MP.SendChatMessage(player.playerID, "\"/transporter area \'chosenArea\' \" to choose an area to play transporter on.")
@@ -651,11 +690,12 @@ function transporter(player, argument)
 		MP.SendChatMessage(player.playerID, "\"/transporter score limit \'points\' \" to set the score limit of a transporter game to the specified score.")
 		MP.SendChatMessage(player.playerID, "\"/transporter teams \'true/false\' \" to specify if the transporter games uses teams.")
 		MP.SendChatMessage(player.playerID, "\"/transporter allow resets \'true/false\' \" to specify if the flag carrier can reset without losing the flag.")
-		MP.SendChatMessage(player.playerID, "\"/transporter create \'flag/goal/spawn\' \" to create a goal, spawn, or flag, so you can make your own areas! \n Consult the tutorial on GitHub to learn how to do this.")
+		MP.SendChatMessage(player.playerID, "\"/transporter create \'flag/goal/spawn\' \" to create a goal, spawn, or flag, so you can make your own areas! Consult the tutorial on GitHub to learn how to do this.")
 		MP.SendChatMessage(player.playerID, "\"/transporter ghosts \'true/false\' \" to specify if people should be ghosts on reset and when getting the flag.")
 		MP.SendChatMessage(player.playerID, "\"/transporter save \'name\' \" to save the created area with the name (overwrites the area with name and saves all goals, flags, spawns, and obstacles created with /ctf create goal/flag/spawn or obstacles renamed with world editor.).")
 		MP.SendChatMessage(player.playerID, "\"/transporter auto \'true/false\' \" turns auto mode on or off")
 		MP.SendChatMessage(player.playerID, "\"/transporter auto wait time \'seconds\' \" the amount of seconds to wait between automatic rounds")
+		MP.SendChatMessage(player.playerID, "\"/transporter random vehicles \'true/false\' \" specifies if random vehicles from defined classes should be spawned for the players.")
 	elseif argument == "show" then
 		onAreaChange()
 		showPrefabs(player)
@@ -716,14 +756,17 @@ function transporter(player, argument)
     local value = string.match(argument, "^auto (%S+)")
     if value == "true" or value == "false" then
       settings.autoStart = (value == "true")
+      MP.SendChatMessage(player.playerID, "Using auto mode: " .. settings.autoStart)
     end
 	elseif string.match(argument, "^auto wait time %S") then
     local value = string.match(argument, "^auto wait time (%S+)")
     autoWaitTime = tonumber(value)
+    MP.SendChatMessage(player.playerID, "Auto wait time is now: " .. autoWaitTime)
 	elseif string.match(argument, "^random vehicles %S") then
-    local value = string.match(argument, "^auto (%S+)")
+    local value = string.match(argument, "^random vehicles (%S+)")
     if value == "true" or value == "false" then
       settings.autoStart = (value == "true")
+      MP.SendChatMessage(player.playerID, "Using random vehicles: " .. settings.autoStart)
     end
 	elseif string.find(argument, "create %S") then
 		local createString = string.sub(argument,8,10000) 

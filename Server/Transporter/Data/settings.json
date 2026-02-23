@@ -5,5 +5,5 @@
     "roundLength": 300,
     "teams": false,
     "allowCommands": true,
-    "randomVehicles": false
+    "randomVehicles": true
 }

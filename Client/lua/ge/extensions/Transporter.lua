@@ -211,6 +211,46 @@ function disallowResets()
 	end
 end
 
+local function spawnVehicleConfig(config)
+	if type(config) ~= 'table' then config = jsonDecode(config) end
+	core_vehicles.replaceVehicle(config.model or config.mainPartName, {model = config.model or config.mainPartName, config = config})
+end
+
+local function spawnRandomVehicle()
+	local hasCar = false
+	local playerName = ""
+	local vehCount = 0
+	playerName = MPConfig.getNickname()
+	for vehID, vehData in pairs(MPVehicleGE.getOwnMap()) do
+		hasCar = true
+		print("Playername: " .. playerName .. " vehCount: " .. vehCount)
+		break
+	end 
+	if not hasCar then return end
+	if not playerName then print("No playername!?!?") return end	
+	career_career.closeAllMenus()
+	local ogCamNameRVeh = core_camera.getActiveCamName(0)
+	core_camera.setByName(0, "free")
+	core_camera.resetCamera(0)
+	career_career.closeAllMenus()
+	for vehID, theCar in pairs(MPVehicleGE.getOwnMap()) do
+		local vehicle = scenetree.findObjectById(theCar.gameVehicleID)
+		if vehicle then
+			vehicle:delete()
+		end
+    end
+	career_career.closeAllMenus() -- spam this son of a bitch
+	for playername, player in pairs(gamestate.players) do
+		if playername == playerName then
+			print("Playername: " .. playername .. " chosenConfig: " .. dump(player.chosenConfig))
+			spawnVehicleConfig(player.chosenConfig)
+			break
+		end
+	end
+	core_camera.setByName(0, ogCamNameRVeh)
+	core_camera.resetCamera(0)
+end
+
 local function removePrefabs(type)
 	-- Search through all objects in the scene
 	for _, objName in pairs(scenetree.getAllObjects()) do
@@ -752,6 +792,9 @@ function updateTransporterGameState(data)
 		core_gamestate.setGameState('transporter', 'transporter', 'transporter')
 	end
 
+	if gamestate.randomVehicles and time and time == -29 then
+		spawnRandomVehicle()
+	end
 	if time and time < 0 then
 		txt = "Game starts in "..math.abs(time).." seconds"
 	elseif gamestate.gameRunning and not gamestate.gameEnding and time or gamestate.endtime and (gamestate.endtime - time) > 9 then
