@@ -520,16 +520,16 @@ function transporterGameEnd(reason)
     MP.TriggerClientEvent(-1, "removePrefabs", "all")
 	gameState.gameEnding = true
 	if reason == nil or reason == "nil" then
-		MP.SendChatMessage(-1,"Game stopped for uknown reason")
+		MP.SendChatMessage(-1, "Game stopped for uknown reason")
 	else
 		if reason == "time" then
-			MP.SendChatMessage(-1,"Game over, time limit was reached")
+			MP.SendChatMessage(-1, "Game over, time limit was reached")
 			gameState.endtime = gameState.time + 10
 		elseif reason == "manual" then
-			MP.SendChatMessage(-1,"Game stopped, Everyone Looses")
+			MP.SendChatMessage(-1, "Game stopped, Everyone Looses")
 			gameState.endtime = gameState.time + 10
 		elseif reason == "score" then
-			MP.SendChatMessage(-1,"Game over, score limit was reached")
+			MP.SendChatMessage(-1, "Game over, score limit was reached")
 			gameState.endtime = gameState.time + 10
 		end
 	end
@@ -585,7 +585,7 @@ function transporterGameEnd(reason)
 			end
 		end
 	end
-	MP.SendChatMessage("Amount of rounds won:")
+	MP.SendChatMessage(player.ID, "Amount of rounds won:")
 	for playername, player in pairs(playersOutsideOfRound) do
 		MP.SendChatMessage(player.ID, "" .. playername .. ": " .. playersOutsideOfRound[playername].totalScore)
 	end
