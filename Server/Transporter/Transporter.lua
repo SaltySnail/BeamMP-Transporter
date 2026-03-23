@@ -585,9 +585,9 @@ function transporterGameEnd(reason)
 			end
 		end
 	end
-	MP.SendChatMessage(player.ID, "Amount of rounds won:")
+	MP.SendChatMessage(-1, "Amount of rounds won:")
 	for playername, player in pairs(playersOutsideOfRound) do
-		MP.SendChatMessage(player.ID, "" .. playername .. ": " .. playersOutsideOfRound[playername].totalScore)
+		MP.SendChatMessage(-1, "" .. playername .. ": " .. playersOutsideOfRound[playername].totalScore)
 	end
 
 	if settings.ghosts then
@@ -752,21 +752,21 @@ function transporter(player, argument)
 			settings.ghosts = false
 		end
 		MP.SendChatMessage(-1, "Ghosting enabled: " .. dump(settings.ghosts) .. " (available options are true or false)")
-	elseif string.match(argument, "^auto %S") then
-    local value = string.match(argument, "^auto (%S+)")
+	elseif string.match(argument, "auto %S") then
+    local value = string.match(argument, "auto (%S+)")
     if value == "true" or value == "false" then
       settings.autoStart = (value == "true")
-      MP.SendChatMessage(player.playerID, "Using auto mode: " .. settings.autoStart)
+      MP.SendChatMessage(player.playerID, "Using auto mode: " .. tostring(settings.autoStart))
     end
-	elseif string.match(argument, "^auto wait time %S") then
-    local value = string.match(argument, "^auto wait time (%S+)")
+	elseif string.match(argument, "auto wait time %S") then
+    local value = string.match(argument, "auto wait time (%S+)")
     autoWaitTime = tonumber(value)
     MP.SendChatMessage(player.playerID, "Auto wait time is now: " .. autoWaitTime)
-	elseif string.match(argument, "^random vehicles %S") then
-    local value = string.match(argument, "^random vehicles (%S+)")
+	elseif string.match(argument, "random vehicles %S") then
+    local value = string.match(argument, "random vehicles (%S+)")
     if value == "true" or value == "false" then
-      settings.autoStart = (value == "true")
-      MP.SendChatMessage(player.playerID, "Using random vehicles: " .. settings.autoStart)
+      settings.randomVehicles = (value == "true")
+      MP.SendChatMessage(player.playerID, "Using random vehicles: " .. tostring(settings.randomVehicles))
     end
 	elseif string.find(argument, "create %S") then
 		local createString = string.sub(argument,8,10000) 

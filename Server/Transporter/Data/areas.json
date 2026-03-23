@@ -6266,6 +6266,1550 @@
                 }
             }
         },
+        "island": {
+            "flags": {
+                "CTF_flag1": {
+                    "position": [
+                        -965.72027587891,
+                        1994.9844970703,
+                        85.136161804199
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_flag10": {
+                    "position": [
+                        452.97537231445,
+                        1670.5288085938,
+                        74.921981811523
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_flag11": {
+                    "position": [
+                        548.89520263672,
+                        1888.2322998047,
+                        75.222396850586
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_flag12": {
+                    "position": [
+                        149.61827087402,
+                        1758.9682617188,
+                        102.66827392578
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_flag2": {
+                    "position": [
+                        -719.71392822266,
+                        2001.677734375,
+                        80.707542419434
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_flag3": {
+                    "position": [
+                        -579.50958251953,
+                        1969.5015869141,
+                        80.658737182617
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_flag4": {
+                    "position": [
+                        -543.4296875,
+                        2179.8654785156,
+                        78.963104248047
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_flag5": {
+                    "position": [
+                        -467.47045898438,
+                        2058.0236816406,
+                        73.29264831543
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_flag6": {
+                    "position": [
+                        -414.79718017578,
+                        1932.0059814453,
+                        81.638534545898
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_flag7": {
+                    "position": [
+                        -622.60754394531,
+                        1899.6716308594,
+                        85.752868652344
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_flag8": {
+                    "position": [
+                        346.15103149414,
+                        1786.9934082031,
+                        75.133277893066
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_flag9": {
+                    "position": [
+                        663.17687988281,
+                        1648.37109375,
+                        74.917846679688
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                }
+            },
+            "goals": {
+                "CTF_goal1": {
+                    "position": [
+                        -1053.7744140625,
+                        1951.8756103516,
+                        92.131088256836
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_goal10": {
+                    "position": [
+                        -259.15493774414,
+                        1821.4053955078,
+                        90.208038330078
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_goal2": {
+                    "position": [
+                        -745.05969238281,
+                        1797.4898681641,
+                        86.193664550781
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_goal3": {
+                    "position": [
+                        -151.24095153809,
+                        1634.9545898438,
+                        74.974906921387
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_goal4": {
+                    "position": [
+                        37.840278625488,
+                        1524.0374755859,
+                        75.11474609375
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_goal5": {
+                    "position": [
+                        314.67532348633,
+                        1560.1010742188,
+                        75.069816589355
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_goal6": {
+                    "position": [
+                        -285.42724609375,
+                        1997.5520019531,
+                        75.96656036377
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_goal7": {
+                    "position": [
+                        -656.52392578125,
+                        2034.9918212891,
+                        79.084564208984
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_goal8": {
+                    "position": [
+                        27.390836715698,
+                        1836.5718994141,
+                        104.44246673584
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                },
+                "CTF_goal9": {
+                    "position": [
+                        -29.00341796875,
+                        1800.3527832031,
+                        95.247787475586
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        0,
+                        0.99999994039536
+                    ]
+                }
+            },
+            "obstacles": {
+                "CTF_obstacle0": {
+                    "position": [
+                        2.578236579895,
+                        1686.9611816406,
+                        111.26280212402
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.018343202769756,
+                        0.9998317360878
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle01": {
+                    "position": [
+                        3.9736847877502,
+                        1687.0124511719,
+                        111.26280212402
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.018343202769756,
+                        0.9998317360878
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle011": {
+                    "position": [
+                        5.3765172958374,
+                        1687.0639648438,
+                        111.26280212402
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.018343202769756,
+                        0.9998317360878
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle0111": {
+                    "position": [
+                        9.6006164550781,
+                        1687.2189941406,
+                        111.26280212402
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.018343202769756,
+                        0.9998317360878
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle01111": {
+                    "position": [
+                        13.809529304504,
+                        1687.3735351563,
+                        111.26280212402
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.018343202769756,
+                        0.9998317360878
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle011111": {
+                    "position": [
+                        15.35062122345,
+                        1687.4302978516,
+                        111.26280212402
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.018343202769756,
+                        0.9998317360878
+                    ],
+                    "scale": [
+                        1.2000000476837,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle012": {
+                    "position": [
+                        8.1977844238281,
+                        1687.1674804688,
+                        111.26280212402
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.018343202769756,
+                        0.9998317360878
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle0121": {
+                    "position": [
+                        12.406697273254,
+                        1687.3220214844,
+                        111.26280212402
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.018343202769756,
+                        0.9998317360878
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle02": {
+                    "position": [
+                        6.8023357391357,
+                        1687.1162109375,
+                        111.26280212402
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.018343202769756,
+                        0.9998317360878
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle021": {
+                    "position": [
+                        11.011248588562,
+                        1687.2707519531,
+                        111.26280212402
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.018343202769756,
+                        0.9998317360878
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle03": {
+                    "position": [
+                        6.8556003570557,
+                        1628.4549560547,
+                        108.3443145752
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle031": {
+                    "position": [
+                        8.2278938293457,
+                        1628.7222900391,
+                        108.3443145752
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle0311": {
+                    "position": [
+                        9.5918998718262,
+                        1628.9879150391,
+                        108.3443145752
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle03111": {
+                    "position": [
+                        10.955684661865,
+                        1629.2535400391,
+                        108.3443145752
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle031111": {
+                    "position": [
+                        12.320286750793,
+                        1629.5191650391,
+                        108.3443145752
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle0311111": {
+                    "position": [
+                        29.362188339233,
+                        1632.91015625,
+                        108.3443145752
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle03111111": {
+                    "position": [
+                        29.299230575562,
+                        1620.3612060547,
+                        99.841552734375
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle031111111": {
+                    "position": [
+                        22.45415687561,
+                        1619.0278320313,
+                        99.841552734375
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle0311111111": {
+                    "position": [
+                        15.608522415161,
+                        1617.6943359375,
+                        99.841552734375
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle031112": {
+                    "position": [
+                        27.997583389282,
+                        1632.64453125,
+                        108.3443145752
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle0311121": {
+                    "position": [
+                        27.93462562561,
+                        1620.0955810547,
+                        99.841552734375
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle03111211": {
+                    "position": [
+                        21.089551925659,
+                        1618.7622070313,
+                        99.841552734375
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle031112111": {
+                    "position": [
+                        14.243914604187,
+                        1617.4287109375,
+                        99.841552734375
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle03112": {
+                    "position": [
+                        26.633798599243,
+                        1632.37890625,
+                        108.3443145752
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle031121": {
+                    "position": [
+                        26.570840835571,
+                        1619.8299560547,
+                        99.841552734375
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle0311211": {
+                    "position": [
+                        19.72576713562,
+                        1618.4965820313,
+                        99.841552734375
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle03112111": {
+                    "position": [
+                        12.880129814148,
+                        1617.1630859375,
+                        99.841552734375
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle0312": {
+                    "position": [
+                        25.269792556763,
+                        1632.11328125,
+                        108.3443145752
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle03121": {
+                    "position": [
+                        25.206834793091,
+                        1619.5643310547,
+                        99.841552734375
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle031211": {
+                    "position": [
+                        18.36176109314,
+                        1618.2309570313,
+                        99.841552734375
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle0312111": {
+                    "position": [
+                        11.516123771667,
+                        1616.8974609375,
+                        99.841552734375
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle0312112": {
+                    "position": [
+                        18.15539932251,
+                        1630.3929443359,
+                        100.69650268555
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        0.5,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle032": {
+                    "position": [
+                        23.897499084473,
+                        1631.8459472656,
+                        108.3443145752
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle0321": {
+                    "position": [
+                        23.834541320801,
+                        1619.2969970703,
+                        99.841552734375
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle03211": {
+                    "position": [
+                        16.98946762085,
+                        1617.9636230469,
+                        99.841552734375
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle032111": {
+                    "position": [
+                        10.143830299377,
+                        1616.6301269531,
+                        99.841552734375
+                    ],
+                    "rotation": [
+                        0,
+                        0,
+                        -0.096048720180988,
+                        0.99537658691406
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/art/shapes/garage_and_dealership/Clutter/hr_plasticbarrier.DAE"
+                },
+                "CTF_obstacle1": {
+                    "position": [
+                        -28.296548843384,
+                        1795.2338867188,
+                        109.14360046387
+                    ],
+                    "rotation": [
+                        0.050900485366583,
+                        0.090804606676102,
+                        0.69916582107544,
+                        0.70734059810638
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/levels/west_coast_usa/art/shapes/objects/s_containers_40_okudai.dae"
+                },
+                "CTF_obstacle11": {
+                    "position": [
+                        -28.344711303711,
+                        1804.6529541016,
+                        107.07908630371
+                    ],
+                    "rotation": [
+                        0.050900485366583,
+                        0.090804606676102,
+                        0.69916582107544,
+                        0.70734059810638
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/levels/west_coast_usa/art/shapes/objects/s_containers_40_okudai.dae"
+                },
+                "CTF_obstacle111": {
+                    "position": [
+                        -21.014471054077,
+                        1799.9862060547,
+                        108.53967285156
+                    ],
+                    "rotation": [
+                        -0.028496164828539,
+                        0.10012140870094,
+                        0.99456256628036,
+                        0.0030032673384994
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/levels/west_coast_usa/art/shapes/objects/s_containers_40_okudai.dae"
+                },
+                "CTF_obstacle1111": {
+                    "position": [
+                        -35.588474273682,
+                        1799.7133789063,
+                        107.21789550781
+                    ],
+                    "rotation": [
+                        -0.028496164828539,
+                        0.10012140870094,
+                        0.99456256628036,
+                        0.0030032673384994
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/levels/west_coast_usa/art/shapes/objects/s_containers_40_okudai.dae"
+                },
+                "CTF_obstacle11111": {
+                    "position": [
+                        -35.735023498535,
+                        1800.2222900391,
+                        109.72045898438
+                    ],
+                    "rotation": [
+                        -0.028496164828539,
+                        0.10012140870094,
+                        0.99456256628036,
+                        0.0030032673384994
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/levels/west_coast_usa/art/shapes/objects/s_containers_40_okudai.dae"
+                },
+                "CTF_obstacle111111": {
+                    "position": [
+                        -35.880851745605,
+                        1800.7287597656,
+                        112.21081542969
+                    ],
+                    "rotation": [
+                        -0.028496164828539,
+                        0.10012140870094,
+                        0.99456256628036,
+                        0.0030032673384994
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/levels/west_coast_usa/art/shapes/objects/s_containers_40_okudai.dae"
+                },
+                "CTF_obstacle1111111": {
+                    "position": [
+                        -36.025924682617,
+                        1801.2326660156,
+                        114.68846130371
+                    ],
+                    "rotation": [
+                        -0.028496164828539,
+                        0.10012140870094,
+                        0.99456256628036,
+                        0.0030032673384994
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/levels/west_coast_usa/art/shapes/objects/s_containers_40_okudai.dae"
+                },
+                "CTF_obstacle1112": {
+                    "position": [
+                        -21.161001205444,
+                        1800.4951171875,
+                        111.04223632813
+                    ],
+                    "rotation": [
+                        -0.028496164828539,
+                        0.10012140870094,
+                        0.99456256628036,
+                        0.0030032673384994
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/levels/west_coast_usa/art/shapes/objects/s_containers_40_okudai.dae"
+                },
+                "CTF_obstacle11121": {
+                    "position": [
+                        -21.306818008423,
+                        1801.0015869141,
+                        113.53259277344
+                    ],
+                    "rotation": [
+                        -0.028496164828539,
+                        0.10012140870094,
+                        0.99456256628036,
+                        0.0030032673384994
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/levels/west_coast_usa/art/shapes/objects/s_containers_40_okudai.dae"
+                },
+                "CTF_obstacle111211": {
+                    "position": [
+                        -21.451889038086,
+                        1801.5054931641,
+                        116.01023864746
+                    ],
+                    "rotation": [
+                        -0.028496164828539,
+                        0.10012140870094,
+                        0.99456256628036,
+                        0.0030032673384994
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/levels/west_coast_usa/art/shapes/objects/s_containers_40_okudai.dae"
+                },
+                "CTF_obstacle112": {
+                    "position": [
+                        -28.491241455078,
+                        1805.1618652344,
+                        109.58164978027
+                    ],
+                    "rotation": [
+                        0.050900485366583,
+                        0.090804606676102,
+                        0.69916582107544,
+                        0.70734059810638
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/levels/west_coast_usa/art/shapes/objects/s_containers_40_okudai.dae"
+                },
+                "CTF_obstacle1121": {
+                    "position": [
+                        -28.637058258057,
+                        1805.6683349609,
+                        112.07200622559
+                    ],
+                    "rotation": [
+                        0.050900485366583,
+                        0.090804606676102,
+                        0.69916582107544,
+                        0.70734059810638
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/levels/west_coast_usa/art/shapes/objects/s_containers_40_okudai.dae"
+                },
+                "CTF_obstacle11211": {
+                    "position": [
+                        -28.78212928772,
+                        1806.1722412109,
+                        114.54965209961
+                    ],
+                    "rotation": [
+                        0.050900485366583,
+                        0.090804606676102,
+                        0.69916582107544,
+                        0.70734059810638
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/levels/west_coast_usa/art/shapes/objects/s_containers_40_okudai.dae"
+                },
+                "CTF_obstacle12": {
+                    "position": [
+                        -28.443078994751,
+                        1795.7427978516,
+                        111.64616394043
+                    ],
+                    "rotation": [
+                        0.050900485366583,
+                        0.090804606676102,
+                        0.69916582107544,
+                        0.70734059810638
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/levels/west_coast_usa/art/shapes/objects/s_containers_40_okudai.dae"
+                },
+                "CTF_obstacle121": {
+                    "position": [
+                        -28.588895797729,
+                        1796.2492675781,
+                        114.13652038574
+                    ],
+                    "rotation": [
+                        0.050900485366583,
+                        0.090804606676102,
+                        0.69916582107544,
+                        0.70734059810638
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/levels/west_coast_usa/art/shapes/objects/s_containers_40_okudai.dae"
+                },
+                "CTF_obstacle1211": {
+                    "position": [
+                        -28.733966827393,
+                        1796.7531738281,
+                        116.61416625977
+                    ],
+                    "rotation": [
+                        0.050900485366583,
+                        0.090804606676102,
+                        0.69916582107544,
+                        0.70734059810638
+                    ],
+                    "scale": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shapeName": "/levels/west_coast_usa/art/shapes/objects/s_containers_40_okudai.dae"
+                }
+            },
+            "spawns": {
+                "CTF_spawn1": {
+                    "position": [
+                        -1176.9857177734,
+                        1943.2554931641,
+                        94.519561767578
+                    ],
+                    "rotation": [
+                        0.0068730521,
+                        -0.00302315527,
+                        0.999971807,
+                        129.01268
+                    ]
+                },
+                "CTF_spawn11": {
+                    "position": [
+                        -1178.6798095703,
+                        1941.1640625,
+                        94.543380737305
+                    ],
+                    "rotation": [
+                        0.0068730521,
+                        -0.00302315527,
+                        0.999971807,
+                        129.01268
+                    ]
+                },
+                "CTF_spawn111": {
+                    "position": [
+                        -1180.2858886719,
+                        1939.1815185547,
+                        94.565971374512
+                    ],
+                    "rotation": [
+                        0.00688322028,
+                        -0.00335586956,
+                        0.999970675,
+                        124.515503
+                    ]
+                },
+                "CTF_spawn1111": {
+                    "position": [
+                        -1181.7595214844,
+                        1937.0382080078,
+                        94.586822509766
+                    ],
+                    "rotation": [
+                        0.00689268997,
+                        -0.00366577762,
+                        0.999969602,
+                        120.486855
+                    ]
+                },
+                "CTF_spawn11111": {
+                    "position": [
+                        -1183.0562744141,
+                        1934.8349609375,
+                        94.605316162109
+                    ],
+                    "rotation": [
+                        0.00689734053,
+                        -0.00381796784,
+                        0.999968946,
+                        118.565331
+                    ]
+                },
+                "CTF_spawn111111": {
+                    "position": [
+                        -1184.2921142578,
+                        1932.5646972656,
+                        94.623001098633
+                    ],
+                    "rotation": [
+                        0.00690436363,
+                        -0.00404784083,
+                        0.999967992,
+                        115.734322
+                    ]
+                },
+                "CTF_spawn1111111": {
+                    "position": [
+                        -1185.5064697266,
+                        1930.0452880859,
+                        94.640502929688
+                    ],
+                    "rotation": [
+                        0.00690667471,
+                        -0.00412342092,
+                        0.999967635,
+                        114.822159
+                    ]
+                },
+                "CTF_spawn11111111": {
+                    "position": [
+                        -1186.623046875,
+                        1927.6307373047,
+                        94.656639099121
+                    ],
+                    "rotation": [
+                        0.00691884151,
+                        -0.00452167355,
+                        0.999965847,
+                        110.166641
+                    ]
+                },
+                "CTF_spawn111111111": {
+                    "position": [
+                        -1187.5473632813,
+                        1925.1204833984,
+                        94.670196533203
+                    ],
+                    "rotation": [
+                        0.00692343386,
+                        -0.00467196992,
+                        0.999965131,
+                        108.475037
+                    ]
+                },
+                "CTF_spawn1111111111": {
+                    "position": [
+                        -1188.3226318359,
+                        1922.7994384766,
+                        94.681655883789
+                    ],
+                    "rotation": [
+                        0.00693891896,
+                        -0.00517889578,
+                        0.999962568,
+                        103.026611
+                    ]
+                },
+                "CTF_spawn11111111111": {
+                    "position": [
+                        -1188.9294433594,
+                        1920.1752929688,
+                        94.690971374512
+                    ],
+                    "rotation": [
+                        0.00693891896,
+                        -0.00517889578,
+                        0.999962568,
+                        103.026611
+                    ]
+                },
+                "CTF_spawn111111111111": {
+                    "position": [
+                        -1189.4846191406,
+                        1917.7750244141,
+                        94.699478149414
+                    ],
+                    "rotation": [
+                        0.00695772981,
+                        -0.00579473702,
+                        0.999958992,
+                        96.9205017
+                    ]
+                },
+                "CTF_spawn1111111111111": {
+                    "position": [
+                        -1189.8106689453,
+                        1915.0882568359,
+                        94.705009460449
+                    ],
+                    "rotation": [
+                        0.00696237711,
+                        -0.00594683737,
+                        0.999958158,
+                        95.4950638
+                    ]
+                },
+                "CTF_spawn11111111111111": {
+                    "position": [
+                        -1190.0708007813,
+                        1912.3822021484,
+                        94.709663391113
+                    ],
+                    "rotation": [
+                        0.00698800245,
+                        -0.00678601023,
+                        0.999952555,
+                        88.1795349
+                    ]
+                },
+                "CTF_spawn111111111111111": {
+                    "position": [
+                        -1189.9879150391,
+                        1909.7805175781,
+                        94.709617614746
+                    ],
+                    "rotation": [
+                        0.00699844025,
+                        -0.00712781912,
+                        0.999950171,
+                        85.449852
+                    ]
+                },
+                "CTF_spawn1111111111111111": {
+                    "position": [
+                        -1189.7719726563,
+                        1907.1252441406,
+                        94.707801818848
+                    ],
+                    "rotation": [
+                        0.00701083522,
+                        -0.00753378449,
+                        0.999947071,
+                        82.3811493
+                    ]
+                },
+                "CTF_spawn11111111111111111": {
+                    "position": [
+                        -1189.4166259766,
+                        1904.4809570313,
+                        94.704086303711
+                    ],
+                    "rotation": [
+                        0.00702132471,
+                        -0.00787732098,
+                        0.999944329,
+                        79.9230423
+                    ]
+                },
+                "CTF_spawn111111111111111111": {
+                    "position": [
+                        -1188.9614257813,
+                        1901.9206542969,
+                        94.69898223877
+                    ],
+                    "rotation": [
+                        0.00704135187,
+                        -0.00853338465,
+                        0.999938786,
+                        75.5555878
+                    ]
+                },
+                "CTF_spawn1111111111111111111": {
+                    "position": [
+                        -1188.3216552734,
+                        1899.4317626953,
+                        94.691337585449
+                    ],
+                    "rotation": [
+                        0.00705488911,
+                        -0.00897688232,
+                        0.999934852,
+                        72.8272934
+                    ]
+                },
+                "CTF_spawn11111111111111111111": {
+                    "position": [
+                        -1187.5234375,
+                        1896.8491210938,
+                        94.681594848633
+                    ],
+                    "rotation": [
+                        0.00707939686,
+                        -0.00977994781,
+                        0.999927163,
+                        68.2995529
+                    ]
+                }
+            }
+        },
         "track": {
             "flags": {
                 "CTF_flag1": {

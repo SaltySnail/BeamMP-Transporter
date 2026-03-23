@@ -6,7 +6,132 @@ local mod = math.fmod
 local gamestate = {players = {}, settings = {}}
 
 --blocked inputs when flag carrier
-local blockedInputActions = {'slower_motion','faster_motion','toggle_slow_motion','modify_vehicle','vehicle_selector','saveHome','loadHome', 'reset_all_physics','toggleTraffic', "recover_vehicle", "recover_vehicle_alt", "recover_to_last_road", "reload_vehicle", "reload_all_vehicles", "parts_selector", "dropPlayerAtCamera", "nodegrabberRender",'reset_physics','switch_previous_vehicle','switch_next_vehicle'} --"dropPlayerAtCameraNoReset", missing. This allows for resets with f7, this should be done with a sort of timer on reset or only alow rewinds. This seems to not be possible
+-- local blockedInputActions = {'slower_motion','faster_motion','toggle_slow_motion','modify_vehicle','vehicle_selector','saveHome','loadHome', 'reset_all_physics','toggleTraffic', "recover_vehicle", "recover_vehicle_alt", "recover_to_last_road", "reload_vehicle", "reload_all_vehicles", "parts_selector", "dropPlayerAtCamera", "nodegrabberRender",'reset_physics','switch_previous_vehicle','switch_next_vehicle'} --"dropPlayerAtCameraNoReset", missing. This allows for resets with f7, this should be done with a sort of timer on reset or only alow rewinds. This seems to not be possible
+local slowBlockedInputActions = {
+	"dropPlayerAtCamera",
+	-- "dropPlayerAtCameraNoReset",
+	-- "recover_vehicle",
+	"recover_vehicle_alt",
+	"recover_to_last_road",
+	"reload_vehicle",
+	"reload_all_vehicles",
+	"loadHome",
+	"saveHome",
+	"reset_all_physics",
+	"vehicle_selector",
+	"parts_selector",
+	"vehicledebugMenu",
+	"nodegrabberAction",
+	"nodegrabberGrab",
+	"nodegrabberRender",
+	"nodegrabberStrength",
+	"slower_motion",
+	"faster_motion",
+	"toggle_slow_motion",
+	"toggleTraffic",
+	"toggleAITraffic",
+	"switch_next_vehicle",
+	"switch_previous_vehicle",
+	"switch_next_vehicle_multiseat",
+	"editorToggle",
+	"objectEditorToggle",
+	"editorSafeModeToggle",
+	-- "toggleCamera", -- Allow going into freecam to get unstuck
+	-- "dropCameraAtPlayer",
+	"forceField",
+	"funBoom",
+	"funBreak",
+	"funExtinguish",
+	"funFire",
+	"funHinges",
+	"funTires",
+	"funRandomTire",
+	"latchesOpen",
+	"latchesClose",
+	"funBoost",
+	"funBoostBackwards",
+	"funFling",
+	"funFlingDownward",
+	"toggleWalkingMode",
+	"photomode",
+	"toggleTrackBuilder",
+	"toggleBigMap",
+	"menu_item_focus_lr",
+	"menu_item_focus_ud",
+	"pause",
+	"accept",
+	"decline",
+	"reset_physics",
+	"appedit",
+	"toggle_minimap",
+	"toggleRadialMenuSandbox",
+	"toggleRadialMenuPlayerVehicle",
+	"toggleRadialMenuFavorites",
+	"toggleRadialMenuMulti",
+}
+local fastBlockedInputActions = {
+	"dropPlayerAtCamera",
+	"dropPlayerAtCameraNoReset",
+	"recover_vehicle",
+	"recover_vehicle_alt",
+	"recover_to_last_road",
+	"reload_vehicle",
+	"reload_all_vehicles",
+	"loadHome",
+	"saveHome",
+	"reset_all_physics",
+	"vehicle_selector",
+	"parts_selector",
+	"vehicledebugMenu",
+	"nodegrabberAction",
+	"nodegrabberGrab",
+	"nodegrabberRender",
+	"nodegrabberStrength",
+	"slower_motion",
+	"faster_motion",
+	"toggle_slow_motion",
+	"toggleTraffic",
+	"toggleAITraffic",
+	"switch_next_vehicle",
+	"switch_previous_vehicle",
+	"switch_next_vehicle_multiseat",
+	"editorToggle",
+	"objectEditorToggle",
+	"editorSafeModeToggle",
+	"toggleCamera", 
+	"dropCameraAtPlayer",
+	"forceField",
+	"funBoom",
+	"funBreak",
+	"funExtinguish",
+	"funFire",
+	"funHinges",
+	"funTires",
+	"funRandomTire",
+	"latchesOpen",
+	"latchesClose",
+	"funBoost",
+	"funBoostBackwards",
+	"funFling",
+	"funFlingDownward",
+	"toggleWalkingMode",
+	"photomode",
+	"toggleTrackBuilder",
+	"toggleBigMap",
+	"menu_item_focus_lr",
+	"menu_item_focus_ud",
+	"pause",
+	"accept",
+	"decline",
+	"reset_physics",
+	"appedit",
+	"toggle_minimap",
+	"toggleRadialMenuSandbox",
+	"toggleRadialMenuPlayerVehicle",
+	"toggleRadialMenuFavorites",
+	"toggleRadialMenuMulti",
+}
+local playerGoingFast = false
 
 local colors = {["Red"] = {255,50,50,255},["LightBlue"] = {50,50,160,255},["Green"] = {50,255,50,255},["Yellow"] = {200,200,25,255},["Purple"] = {150,50,195,255}}
 
@@ -192,10 +317,30 @@ function mergeTransporterTable(table,gamestateTable)
 	end
 end
 
+function handleBlockedInputs()
+	if gamestate and gamestate.allowFlagCarrierResets then return end
+	if not gamestate.gameRunning then
+		extensions.core_input_actionFilter.setGroup('CTF_Blocked_Inputs', slowBlockedInputActions)
+		extensions.core_input_actionFilter.addAction(0, 'CTF_Blocked_Inputs', false)
+		extensions.core_input_actionFilter.setGroup('CTF_Blocked_Inputs', fastBlockedInputActions)
+		extensions.core_input_actionFilter.addAction(0, 'CTF_Blocked_Inputs', false)
+	elseif playerGoingFast then 
+		extensions.core_input_actionFilter.setGroup('CTF_Blocked_Inputs', slowBlockedInputActions)
+		extensions.core_input_actionFilter.addAction(0, 'CTF_Blocked_Inputs', false)
+		extensions.core_input_actionFilter.setGroup('CTF_Blocked_Inputs', fastBlockedInputActions)
+		extensions.core_input_actionFilter.addAction(0, 'CTF_Blocked_Inputs', true)
+	else
+		extensions.core_input_actionFilter.setGroup('CTF_Blocked_Inputs', fastBlockedInputActions)
+		extensions.core_input_actionFilter.addAction(0, 'CTF_Blocked_Inputs', false)
+		extensions.core_input_actionFilter.setGroup('CTF_Blocked_Inputs', slowBlockedInputActions)
+		extensions.core_input_actionFilter.addAction(0, 'CTF_Blocked_Inputs', true)
+	end
+end
+
 function allowResets()
 	-- log('D', logtag, "allowResets called")
 	if not gamestate.allowFlagCarrierResets then
-		extensions.core_input_actionFilter.setGroup('CTF_Blocked_Inputs', blockedInputActions)
+		extensions.core_input_actionFilter.setGroup('CTF_Blocked_Inputs', fastBlockedInputActions)
 		extensions.core_input_actionFilter.addAction(0, 'CTF_Blocked_Inputs', false)
 	end
 end
@@ -203,10 +348,10 @@ end
 function disallowResets()
 	-- log('D', logtag, "disallowResets called")
 	if not gamestate.allowFlagCarrierResets then --debating if this should stay here
-		extensions.core_input_actionFilter.setGroup('CTF_Blocked_Inputs', blockedInputActions)
+		extensions.core_input_actionFilter.setGroup('CTF_Blocked_Inputs', fastBblockedInputActions)
 		extensions.core_input_actionFilter.addAction(0, 'CTF_Blocked_Inputs', true)
 	else
-		extensions.core_input_actionFilter.setGroup('CTF_Blocked_Inputs', blockedInputActions)
+		extensions.core_input_actionFilter.setGroup('CTF_Blocked_Inputs', fastBblockedInputActions)
 		extensions.core_input_actionFilter.addAction(0, 'CTF_Blocked_Inputs', false)
 	end
 end
@@ -661,6 +806,7 @@ end
 function onGameEnd()
 	core_gamestate.setGameState('multiplayer', 'multiplayer', 'multiplayer') --reset the app layout
 	allowResets()
+	handleBlockedInputs()
 end
 
 local function onLostFlag()
@@ -890,6 +1036,11 @@ end
 local function requestVelocity()
 	local veh = getPlayerVehicle(0)
 	local vehSpeed = veh:getVelocity():len()*3.6
+	if vehSpeed >= 30 then
+		playerGoingFast = true
+	else
+		playerGoingFast = false
+	end
 	if TriggerServerEvent then TriggerServerEvent("setVehVel", vehSpeed) end
 end
 
@@ -985,6 +1136,10 @@ end
 
 local function onPreRender(dt)
 	if not gamestate then return end
+	if gamestate.gameRunning then
+		guihooks.trigger('MenuHide') -- block menu when game is running
+	end
+	handleBlockedInputs()
 	local currentVehID = be:getPlayerVehicleID(0)
 	if not gamestate.gameRunning or gamestate.gameEnding then
 		if flagObj then flagObj:setPosition(vec3(0, 0, -10000)) end
