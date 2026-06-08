@@ -1,6 +1,6 @@
 local M = {}
 
-local EASTER_MODE = true
+local EASTER_MODE = false
 local DEBUG_MODE = true
 
 local floor = math.floor
