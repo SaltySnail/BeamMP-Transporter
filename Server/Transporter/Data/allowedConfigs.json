@@ -1,10 +1,7 @@
 {  
-  "Christmas Pack": [
-    "vehicles/autobello/Holiday.pc",
-    "vehicles/burnside/Holiday.pc",
-    "vehicles/bx/Holiday.pc",
-    "vehicles/covet/Holiday.pc",
-    "vehicles/fullsize/Holiday.pc",
-    "vehicles/sunburst2/Holiday.pc"
+  "Easter pack": [
+    "vehicles/pickup/Egg Hunter.pc",
+    "vehicles/van/Egg Hunter.pc",
+    "vehicles/roamer/Egg Hunter.pc"
   ]
 }

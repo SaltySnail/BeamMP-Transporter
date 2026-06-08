@@ -1,0 +1,30 @@
+{
+  "Mat01_002": {
+    "name": "Mat01_002",
+    "mapTo": "Mat01.002",
+    "class": "Material",
+    "Stages": [
+      {
+        "colorMap": "EasterEgg_Diverse01.png.005"
+      },
+      {},
+      {},
+      {}
+    ],
+    "translucentBlendOp": "None"
+  },
+  "egg01": {
+    "name": "egg01",
+    "mapTo": "egg01",
+    "class": "Material",
+    "Stages": [
+      {
+        "colorMap": "EasterEgg_Diverse01"
+      },
+      {},
+      {},
+      {}
+    ],
+    "translucentBlendOp": "None"
+  }
+}

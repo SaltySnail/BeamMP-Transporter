@@ -1,5 +1,8 @@
 local M = {}
 
+local EASTER_MODE = true
+local DEBUG_MODE = true
+
 local floor = math.floor
 local mod = math.fmod
 
@@ -318,6 +321,7 @@ function mergeTransporterTable(table,gamestateTable)
 end
 
 function handleBlockedInputs()
+	if DEBUG_MODE then return end
 	if gamestate and gamestate.allowFlagCarrierResets then return end
 	if not gamestate.gameRunning then
 		extensions.core_input_actionFilter.setGroup('CTF_Blocked_Inputs', slowBlockedInputActions)
@@ -459,7 +463,6 @@ local function spawnFlag(data)
 			rotation = quatToAxisAngle(rotation)
     end
 	end
-	-- log('D', logtag, "Spawning flag " .. name)	
 	print("Spawning flag " .. name)	
 	local visualObj = createObject('TSStatic')
 	if position then
@@ -481,6 +484,24 @@ local function spawnFlag(data)
 	visualObj:setField('decalType', 0, "None")
 	visualObj.canSave = true
 	visualObj:registerObject(name .. "TSStatic")
+	print("Easter mode: " .. tostring(EASTER_MODE))	
+	if (EASTER_MODE == true) then
+		local eggObj = createObject('TSStatic')
+		if position then
+			eggObj:setPosition(vec3(position.x, position.y, position.z + 0.5))
+		else
+			eggObj:setPosition(vec3(0,0,0))
+		end
+		eggObj:setField('rotation', 0, rotationString)
+		eggObj:setField('shapeName', 0, "/art/shapes/Transporter/easter_egg/egg01.dae")
+		eggObj.scale = vec3(1,1,1)
+		eggObj:registerObject(name .. "egg" .. "TSStatic")
+		eggObj.useInstanceRenderData = true
+		eggObj:setField('collisionType', 0, "None")
+		eggObj:setField('decalType', 0, "None")
+		eggObj.canSave = true
+		scenetree.MissionGroup:addObject(eggObj)
+	end
 	scenetree.MissionGroup:addObject(visualObj)
 	local triggerObj = createObject("BeamNGTrigger")
 	if position then
@@ -545,6 +566,24 @@ local function spawnGoal(data)
 	visualObj.canSave = true
 	visualObj:registerObject(name .. "TSStatic")
 	scenetree.MissionGroup:addObject(visualObj)
+	print("Easter mode: " .. tostring(EASTER_MODE))	
+	if (EASTER_MODE == true) then
+		local eggObj = createObject('TSStatic')
+		if position then
+			eggObj:setPosition(vec3(position.x, position.y, position.z + 0.5))
+		else
+			eggObj:setPosition(vec3(0,0,0))
+		end
+		eggObj:setField('rotation', 0, rotationString)
+		eggObj:setField('shapeName', 0, "/art/shapes/Transporter/easter_basket/EggBasket.dae")
+		eggObj.scale = vec3(2,2,2)
+		eggObj:registerObject(name .. "egg" .. "TSStatic")
+		eggObj.useInstanceRenderData = true
+		eggObj:setField('collisionType', 0, "None")
+		eggObj:setField('decalType', 0, "None")
+		eggObj.canSave = true
+		scenetree.MissionGroup:addObject(eggObj)
+	end
 	local triggerObj = createObject("BeamNGTrigger")
 	if position then
 		triggerObj:setPosition(vec3(position.x, position.y, position.z))
@@ -1188,15 +1227,20 @@ local function onPreRender(dt)
 						local myVeh = getObjectByID(currentVehID)
 						local veh = getObjectByID(vehicle.gameVehicleID)	
 						if myVeh and veh then
-							
 							if flagObj then
 								local boundingBox = veh:getSpawnWorldOOBB()
 								local halfExtents = boundingBox:getHalfExtents()
 								local dir = veh:getDirectionVector()
-								local pos = boundingBox:getCenter() + (dir * -halfExtents.y)
-								pos.z = pos.z + halfExtents.z + 0.15
-								local rot = quatFromDir(dir:cross(vec3(0, 0, 1)), vec3(0, 0, 1))
-								flagObj:setPosRot(pos.x, pos.y, pos.z, rot.x, rot.y, rot.z, rot.w)
+								local up = vec3(veh:getDirectionVectorUp()):normalized()
+								local pos
+								if (EASTER_MODE) then
+									pos = boundingBox:getCenter() + (dir * (-halfExtents.y * 0.5)) + (up * halfExtents.z * 0.05) --move backwards and up with regards to the vehicle rotation
+								else
+									pos = boundingBox:getCenter() + (dir * -halfExtents.y) + (up * halfExtents.z * 1.15) --move backwards and up with regards to the vehicle rotation
+								end
+  							local flagRot = (quatFromDir(vec3(veh:getDirectionVector()):normalized(), vec3(veh:getDirectionVectorUp()):normalized())):toTorqueQuat()
+								flagObj:setPosition(vec3(pos.x, pos.y, pos.z))
+								flagObj:setField("rotation", 0, flagRot.x .. " " .. flagRot.y .. " " .. flagRot.z .. " " .. flagRot.w)
 							end
 							
 							local vehPos = myVeh:getPosition()
@@ -1383,13 +1427,19 @@ local function onWorldReadyState(state)
 	
 	loadJsonMaterialsFile("art/shapes/Transporter/flag_red/main.materials.json")
 	loadJsonMaterialsFile("art/shapes/Transporter/flag_blue/main.materials.json")
+	loadJsonMaterialsFile("art/shapes/Transporter/easter_egg/main.materials.json")
 	
 	flagObj = createObject("TSStatic")
-	flagObj.shapeName = "art/shapes/Transporter/flag_blue/flag_blue_anim.dae"
+	if (EASTER_MODE) then
+		flagObj.shapeName = "art/shapes/Transporter/easter_egg/egg01.dae"
+		flagObj.scale = vec3(0.3, 0.3, 0.3)
+	else
+		flagObj.shapeName = "art/shapes/Transporter/flag_blue/flag_blue_anim.dae"
+		flagObj.scale = vec3(0.3, 0.5, 0.3)
+	end
 	flagObj.dynamic = true
 	flagObj.useInstanceRenderData = 1
 	flagObj:setPosition(vec3(0, 0, -10000))
-	flagObj.scale = vec3(0.3, 0.5, 0.3)
 	flagObj:registerObject("Transporter_Flag")
 end
 
